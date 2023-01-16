@@ -13,3 +13,5 @@ const URL_SUBFOLDER = '';
 const DB_HOST = 'localhost';
 const DB_USER = 'postgres';
 const DB_PASS =  'sva_build';
+
+const DEBUG_MODE = true;

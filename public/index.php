@@ -1,26 +1,28 @@
 <?php
+include '../config/config.php';
+
 $name = $_GET['name'] ?? 'CAMAGRU';
 
 header('Content-Type: text/html; charset=utf-8');
-printf('Start of program: %s<br>', htmlspecialchars($name, ENT_QUOTES, 'UTF-8'));
 
-if (!isset($_SERVER['PATH_INFO']))
+if (DEBUG_MODE)
+    printf('Debug of program: %s<br>', htmlspecialchars($name, ENT_QUOTES, 'UTF-8'));
+    print "\$_SERVER['REQUEST_URI']: ".$_SERVER['REQUEST_URI'].'<br>';
+$arrayUri = explode('?', $_SERVER['REQUEST_URI']);
+
+
+$path = $arrayUri[0];
+
+if (DEBUG_MODE)
+    print "The request path is : ".$path;
+
+if ($path == '/')
 {
-    echo "Home page";
-    exit();
+    require_once __DIR__.'/../app/model/indexmodel.php';
+    require_once __DIR__.'/../app/controller/indexcontroller.php';
+    $req_model = new IndexModel();
+    $req_controller = new IndexController($req_model);
+
+
 }
 
-print "The request path is : ".$_SERVER['PATH_INFO'];
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Camagru Home Page</title>
-</head>
-<body>
-    <p>HELLO WORLD WEEDS</p>
-</body>
-</html>
