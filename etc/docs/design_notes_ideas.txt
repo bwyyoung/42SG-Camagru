@@ -1,0 +1,22 @@
+
+
+User
+- Username
+- Password
+- Valid Email Address
+- Send confirmation email unique email link
+- Connect to my application
+- Forgot password
+- Login, Logout
+- Edit Rights: Edit username, email address and password
+
+Gallery
+- Display all images edited and created by users, ordered by date of creation (Public)
+- Allow only a connected user to like and comment.
+- When Image gets new comment, image author notified by email. (Based on preferences)
+- List of images paginated, with 5 images per page.
+
+Editing
+- User webcam preview
+- Side section featuring thumbnails of all pics taken
+- Figure V1

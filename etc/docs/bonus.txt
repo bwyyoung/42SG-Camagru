@@ -1,0 +1,10 @@
+If the required part is done entirely and perfectly, you can add any bonus you wish; They
+will be evaluated by your reviewers. You should however still respect the requirements
+in the bonus parts (i.e. image processing should be done on server side).
+If you lack inspiration, here are some leads:
+• “AJAXify” exchanges with the server.
+• Propose a live preview of the edited result, directly on the webcam preview. We
+should note that this is much easier than it looks.
+• Do an infinite pagination of the gallery part of the site.
+• Offer the possibility to a user to share his images on social networks.
+• Render an animated GIF.

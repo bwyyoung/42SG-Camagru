@@ -1,0 +1,20 @@
+All your forms should have correct validations and the whole site should be secured.
+This point is MANDATORY and shall be verified when your application would be evaluated.
+To have an idea, here are some stuff that is NOT considered as SECURE:
+
+
+Store plain or unencrypted passwords in the database.
+• Offer the ability to inject HTML or “user” JavaScript in badly protected variables.
+• Offer the ability to upload unwanted content on the server.
+• Offer the possibility of altering an SQL query.
+• Use an extern form to manipulate so-called private data
+
+• Authorized languages:
+    -[Server] Any (limited to PHP standard library)
+    -[Client] HTML - CSS - JavaScript (only with browser natives API)
+• Authorized frameworks:
+    - [Server] Any (up to PHP standard library)
+    - [Client] CSS Frameworks tolerated, unless it adds forbidden JavaScript.
+
+Your project should contain imperatively:
+    • One (or more) container to deploy your site with one command. anything equivalent to docker-compose is ok.
