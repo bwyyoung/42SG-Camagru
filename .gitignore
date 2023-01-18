@@ -134,4 +134,3 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/phpstorm
-/etc/sample_projects/simple-mvc-php-framework/
