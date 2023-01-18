@@ -1,0 +1,32 @@
+<?php
+
+namespace util;
+
+include "$_SERVER[DOCUMENT_ROOT]/config/config.php";
+use const config\DEBUG_MODE;
+
+
+class Debug
+{
+    private static bool $First_Use = false;
+
+    private static function check_first() {
+        if (self::$First_Use || !DEBUG_MODE)
+            return;
+        $name = $_GET['name'] ?? 'CAMAGRU';
+        header('Content-Type: text/html; charset=utf-8');
+        printf('Debug of program: %s<br>', htmlspecialchars($name, ENT_QUOTES, 'UTF-8'));
+        self::$First_Use = true;
+    }
+    public static function print_string(string $a) {
+        self::check_first();
+        if (DEBUG_MODE)
+            print $a.'<br>';
+    }
+
+    public static function print_array(array $a) {
+        self::check_first();
+        if (DEBUG_MODE)
+            print print_r($a, true).'<br>';
+    }
+}

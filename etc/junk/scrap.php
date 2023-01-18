@@ -132,4 +132,3 @@ if($path_split === '/'){
 //Display its view
     }
 }
-?>
