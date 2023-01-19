@@ -21,12 +21,12 @@ class Debug
     public static function print_string(string $a) {
         self::check_first();
         if (DEBUG_MODE)
-            print $a.'<br>';
+            print '<p>'.$a.'</p>';
     }
 
     public static function print_array(array $a) {
         self::check_first();
         if (DEBUG_MODE)
-            print print_r($a, true).'<br>';
+            print '<p>'.print_r($a, true).'</p>';
     }
 }
