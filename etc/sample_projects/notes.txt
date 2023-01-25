@@ -13,3 +13,10 @@ https://github.com/gmaccario/simple-mvc-php-framework
 
 
 https://github.com/Naksi96/camagru
+
+
+
+https://medium.com/@gotzmann/the-fastest-template-engine-for-php-b5b461b46296
+https://codeshack.io/lightweight-template-engine-php/
+https://stackoverflow.com/questions/32542200/php-simple-template-engine-function
+https://twig.symfony.com/
