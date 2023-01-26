@@ -1,4 +1,5 @@
 <?php
+include dirname(__FILE__) . '/../view/template/Template.php';
 
 class IndexController {
     private $model;
@@ -8,7 +9,7 @@ class IndexController {
     }
 
     public function index() {
-        return "Index Method";
+        Template::view('index.html');
     }
 
     public function login() {

@@ -2,7 +2,7 @@
 
 namespace util;
 
-include "$_SERVER[DOCUMENT_ROOT]/config/config.php";
+include dirname(__FILE__)."/../../config/config.php";
 use const config\DEBUG_MODE;
 
 
