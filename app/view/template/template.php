@@ -2,7 +2,9 @@
 
 use util\Debug as Debug;
 
-// Adapted from https://codeshack.io/lightweight-template-engine-php/
+// Adapted from:
+// https://codeshack.io/lightweight-template-engine-php/
+// https://www.youtube.com/watch?v=RSoUIa7sjGg
 
 class Template {
 
@@ -50,6 +52,7 @@ class Template {
     }
 
     static function compileCode($code) {
+        $code = self::compileConditionals($code);
         $code = self::compileBlock($code);
         $code = self::compileYield($code);
         $code = self::compileEscapedEchos($code);
@@ -57,6 +60,7 @@ class Template {
         $code = self::compilePHP($code);
         return $code;
     }
+
 
     static function includeFiles($file) {
         $file = self::get_viewdir_file($file);
@@ -67,6 +71,12 @@ class Template {
         }
         $code = preg_replace('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', '', $code);
         return $code;
+    }
+    static function compileConditionals($code) {
+        $code = preg_replace('/\<\!\-\- if (.*) \-\->/', '{% if ($1) : %}', $code);
+        $code = preg_replace('/\<\!\-\- elseif (.*) \-\->/', '{% elseif ($1) : %}', $code);
+        $code = preg_replace('/\<\!\-\- else \-\->/', '{% else : %}', $code);
+        return preg_replace('/\<\!\-\- endif \-\->/', '{% endif; %}', $code);
     }
 
     static function compilePHP($code) {

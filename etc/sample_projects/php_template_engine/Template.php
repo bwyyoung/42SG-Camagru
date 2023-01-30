@@ -7,7 +7,7 @@ class Template{
 		$this->vars[$key] = $value;
 	}
 
-	public function render($template_name){
+	public function render($template_name) {
 		$path = $template_name . '.html';
 
 		if(file_exists($path)){

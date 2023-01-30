@@ -1,8 +1,32 @@
 {% extends layout.html %}
-{% block title %}Home Page{% endblock %}
-{% block content %}
 
+{% block title %}{{{ $title }}}{% endblock %}
+
+{% block content %}
 <h1>Home</h1>
-<p>Welcome to the home page!</p>
+<p>Welcome to the home page, list of colors:</p>
+<ul>
+    {% foreach($colors as $color): %}
+    <li>{{{ $color }}}</li>
+    {% endforeach; %}
+</ul>
+{{$username}} is {{$age}} years old <br /> <br />
+
+<!-- if $age == 18 -->
+true
+<!-- elseif $age == 11 -->
+Child
+<!-- else -->
+false
+<!-- endif -->
+
+<br />
+
+<!-- if $username == 'Terry' -->
+true
+<!-- else -->
+false
+<!-- endif -->
+
 
 {% endblock %}

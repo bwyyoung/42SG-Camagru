@@ -9,7 +9,12 @@ class IndexController {
     }
 
     public function index() {
-        Template::view('index.html');
+        Template::view('index.html', [
+            'title' => 'Camagru SG (DSTA - Web Build 1)',
+            'colors' => ['red','blue','green'],
+            'username' => 'Terry',
+            'age' => '11'
+        ]);
     }
 
     public function login() {
