@@ -1,0 +1,26 @@
+form{
+	width:30vw;
+	margin:auto;
+}
+
+/*legend{
+	display: inline;
+	font-size: 1.2vw;
+	font-family: verdana;
+}*/
+
+form p, legend, label{
+	display: inline;
+	font-size: 1.2vw;
+	font-family: verdana;
+}
+
+form input{
+	min-width:5vw;
+}
+
+
+
+.invalid{
+	border-color:red;
+}

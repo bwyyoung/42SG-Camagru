@@ -1,0 +1,55 @@
+#like-btn-1:hover, #like-btn-0:hover {
+	cursor: pointer;
+}
+
+#comment-btn:hover {
+	cursor: pointer;
+}
+
+#comment_input {
+	width: 100%;
+	min-height: 60px;
+	border: 2px solid rgb(214, 214, 214);
+	white-space: pre-wrap;
+	resize: none;
+}
+
+#comment_submit {
+	float: right;
+	margin-top: 3px;
+}
+
+#comment_list {
+	text-align: left;
+	border-bottom: 2px solid rgb(214, 214, 214);
+	margin-bottom: 5px;
+}
+
+#delete_post {
+	float: right;
+	color: rgb(196, 30, 30);
+}
+
+#delete_post:hover {
+	cursor: pointer;
+	color: black;
+}
+
+.button_align {
+	display: inline;
+	float:left;
+	width:50%;
+	margin: auto;
+}
+
+.comment_user_id {
+	font-weight: bold;
+}
+
+.like_comment_btn {
+	height: 60px;
+}
+
+.indiv_comment {
+	border-top: 2px solid rgb(214, 214, 214);
+}

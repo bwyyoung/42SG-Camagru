@@ -1,0 +1,78 @@
+/* Photo sur laquelle on a cliqué */
+
+#id_photo img{
+	display:block;
+	margin: auto;
+	width:50%;
+}
+
+/* Zone commentaires et like */
+
+#like-and-comment{
+	width:50vw;
+	display: -ms-flexbox;
+	-ms-flex-wrap: wrap;
+	-ms-flex-direction: column;
+	-webkit-flex-flow: row wrap;
+	flex-flow: row wrap;
+	display: -webkit-box;
+	display: flex;
+	margin: auto;
+	justify-content: space-between;
+}
+
+#like{
+	width:15%;
+	display: block;
+	text-align: center;
+}
+
+#like-img img{
+	width:5vw;
+	margin: auto;
+}
+
+
+#post-comment{
+	width: 70%;
+	display: block;
+	padding:0% 2%;
+}
+
+fieldset{
+	border: none;
+	margin:0;
+	padding:0;
+}
+
+legend{
+	color:#FF686B;
+	font-size:1.2vw;
+	font-family:verdana;
+}
+
+textarea{
+	display:block;
+	width:100%;
+	margin: 2%;
+}
+
+#list-comments{
+	width:50vw;
+	display:block;
+	margin:auto;
+}
+
+#comment{
+	border: 1px #FF686B solid;
+	padding:0% 2%;
+}
+
+.delete-comment{
+	color: #FF686B;
+	font-family: 'Merienda One', cursive;
+	text-decoration: none;
+	font-size:1.2vw;
+	margin-bottom:1%;
+	display: none;
+}

@@ -1,0 +1,158 @@
+#video {
+width:100%;
+height:auto;
+}
+
+#photo {
+width:300px;
+height:225px;
+}
+
+#canvas {
+	display: none;
+}
+
+.camera {
+width: 100%;
+display:inline-block;
+height: auto;
+position: relative;
+}
+
+.output {
+display:inline-block;
+}
+
+#output {
+	width: 100%;
+	position: relative;
+	height: auto;
+}
+
+.show_box {
+	margin-top: 48px;
+	position: relative;
+}
+
+#startbutton {
+display:block;
+position:relative;
+margin-left:auto;
+margin-right:auto;
+background-color: #80deea;
+border: 0px solid ;
+font-size: 14px;
+height: 30px;
+width: 100%;
+font-family: "Lucida Grande", "Arial", sans-serif;
+}
+
+.upload_btn {
+	width: 100%;
+	margin-bottom: 10px;
+	background-color: #4bacb8;
+	color: white;
+}
+
+#sticker {
+	display:none;
+}
+
+#preview {
+	margin-top: 10%;
+	width: 100%;
+	border: 2px solid black;
+}
+
+#filter_tmp {
+	position: absolute;
+	left: calc(50% - ((150/760)*100%)/2);
+	top: calc(50% - ((150/570)*100%)/2);
+	width: calc((150/760)*100%);
+	height: auto;
+}
+
+.tmp_pics {
+	height: 340px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	padding-left: 10px;
+}
+
+.tmp_img {
+	margin-top: 10px;
+	height: 310px;
+	width: auto;
+}
+
+.contentarea {
+font-size: 16px;
+font-family: "Lucida Grande", "Arial", sans-serif;
+width: 100%;
+}
+
+.container {
+	margin: 0 !important;
+	max-width: 100% !important;
+}
+
+.choice a{
+	margin-top: 10%;
+	width: 50%;
+	height: 50px;
+	background-color: #80deea;
+	line-height: 50px;
+	text-align: center;
+	border: 2px solid black;
+	color: black !important;
+	float: left;
+}
+
+.choice a:hover {
+	color: black !important;
+	text-decoration: none;
+	background-color: #4bacb8;
+}
+
+.sticker_icons {
+	width: 70px;
+}
+
+#sticker_lists {
+	height: 90px;
+	width: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+.row {
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+.limit_set {
+	max-width: 1080px !important;
+	margin: auto !important;
+}
+
+/* HIDE RADIO */
+[type=radio] { 
+position: absolute;
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+outline: 2px solid #f00;
+}

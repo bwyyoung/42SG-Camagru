@@ -1,0 +1,104 @@
+#camera-and-filters{
+	display: flex;
+	justify-content: space-around;
+}
+
+video{
+	width:100%;
+	height:auto;
+	position:absolute;
+	z-index:1;
+}
+
+#canvas{
+	width:100%;
+	position:absolute;
+	z-index:2;
+}
+
+button{
+	background-color: #FF686B;
+	color:white;
+	font-weight: bold;
+	font-size:1.5vw;
+	font-family: 'Open Sans', sans-serif;
+	padding: 5px;
+	border:2px solid #EE575A;
+	width:30%;
+	height: auto;
+}
+
+#snap{
+	background-color: #FFA69E;
+	border:2px solid #FF686B;
+}
+
+button{
+	display: inline;
+	margin: 0 auto;
+}
+
+#camera{
+	width:60%;
+	position:relative;
+	float:left;
+}
+
+#buttons{
+	display: flex;
+	width:100%;
+}
+
+#reset{
+	display: none;
+}
+
+#save{
+	display: none;
+}
+
+#filters{
+	width: 60vw;
+	display:flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#filters img{
+	max-width:10vw;
+	max-height:5vh;
+}
+
+.hidden_path{
+	display:none;
+}
+
+#fleche-bas{
+	max-width:15%;
+	max-height:10%;
+}
+
+#fleche-haut{
+	max-width:15%;
+	max-height:10%;
+
+}
+
+#side{
+	display: flex;
+	width: 90%;
+	margin: auto;
+}
+
+#canva_filters{
+	width:100%;
+	position:absolute;
+	z-index:3;
+}
+
+#move{
+	width: 50vw;
+	justify-content: space-around;
+	margin: auto;
+	display: none;
+}

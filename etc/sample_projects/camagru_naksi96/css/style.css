@@ -1,0 +1,560 @@
+input[type=text], input[type=password], input[type=submit], input[type=email] {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	background-color: #f0ffff !important;
+	font-size: 14pt !important;
+	margin-bottom: 50px;
+}
+
+.whole_body {
+	height: auto;
+	min-height: calc(100vh - 100px);
+	position: relative;
+}
+
+img {
+	display: block;
+}
+
+h1 {
+	color: blue;
+}
+
+.error {
+	color: rgb(187, 17, 17);
+}
+
+.logo {
+	font-family: 'Modak', cursive;
+	font-size: 30pt;
+	line-height: 60px;
+	padding: 0px;
+}
+
+.logo:hover {
+	color: black;
+}
+
+.navbar-brand {
+	padding: 0px !important;
+}
+
+.navbar {
+	height: 60px;
+	padding: 2px !important;
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+}
+
+nav {
+	background-color: #80deea;
+	height: 60px;
+	padding-left: 15px;
+	padding-right: 0px;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	height: 60px;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.navbar-collapse {
+	display: block !important;
+}
+
+.navbar-nav {
+	float: right !important;
+}
+
+.right_nav {
+	float: right;
+}
+
+nav ul li {
+	float: left;
+}
+
+.menu {
+	display: block;
+	height: 60px !important;
+	padding: 0 20px 0 20px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.fa-upload, .fa-user-circle, .fa-sign-out-alt {
+	margin-top: 19px;
+}
+
+nav ul div li input[type=submit] {
+	background: #80deea;
+	border: 0px solid;
+	padding: 0 20px 0 20px !important;
+}
+
+li .menu .logout {
+	background: #80deea !important;
+	border: 0px
+}
+
+li .menu:hover {
+	background: #4bacb8;
+}
+
+.menu:hover {
+	color: black !important;
+}
+
+nav ul li a {
+    display: block;
+    color: black;
+    text-decoration: none !important;
+}
+
+footer {
+	position: relative;
+	background-color: black;
+	color: white;
+	height: 100px;
+	width: 100%;
+	text-align: center;
+}
+
+footer .far{
+	line-height: 100px;
+	font-size: 13pt;
+}
+
+.post_image {
+	width: 100%;
+}
+
+.post_detail_col {
+	margin-top: 10% !important;
+	padding-top: 10px !important;
+	margin-bottom: 10% !important;
+}
+
+/* Create three equal columns that floats next to each other */
+.sidebar {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	margin-top: 58px;
+	min-width: 252px !important;
+	height: 100%;
+	text-align: left;
+	background: white;
+}
+.content {
+	float: left;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
+}
+.content_body {
+	margin-top: 48px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	background-color: white;
+	padding: 20px;
+}
+/* Clear floats after the columns */
+/*
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.row {
+	padding: 0;
+	margin: 0 auto;
+	float: none;
+	max-width: 1080px;
+	width: 97.5%;
+}*/
+
+.my_acc {
+	margin: 0 15% 0 15% !important;
+}
+
+.jobs .job_category {
+	padding: 10px;
+	font-size: 24pt !important;
+	border-bottom: 1px solid #ccc;
+	background-color: white;
+}
+.jobs {
+	font-size: 12pt;
+}
+.jobs .job_list .job_title a {
+	font-size: 18pt !important;
+	text-decoration: none;
+	color: #8c8c8c;
+}
+.job_detail {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	font-size: 16pt;
+}
+.column {
+	float: left;
+	width: 25%;
+}
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.textbox {
+	height: 36px !important;
+	width: 200px !important;
+}
+.search_bar {
+	margin-top: 10px;
+	width: 200px;
+}
+form input #range {
+	width: 100%;
+}
+.row div.sidebar div.side_menu {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 0;
+	width: 100%;
+}
+.row div.sidebar div.und {
+	border-bottom: 1px solid #ccc;
+}
+.row div.sidebar div.side_menu a {
+	margin-left: 20px;
+}
+.side_menu a i.fas {
+	margin-right: 10px;
+}
+.side_menu a {
+	color: black;
+}
+
+/* instagram layout */
+
+.container {
+	max-width: 93.5rem;
+	margin: 0 auto;
+	padding: 0 2rem;
+}
+
+.btn {
+	display: inline-block;
+	font: inherit;
+	background: none;
+	border: none;
+	color: inherit;
+	padding: 0;
+	cursor: pointer;
+}
+
+.btn:focus {
+	outline: 0.5rem auto #4d90fe;
+}
+
+.visually-hidden {
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+.clean_link:hover {
+	text-decoration: none;
+	color: white;
+}
+
+/* Gallery Section */
+
+
+.gallery {
+	display: flex;
+	flex-wrap: wrap;
+	margin: -1rem -1rem;
+	padding-bottom: 3rem;
+}
+
+.gallery-item {
+	position: relative;
+	flex: 1 0 22rem;
+	margin: 1rem;
+	color: #fff;
+	cursor: pointer;
+	width: 95% !important;
+}
+
+.gallery-item:hover .gallery-item-info,
+.gallery-item:focus .gallery-item-info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item-info {
+	display: none;
+}
+
+.gallery-item-info li {
+	display: inline-block;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.gallery-item-likes {
+	margin-right: 2.2rem;
+}
+
+.gallery-item-type {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	font-size: 2.5rem;
+	text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+
+.fa-clone,
+.fa-comment {
+	transform: rotateY(180deg);
+}
+
+.gallery-image {
+	width: 100%;
+	object-fit: cover;
+}
+
+/* Loader */
+
+.loader {
+	width: 5rem;
+	height: 5rem;
+	border: 0.6rem solid #999;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	margin: 0 auto;
+	animation: loader 500ms linear infinite;
+}
+
+/* Media Query */
+
+/* Spinner Animation */
+
+@keyframes loader {
+	to {
+			transform: rotate(360deg);
+	}
+}
+
+/*
+
+The following code will only run if your browser supports CSS grid.
+
+Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
+
+*/
+
+
+/* Login Form */
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+  width: 100%;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 0px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+form input[type=password], form input[type=text], form input[type=email]{
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100% !important;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14pt;
+}
+
+
+.login_form input[type=submit] {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  background-color: #80deea;
+  color: #FFFFFF;
+  font-size: 14pt;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+div .save_change {
+	font-family: "Roboto", sans-serif;
+	text-transform: uppercase;
+	outline: 0;
+	width: 100%;
+	border: 0;
+	padding: 15px;
+	background-color: #80deea;
+	color: #FFFFFF;
+	font-size: 14pt;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+div .delete_btn {
+	font-family: "Roboto", sans-serif;
+	text-transform: uppercase;
+	outline: 0;
+	width: 100%;
+	border: 0;
+	padding: 15px;
+	background-color: rgb(189, 32, 32);
+	color: #FFFFFF;
+	font-size: 14pt;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+.login_form input[type=submit]:hover {
+  background: #4bacb8;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12pt;
+}
+.form .message a {
+  color: #4bacb8;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+}
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.container .info span .fa {
+  color: #EF3B3A;
+}
+
+@media only screen and (max-width: 450px) {
+	.my_acc {
+		margin: 0 10px 0 10px !important;
+	}
+	
+	.sidebar {
+		margin-top: 10px !important;
+	}
+	.gallery-item {
+		flex: 100%;
+	}
+	.gallery {
+		width: 100% !important;
+		margin: 0 !important;
+	}
+	.logo {
+		font-size: 22pt !important;
+	}
+	.container {
+		padding: 0 !important;
+	}
+	.menu {
+		padding: 0 10px 0 10px !important;
+	}
+	.post_detail_row {
+		width: 100% !important;
+		margin: auto !important;
+		margin-top: 10% !important;
+		margin-bottom: 10% !important;
+	}
+	.post_detail_col {
+		margin: auto !important;
+	}
+}
+
+@media only screen and (max-width: 1094px) {
+	.col-sm-4 {
+	max-width: 100% !important;
+	width: 100% !important;
+	flex: 100% !important;
+	}
+
+	.col-sm-8 {
+		max-width: 100% !important;
+		width: 100% !important;
+		flex: 100% !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	.content {
+		padding-top: 0 !important;
+	}
+
+	.content_body {
+		margin-top: 0 !important;
+	}
+}

@@ -1,0 +1,9 @@
+*.log
+TODO.md
+config.ini
+node_modules
+public/assets/.gitkeep
+storage/tmp/*
+storage/decorations/*
+storage/uploads/*
+storage/.initialized
