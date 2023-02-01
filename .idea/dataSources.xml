@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/dstawebbuild1</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="camagru_glagan@localhost:3306" uuid="dc6b5380-e1cb-4f8a-b52e-5bf153ba6401">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/camagru_glagan</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

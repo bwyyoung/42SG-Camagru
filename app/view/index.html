@@ -1,29 +1,27 @@
 {% extends layout.html %}
-
 {% block title %}{{{ $title }}}{% endblock %}
 
 {% block content %}
+{% include navbar.html %}
 <h1>Home</h1>
 <p>Welcome to the home page, list of colors:</p>
+
+
+<!-- if $age == 18 -->
+true
+<!-- elseif $age == 11 -->
+{{$username}} is {{$age}} years old <br /> <br />
+<!-- else -->
+false
+<!-- endif -->
+
+<!-- if $username == 'Terry' -->
+true
 <ul>
     {% foreach($colors as $color): %}
     <li>{{{ $color }}}</li>
     {% endforeach; %}
 </ul>
-{{$username}} is {{$age}} years old <br /> <br />
-
-<!-- if $age == 18 -->
-true
-<!-- elseif $age == 11 -->
-Child
-<!-- else -->
-false
-<!-- endif -->
-
-<br />
-
-<!-- if $username == 'Terry' -->
-true
 <!-- else -->
 false
 <!-- endif -->

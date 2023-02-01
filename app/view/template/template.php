@@ -1,6 +1,8 @@
 <?php
 
 use util\Debug as Debug;
+use core\Init as Init;
+
 
 // Adapted from:
 // https://codeshack.io/lightweight-template-engine-php/
@@ -10,7 +12,7 @@ use util\Debug as Debug;
 class Template {
 
     static $blocks = array();
-    static $cache_enabled = TRUE;
+    static $cache_enabled = FALSE;
     static $view_dir = __DIR__ . '/../';
     static $cache_path = __DIR__ . '/../cache/';
 

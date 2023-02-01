@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/etc/junk/scrap_mysql.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/etc/sample_projects/camagru_glagan/Docker/mysql/migrate.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/etc/sample_projects/camagru_glagan/Docker/mysql/seed.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/etc/sql/migration.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/etc/sql/scrap.sql" dialect="PostgreSQL" />
+    <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>

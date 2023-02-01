@@ -12,7 +12,39 @@ RewriteRule (.+) public/$1 [L]
 # Route all other requests
 RewriteRule (.*) public/index.php?route=$1 [L,QSA]
 
+
+SetEnv WEBSITE_PEPPER atga*EgEJ_c5B*5$CKKr5D-$Eb=J%hN9w2QSsCTw-MdVt4pfcE*qyxzdkydxN%cysyh=gyLgaL=J4z?pj*G?*65qsPHuTzWV+wrtQdGr6xjRurvNu&a@H*c5QZtu?vQzn+FKHX*@+%gPJFuZPe*YX_LKZTtAUaCae=zFtM?KpNkjjYS7_T_-u6QnuTTeR_Fzdd4u*fF^UvUcA^%RnTvScrDtz$64gXkDWNg@-gNRJtMjp!*xZ&3gAe5-gkp2E&mvGbZVUBK8E3b3gTh8xHz=_UfkMFTRkc?vq9VXqcge=HfDeuKy+KpYEqSYsX&JrU^3m4YVsvG_3f8za2$6p3F!kwn5FhH-@_cV_4Jf=5%?$PVp@8yXnZeKpWxRwU9wZ?@xLjKz8=AqAas4*VH@J=pY=9PHEA*zP5H69+QcZ*v!QkBwR*3tPErhUY@nGVV?*vCZc6vm&ZD_fuZd8wJb=DUgWmTvyqh?*5_AbT?n?h4AtMsbfb=QDemNfm_N3nvHqDA6FDU$sU7VJp9U^qC4V*?PvYqy!LhzqwNk*qzPf3LZMuJ3^B-Pr3ww3rE@=yU!!6PM!GhMtMN@sd=-Kz8jD$k7SZ35k9f5&C^sG_&PJUzwfNGUmUWDBp7-8?9Szvq&gLWwrZqkgeE&4n-MdVDw$B+4h@=R46Jae&_Q^k=-m5-GBhqs_?3EUeFY&p^9jqwz@U=sXzVqHw?wU8FZP8uhttcT@wDwLRUXt783Q+^5wK-D_cScrz+B=Sa8JUZp!BtCK_N$MvH8?wQP!6P?e$tBq3Mw@pSS*6TYvYvYrh@BkeMgVkz=p$Pwc7V_7$R@EN6!HWFJ&cCQYTYqRMu2@K@DYn9U+AF_R*-ScEtFL&K33xspLFFEg6n!W7WBSN-^p7XNW^7Yw=E=28GCp*gw9&P-UA3PK9*k_v9px+vnc-hxU6Ar3*@Y@NUBx3^YbErs8ar7y2b5kuZwfrB*KuESgmG?=r&M=MW2Yz=jEzP3BUC&wraf@PJS$c7%7&Y%$wWAer!MhSKShf8X43HMA%sQC8jCAyjh&sU!wqQNKyFRWJ+cSv4!gCXuh=&5Y%qts!6qA2ZJ-G@ZYZRg&cDW+Kv%Ad2ggax%f96Skww?tUS2Mw9p%=M8kAdbzshrkXGsdAM8WR$KE@PL-_C$U-RCS6zMeZ^rSxKfvF3BnzVXHY9+MK?tsyeauvDa33HNp752E*8zgebP?HnMy&QZE*dgJPKV2T?YE9MkM!J4SSyUTtU4ghfxFfmVeE&XWR=wH?bD@zydM?s^V9=WWEb-A^q6tgHr@vvg5zW^CZNt-?bkAAjnHW4+8KTAJQg@$7+&*DkTBV5WryZcc&cLPJ*YC=!2DKHjQpDamc9DHGnsQCu9_zdX3sbML?pKQ455MBzEnCRkt8?fvtfwCrN?c75Ss42K68L9c@WfhybPmNc%@TTBjq+XG^_DZE%kyF?zWq=5Hk^h?t4zhkcGWsf9mfhRPKUm$z%j*z7=aK-wt4!pFsurM@bvTgwS!YS&vTkxwRwNwP%ELJFmakvTGNVaS?tp$mw_uVZFB?L6D9h!H?&YXyTJz5wg-Fd=ADcDtuRJ@a*6CUMCw2kAE5rJk?gRyfwj&6AxFkw5fnWQBsLKGKTpzV*c65jN7-2Rdh2JCB+ZACG6d8z4bbcVF7xMa-KP^wd_kTvSrq42yR?-fJeuVkb%g@u&=zD3SMBJzSm&mhJ58dN4x4k_Ke@c=XuE5MB7e=$ncQC@wU7pcSeA?cXzNbAxYgm4ShpykS32Dq2ej&-v_HtnbG?JKSc%jn67YLwA=-TMEPQc=AFZ?_CLxw==$Rs5d$mk6NB4A4MR*MUW5M+QMNdAfUktag4!amReFyUS=sCH73@a9Xj4UZugC=UT9Y*jHM6DU!Ek@a*2eQJ7hTWp4YWX26NFz*tDmBq7rWeq+x24rD_8BX4Yd+mRCvZKbnkN9sD@PdL@Qd%DRpbs9$5ZGT64-SFP&GEwFEuSRdDeE%d3?qUJapP$B!+%C2pTU7DFgVw?a2+WaLN
+
 <If "%{REQUEST_URI} =~ m#^/etc($|/)#">
     Require all denied
 </If>
 </IfModule>
+
+# Block hacker user agents. https://gist.github.com/NinjaPress/1910735
+<IfModule mod_setenvif.c>
+ SetEnvIfNoCase User-Agent ^$ keep_out
+ SetEnvIfNoCase User-Agent (casper|cmsworldmap|diavol|dotbot)   keep_out
+ SetEnvIfNoCase User-Agent (flicky|ia_archiver|jakarta|kmccrew) keep_out
+ SetEnvIfNoCase User-Agent (libwww|planetwork|pycurl|skygrid)   keep_out
+ SetEnvIfNoCase User-Agent (purebot|comodo|feedfinder|turnit)   keep_out
+ SetEnvIfNoCase User-Agent (zmeu|nutch|vikspider|binlar|sucker) keep_out
+ <Limit GET POST PUT>
+  Order Allow,Deny
+  Allow from all
+  Deny from env=keep_out
+ </Limit>
+</IfModule>
+
+# https://aesonlabs.ca/blogs/how-to-protect-your-website-from-hackers-via-htaccess-file/
+# 3. Protect Your .Htaccess File From Hackers Trying To Write New Rules
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+#  keep your plugins safe from potential abuse
+<Files ~ "\.(js|css)$">
+  order allow,deny
+  allow from all
+</Files>

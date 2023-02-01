@@ -1,19 +1,25 @@
 <?php
+session_start();
 
 include "../app/util/debug.php";
 use util\Debug as Debug;
 
-include "../app/core/init.php";
+include  "../app/core/init.php";
 use core\Init as Init;
+
+Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
 
 Debug::print_string("\$_SERVER['REQUEST_URI']: ".$_SERVER['REQUEST_URI']);
 Debug::print_string("\$_SERVER['PATH_INFO']: ".($_SERVER['PATH_INFO'] ?? 'undefined'));
-
+#Debug::print_string(getenv('WEBSITE_PEPPER'));
 
 $path = $_SERVER['REQUEST_URI'];
 
 if (isset($req_method))
     $method = $req_method; // Loaded from CORE, come back later.
+
+
+
 
 if ($path === '/')
 {
@@ -27,7 +33,6 @@ if ($path === '/')
 
     $obj_model = new $model;
     $obj_controller = new $controller($model);
-
     if (Init::getInstance()->req_method == '')
         return print $obj_controller->index();
     return print $obj_controller->$method(Init::getInstance()->req_param);
