@@ -3,6 +3,6 @@
 class IndexModel
 {
     function __construct(){
-    }
 
+    }
 }

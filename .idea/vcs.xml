@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/etc/sample_projects/CogentPHP" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/etc/sample_projects/php-framework-tutorial-p1" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/etc/sample_projects/php-framework-tutorial-p2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/etc/sample_projects/simple-mvc-php-framework" vcs="Git" />
   </component>
 </project>

@@ -19,8 +19,9 @@ class Template {
     static $template_dir = __DIR__;
 
     static private function get_viewdir_file($file) {
-        $fileParts = pathinfo($file);
-        return self::$view_dir.$fileParts['basename'];
+       # $fileParts = pathinfo($file);
+        return self::$view_dir.$file;
+        #return self::$view_dir.$fileParts['basename'];
     }
     static private function get_filename($file) {
         $fileParts = pathinfo($file);

@@ -1,0 +1,12 @@
+    require_once WEB_ROOT.'/app/model/indexmodel.php';
+    require_once WEB_ROOT.'/app/controller/indexcontroller.php';
+    $req_model = new IndexModel();
+    $req_controller = new IndexController($req_model);
+    $model = $req_model;
+    $controller = $req_controller;
+
+    $obj_model = new $model;
+    $obj_controller = new $controller($model);
+    if (Init::getInstance()->req_method == '')
+        return print $obj_controller->index();
+    return print $obj_controller->$method(Init::getInstance()->req_param);
