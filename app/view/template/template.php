@@ -31,6 +31,10 @@ class Template {
     static function view($file, $data = array()) {
         $file = self::get_viewdir_file($file);
         $cached_file = self::cache($file);
+        $data ['login'] = Init::getInstance()->login;
+        $data ['controller'] = Init::getInstance()->req_controller;
+        $data ['method'] = Init::getInstance()->req_method;
+
         extract($data, EXTR_SKIP);
         require $cached_file;
     }

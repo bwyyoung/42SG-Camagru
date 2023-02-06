@@ -3,7 +3,19 @@
 
 {% block content %}
 {% include component/navbar.html %}
+
+<!-- if ($method == '') -->
 <h1>Home</h1>
-<p>Welcome to the home page</p>
+<p>Welcome to Camagru SG</p>
+
+<!-- elseif ($method == 'about') -->
+<h1>About</h1>
+<p> How to upload photos here and stuff </p>
+<h1>Terms of Service</h1>
+<p> Law stuff </p>
+<!-- elseif ($method == 'contact') -->
+<h1>Contact</h1>
+<p>Contact our staff here</p>
+<!-- endif -->
 
 {% endblock %}

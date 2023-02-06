@@ -47,7 +47,7 @@ body {
 
 }
 
-.topnav input[type=text] {
+.topnav .login-container input  {
     padding: 6px;
     margin-top: 8px;
     font-size: 17px;
@@ -76,7 +76,7 @@ body {
     .topnav .login-container {
         float: none;
     }
-    .topnav a, .topnav input[type=text], .topnav .login-container button {
+    .topnav a, .topnav input .topnav .login-container button {
         float: none;
         display: block;
         text-align: left;
@@ -84,7 +84,7 @@ body {
         margin: 0;
         padding: 14px;
     }
-    .topnav input[type=text] {
+    .topnav input {
         border: 1px solid #ccc;
     }
 }
