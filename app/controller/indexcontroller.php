@@ -10,16 +10,20 @@ class IndexController {
 
     public function index() {
         Template::view('index.html', [
-            'title' => 'Camagru SG Home Page',
+            'title' => 'Camagru SG Home Page'
         ]);
     }
 
     public function about() {
-        echo "About Method";
+        Template::view('index.html', [
+            'title' => 'Camagru SG - About'
+        ]);
     }
 
     public function contact() {
-        echo "Contact Method";
+        Template::view('index.html', [
+            'title' => 'Camagru SG - Contact'
+        ]);
     }
 
     public function login() {

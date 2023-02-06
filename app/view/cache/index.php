@@ -3,38 +3,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../../public/css/default.css">
     <title><?php echo htmlentities($title, ENT_QUOTES, 'UTF-8') ?></title>
     <meta charset="utf-8">
 </head>
 <body>
 <div class="content">
     
-<?php use core\Init as Init; ?>
+<link rel="stylesheet" href="../../../public/css/navbar.css">
 <div class="topnav">
-    <a <?php if ((Init::getInstance()->req_controller == 'index')) : ?> class="active"
+    <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
     <?php endif; ?> href="http://www.camagru.sg/">Home</a>
-    <a href="http://www.camagru.sg/index/about">About</a>
-    <a href="http://www.camagru.sg/index/contact">Contact</a>
+    <a <?php if (($method == 'about')) : ?> class="active"
+    <?php endif; ?> href="http://camagru.sg/index/about">About</a>
+    <a <?php if (($method == 'contact')) : ?> class="active"
+    <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
+    <?php if (($controller != 'register')) : ?>
     <div class="login-container flex">
-        <?php if (!(Init::getInstance()->login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://www.camagru.sg/index/login">
-            <input type="text" placeholder="Username" name="username">
-            <input type="text" placeholder="Password" name="psw">
+        <?php if (!($login)) : ?>
+        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/index/login">
+            <input  type="text" placeholder="Username" name="username">
+            <input type="password" minlength="14" placeholder="Password" name="password">
             <button type="submit">Login</button>
         </form>
         <div>
-            <a style="padding: unset" href="http://www.camagru.sg/register">  <button type="button">Register</button></a>
+            <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
         <?php else : ?>
-            <a style="padding: unset" href="http://www.camagru.sg/index/logout"> <button type="submit">Logout</button></a>
+            <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
         <?php endif; ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 
+
+<?php if (($method == '')) : ?>
 <h1>Home</h1>
-<p>Welcome to the home page</p>
+<p>Welcome to Camagru SG</p>
+
+<?php elseif (($method == 'about')) : ?>
+<h1>About</h1>
+<p> How to upload photos here and stuff </p>
+<h1>Terms of Service</h1>
+<p> Law stuff </p>
+<?php elseif (($method == 'contact')) : ?>
+<h1>Contact</h1>
+<p>Contact our staff here</p>
+<?php endif; ?>
 
 
 </div>
