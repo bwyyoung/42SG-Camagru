@@ -5,7 +5,7 @@ class IndexController {
     private $model;
 
     function __construct($modelclass) {
-        $this->model = new $modelclass;
+        $this->model = $modelclass;
     }
 
     public function index() {

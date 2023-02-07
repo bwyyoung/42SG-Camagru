@@ -1,9 +1,11 @@
 <?php
 session_start();
 
+include "../app/util/security.php";
 include "../app/util/debug.php";
-use util\Debug as Debug;
+include "../app/model/model.php";
 
+use util\Debug as Debug;
 include  "../app/core/init.php";
 use core\Init as Init;
 
@@ -35,11 +37,11 @@ include WEB_ROOT.'/app/model/'.Init::getInstance()->req_model.'model.php';
 include WEB_ROOT.'/app/controller/'.Init::getInstance()->req_controller.'controller.php';
 $model = ucfirst(Init::getInstance()->req_model).'Model';
 $controller = ucfirst(Init::getInstance()->req_controller).'Controller';
-$obj_model = new $model;
-$obj_controller = new $controller($model);
+$obj_controller = new $controller(new $model);
 
 // Methods come after the req_model.
 Init::getInstance()->req_method = $path_split[2] ?? '';
+
 if (Init::getInstance()->req_method == '')
     return $obj_controller->index();
 if (method_exists($obj_controller, Init::getInstance()->req_method))

@@ -2,33 +2,27 @@
 include dirname(__FILE__) . '/../view/template/Template.php';
 use core\Init as Init;
 use util\Debug as Debug;
+use util\Security as Security;
+
 class RegisterController
 {
     private $model;
 
     function __construct($modelclass)
     {
-        $this->model = new $modelclass;
+        $this->model = $modelclass;
     }
 
     public function index()
     {
-        if (Init::getInstance()->login)
-        {
-            header("Location: http://camagru.sg");
-            exit();
-        }
+        Security::Block_LoginUser();
         Template::view('register.html', [
             'title' => 'Camagru SG Registration',
         ]);
     }
 
     public function register_account() {
-        if (Init::getInstance()->login)
-        {
-            header("Location: http://camagru.sg");
-            exit();
-        }
+        Security::Block_LoginUser();
         echo "Register button";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Debug::print_string($_POST['username']);

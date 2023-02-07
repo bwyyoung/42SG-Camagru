@@ -1,18 +1,38 @@
 <?php
-namespace config;
+namespace Model;
+
+use PgSql\Connection;
+use util\Debug;
 
 class Model
 {
     // DB Params
-    private const DB_HOST = 'host = localhost';
-    private const DB_PORT = 'port = 5432';
+    private  $DB_HOST;
+    private $DB_PORT;
+    private $DB_NAME;
+    private $DB_USER;
+    private $DB_PASS;
 
-    private const DB_NAME = 'dbname = dstawebbuild1';
-    private const DB_USER = 'user = postgres';
-    private const DB_PASS =  'password=sva_build';
+    private Connection $db;
+
+    function __construct() {
+        $this->DB_HOST = getenv('DB_HOST');
+        $this->DB_PORT = getenv('DB_PORT');
+        $this->DB_NAME = getenv('DB_NAME');
+        $this->DB_USER = getenv('DB_USER');
+        $this->DB_PASS = getenv('DB_PASS');
+    }
 
     public function connect()
     {
-
+        $this->db = pg_connect($this->DB_HOST .' '.
+            $this->DB_PORT.' '.
+            $this->DB_NAME.' '.
+            $this->DB_USER.' '.
+            $this->DB_PASS);
+        if(!$this->db)
+            Debug::print_string("Error : Unable to open database\n");
+        else
+            Debug::print_string("Opened database successfully\n");
     }
 }

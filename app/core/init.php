@@ -2,6 +2,9 @@
 
 namespace core;
 
+include WEB_ROOT.'/app/util/dotenv.php';
+use util\DotEnv;
+
 class Init
 {
     public $req_param = '';
@@ -16,7 +19,18 @@ class Init
      * construction calls with the `new` operator.
      */
     protected function __construct() {
+        $this->setup();
+    }
 
+    public function reset_camagru() {
+
+    }
+    private function setup_env() {
+        $dotenv = new DotEnv(WEB_ROOT.'/.env');
+        $dotenv->load();
+    }
+    private function setup() {
+        $this->setup_env();
     }
 
     /**

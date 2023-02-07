@@ -1,6 +1,7 @@
 <?php
+use Model\Model;
 
-class UserModel {
+class UserModel extends Model {
     protected $id;
     protected $username;
     protected $email;
