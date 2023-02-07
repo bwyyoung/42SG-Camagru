@@ -11,6 +11,7 @@
     
 <link rel="stylesheet" href="../../../public/css/navbar.css">
 <div class="topnav">
+
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
     <?php endif; ?> href="http://www.camagru.sg/">Home</a>
     <a <?php if (($method == 'about')) : ?> class="active"
@@ -25,13 +26,15 @@
             <input  type="text" placeholder="Username" name="username">
             <input type="password" minlength="14" placeholder="Password" name="password">
             <button type="submit">Login</button>
+            <div class="login_outside_form">
+                <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
+                <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                <?php else : ?>
+                <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
+                <?php endif; ?>
+            </div>
         </form>
-        <div>
-            <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
-        <?php else : ?>
-            <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
-        <?php endif; ?>
-        </div>
+
     </div>
     <?php endif; ?>
 </div>
