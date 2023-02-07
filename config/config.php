@@ -14,5 +14,5 @@ const URL_SUBFOLDER = '';
 
 
 
-const DEBUG_MODE = FALSE;
+const DEBUG_MODE = TRUE;
 
