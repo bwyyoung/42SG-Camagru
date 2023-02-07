@@ -8,8 +8,7 @@ class RegisterController
 {
     private $model;
 
-    function __construct($modelclass)
-    {
+    function __construct($modelclass) {
         $this->model = $modelclass;
     }
 
@@ -18,6 +17,8 @@ class RegisterController
         Security::Block_LoginUser();
         Template::view('register.html', [
             'title' => 'Camagru SG Registration',
+            'error' => false,
+            'errormessage' => ''
         ]);
     }
 
@@ -28,6 +29,7 @@ class RegisterController
             Debug::print_string($_POST['username']);
             Debug::print_string($_POST['email']);
             Debug::print_string($_POST['psw']);
+            Debug::print_string($_POST['psw-repeat']);
         }
     }
 }
