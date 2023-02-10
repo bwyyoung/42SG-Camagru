@@ -4,6 +4,7 @@ session_start();
 include "../app/util/security.php";
 include "../app/util/debug.php";
 include "../app/model/model.php";
+include "../app/controller/controller.php";
 
 use util\Debug as Debug;
 include  "../app/core/init.php";
@@ -23,7 +24,6 @@ Init::getInstance()->req_model = Init::getInstance()->req_controller = $path_spl
 if ($path === '/')
     Init::getInstance()->req_model = Init::getInstance()->req_controller = 'index';
 
-Debug::print_string(Init::getInstance()->req_model."    |    ".Init::getInstance()->req_controller);
 Init::getInstance()->req_param = array_slice($path_split, 3);
 $req_controller_exists = WEB_ROOT.'/app/controller/'.Init::getInstance()->req_controller.'controller.php';
 

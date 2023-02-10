@@ -1,12 +1,7 @@
 <?php
 include dirname(__FILE__) . '/../view/template/Template.php';
 
-class IndexController {
-    private $model;
-
-    function __construct($modelclass) {
-        $this->model = $modelclass;
-    }
+class IndexController extends Controller {
 
     public function index() {
         Template::view('index.html', [

@@ -4,14 +4,8 @@ use core\Init as Init;
 use util\Debug as Debug;
 use util\Security as Security;
 
-class RegisterController
+class RegisterController extends Controller
 {
-    private $model;
-
-    function __construct($modelclass) {
-        $this->model = $modelclass;
-    }
-
     public function index()
     {
         Security::Block_LoginUser();
@@ -24,7 +18,9 @@ class RegisterController
 
     public function register_account() {
         Security::Block_LoginUser();
-        echo "Register button";
+
+        $this->model->connect();
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Debug::print_string($_POST['username']);
             Debug::print_string($_POST['email']);

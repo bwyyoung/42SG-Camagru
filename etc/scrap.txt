@@ -10,3 +10,6 @@
     if (Init::getInstance()->req_method == '')
         return print $obj_controller->index();
     return print $obj_controller->$method(Init::getInstance()->req_param);
+
+
+    <script type="text/javascript" src="../../app/view/js/register.js" ></script>

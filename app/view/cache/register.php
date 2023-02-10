@@ -5,6 +5,7 @@
 <head>
     <title><?php echo htmlentities($title, ENT_QUOTES, 'UTF-8') ?></title>
     <meta charset="utf-8">
+    <base href="/" />
 </head>
 <body>
 <div class="content">
@@ -54,7 +55,7 @@
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
 <br/>
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <input type="password" placeholder="Enter Password (minimum 14 characters, Uppercase, Lowercase, numbers and symbols)" name="psw" id="psw" required>
         <br/>
         <label for="psw-repeat"><b>Repeat Password</b></label>
         <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
