@@ -72,6 +72,7 @@
                required>
 <br/><br/>
 
+
         <span id = "message_error" style="color:red">Please fill in registration information. </span> <br><br>
         <hr>
 

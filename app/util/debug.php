@@ -23,6 +23,11 @@ class Debug
             print '<p>'.$a.'</p>';
     }
 
+    public static function console_log(string $a) {
+        if (DEBUG_MODE)
+            error_log( $a);
+    }
+
     public static function print_array(array $a) {
         self::check_first();
         if (DEBUG_MODE)

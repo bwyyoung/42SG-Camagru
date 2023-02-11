@@ -14,7 +14,7 @@ class Model
     private $DB_PASS;
     private $DB_SCHEMA;
 
-    private static Connection $db;
+    protected static Connection $db;
 
     function __construct() {
         $this->DB_HOST = getenv('DB_HOST');
@@ -23,6 +23,7 @@ class Model
         $this->DB_USER = getenv('DB_USER');
         $this->DB_PASS = getenv('DB_PASS');
         $this->DB_SCHEMA = getenv('DB_SCHEMA');
+
     }
 
     public function connect()
@@ -33,8 +34,8 @@ class Model
             $this->DB_USER.' '.
             $this->DB_PASS);
         if(!Model::$db)
-            Debug::print_string("Error : Unable to open database\n");
+            Debug::console_log("Error : Unable to open database\n");
         else
-            Debug::print_string("Opened database successfully\n");
+            Debug::console_log("Opened database successfully\n");
     }
 }

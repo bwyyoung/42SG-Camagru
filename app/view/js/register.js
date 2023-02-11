@@ -113,13 +113,13 @@ function check_username_exists() {
             username_check.innerText = 'Username already exists'
             return
         }
-        if (request.responseText === 'error') {
-            username_check.style.color = 'Red'
-            username_check.innerText = 'Username already exists'
+        if (request.responseText === 'not found') {
+            username_check.style.color = 'Green'
+            username_check.innerText = 'Username is available'
             return
         }
-        username_check.style.color = 'Green'
-        username_check.innerText = 'Username is available'
+        username_check.style.color = 'Red'
+        username_check.innerText = 'Unknown Error'
     }
     request.open("POST","register/checkusername" , true)
     var data = {username: fld_username.value}

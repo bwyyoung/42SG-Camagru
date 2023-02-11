@@ -28,3 +28,6 @@ https://stackoverflow.com/questions/18449071/1130-host-localhost-is-not-allowed-
 
 
 $ psql -U postgres -d DSTAWebBuild -f /c/Users/bwyyoung/Documents/PHPStorm/DSTA_Build-1/etc/sql/camagru_glagan_postgre.sql
+
+
+psql -U postgres -d dstawebbuild1 -f /e/PHPStorm/DSTA_Build-1/etc/sql/camagru_glagan_postgre.sql
