@@ -5,11 +5,12 @@
 <head>
     <title><?php echo htmlentities($title, ENT_QUOTES, 'UTF-8') ?></title>
     <meta charset="utf-8">
+    <base href="/" />
 </head>
 <body>
 <div class="content">
     
-<link rel="stylesheet" href="../../../public/css/navbar.css">
+<link rel="stylesheet" href="../css/navbar.css">
 <div class="topnav">
 
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"

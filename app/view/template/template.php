@@ -40,6 +40,7 @@ class Template {
     }
 
     static function cache($file) {
+        Debug::print_string('template_cache');
         $file = self::get_filename($file);
         if (!file_exists(self::$cache_path)) {
             mkdir(self::$cache_path, 0744);
@@ -60,7 +61,9 @@ class Template {
     }
 
     static function compileCode($code) {
+        Debug::print_string('compileCode');
         $code = self::compileConditionals($code);
+        $code = self::compileJS_CSS($code);
         $code = self::compileBlock($code);
         $code = self::compileYield($code);
         $code = self::compileEscapedEchos($code);
@@ -71,6 +74,7 @@ class Template {
 
 
     static function includeFiles($file) {
+        Debug::print_string('includeFiles');
         $file = self::get_viewdir_file($file);
         $code = file_get_contents($file);
         preg_match_all('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', $code, $matches, PREG_SET_ORDER);
@@ -85,6 +89,16 @@ class Template {
         $code = preg_replace('/\<\!\-\- elseif (.*) \-\->/', '{% elseif ($1) : %}', $code);
         $code = preg_replace('/\<\!\-\- else \-\->/', '{% else : %}', $code);
         return preg_replace('/\<\!\-\- endif \-\->/', '{% endif; %}', $code);
+    }
+
+    static function compileJS_CSS($code){
+        Debug::print_string('compileJS_CSS');
+        $code = preg_replace('/{% js (.*) %}/',
+            '<script>{% require_once(\''.WEB_ROOT.'/app/view/js/$1\'); %}</script>', $code);
+
+        $code = preg_replace('/{% css (.*) %}/',
+            '<style>{% require_once(\''.WEB_ROOT.'/app/view/css/$1\'); %}</style>', $code);
+        return $code;
     }
 
     static function compilePHP($code) {
