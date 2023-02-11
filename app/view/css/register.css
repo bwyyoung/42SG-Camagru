@@ -1,0 +1,63 @@
+* {box-sizing: border-box}
+
+/* Add padding to containers */
+.registercontainer {
+    padding: 16px;
+}
+
+/* Full-width input fields */
+.registercontainer input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 5px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+.registercontainer  input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Overwrite default styles of hr */
+.registercontainer hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registercontainer .registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.registercontainer  .registerbtn:hover {
+    opacity:1;
+}
+
+/* Add a blue text color to links */
+.registercontainer a {
+    color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.registercontainer .signin {
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+.registercontainer .registerbtn:disabled
+{
+    cursor: not-allowed ;
+    pointer-events: none;
+    /*Button disabled - CSS color class*/
+    color: white ;
+    background-color: #006944 ;
+}

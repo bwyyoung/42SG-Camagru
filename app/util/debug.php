@@ -15,7 +15,6 @@ class Debug
             return;
         $name = $_GET['name'] ?? 'CAMAGRU';
         header('Content-Type: text/html; charset=utf-8');
-        printf('Debug of program: %s<br>', htmlspecialchars($name, ENT_QUOTES, 'UTF-8'));
         self::$First_Use = true;
     }
     public static function print_string(string $a) {
@@ -28,5 +27,9 @@ class Debug
         self::check_first();
         if (DEBUG_MODE)
             print '<p>'.print_r($a, true).'</p>';
+    }
+    public static function echo_return (string $a) :bool{
+        echo $a;
+        return true;
     }
 }

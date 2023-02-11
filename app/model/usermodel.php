@@ -1,6 +1,7 @@
 <?php
+use Model\Model;
 
-class UserModel {
+class UserModel extends Model {
     protected $id;
     protected $username;
     protected $email;
@@ -23,5 +24,9 @@ class UserModel {
 
     public function set_email(string $email) {
         $this->email = $email;
+    }
+
+    public function set_password(string $password) {
+
     }
 }

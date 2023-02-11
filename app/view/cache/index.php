@@ -3,58 +3,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/default.css">
     <title><?php echo htmlentities($title, ENT_QUOTES, 'UTF-8') ?></title>
     <meta charset="utf-8">
+    <base href="/" />
 </head>
 <body>
 <div class="content">
     
-<?php use core\Init as Init; ?>
+<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
 <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
 
+    <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
+    <?php endif; ?> href="http://www.camagru.sg/">Home</a>
+    <a <?php if (($method == 'about')) : ?> class="active"
+    <?php endif; ?> href="http://camagru.sg/index/about">About</a>
+    <a <?php if (($method == 'contact')) : ?> class="active"
+    <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
+
+    <?php if (($controller != 'register')) : ?>
     <div class="login-container flex">
-        <?php if (!(Init::getInstance()->login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/?action=login">
-            <input type="text" placeholder="Username" name="username">
-            <input type="text" placeholder="Password" name="psw">
+        <?php if (!($login)) : ?>
+        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/index/login">
+            <input  type="text" placeholder="Username" name="username">
+            <input type="password" minlength="14" placeholder="Password" name="password">
             <button type="submit">Login</button>
+            <div class="login_outside_form">
+                <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
+                <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                <?php else : ?>
+                <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
+                <?php endif; ?>
+            </div>
         </form>
-        <div>
-        <button type="submit">Register</button>
-        <?php else : ?>
-        <button type="submit">Logout</button>
-        <?php endif; ?>
-        </div>
+
     </div>
+    <?php endif; ?>
 </div>
 
+
+<?php if (($method == '')) : ?>
 <h1>Home</h1>
-<p>Welcome to the home page, list of colors:</p>
+<p>Welcome to Camagru SG</p>
 
-
-<?php if ($age == 18) : ?>
-true
-<?php elseif ($age == 11) : ?>
-<?php echo $username ?> is <?php echo $age ?> years old <br /> <br />
-<?php else : ?>
-false
+<?php elseif (($method == 'about')) : ?>
+<h1>About</h1>
+<p> How to upload photos here and stuff </p>
+<h1>Terms of Service</h1>
+<p> Law stuff </p>
+<?php elseif (($method == 'contact')) : ?>
+<h1>Contact</h1>
+<p>Contact our staff here</p>
 <?php endif; ?>
-
-<?php if ($username == 'Terry') : ?>
-true
-<ul>
-    <?php foreach($colors as $color): ?>
-    <li><?php echo htmlentities($color, ENT_QUOTES, 'UTF-8') ?></li>
-    <?php endforeach; ?>
-</ul>
-<?php else : ?>
-false
-<?php endif; ?>
-
 
 
 </div>

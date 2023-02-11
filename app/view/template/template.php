@@ -19,8 +19,9 @@ class Template {
     static $template_dir = __DIR__;
 
     static private function get_viewdir_file($file) {
-        $fileParts = pathinfo($file);
-        return self::$view_dir.$fileParts['basename'];
+       # $fileParts = pathinfo($file);
+        return self::$view_dir.$file;
+        #return self::$view_dir.$fileParts['basename'];
     }
     static private function get_filename($file) {
         $fileParts = pathinfo($file);
@@ -30,6 +31,10 @@ class Template {
     static function view($file, $data = array()) {
         $file = self::get_viewdir_file($file);
         $cached_file = self::cache($file);
+        $data ['login'] = Init::getInstance()->login;
+        $data ['controller'] = Init::getInstance()->req_controller;
+        $data ['method'] = Init::getInstance()->req_method;
+
         extract($data, EXTR_SKIP);
         require $cached_file;
     }
@@ -56,6 +61,7 @@ class Template {
 
     static function compileCode($code) {
         $code = self::compileConditionals($code);
+        $code = self::compileJS_CSS($code);
         $code = self::compileBlock($code);
         $code = self::compileYield($code);
         $code = self::compileEscapedEchos($code);
@@ -80,6 +86,15 @@ class Template {
         $code = preg_replace('/\<\!\-\- elseif (.*) \-\->/', '{% elseif ($1) : %}', $code);
         $code = preg_replace('/\<\!\-\- else \-\->/', '{% else : %}', $code);
         return preg_replace('/\<\!\-\- endif \-\->/', '{% endif; %}', $code);
+    }
+
+    static function compileJS_CSS($code){
+        $code = preg_replace('/{% js (.*) %}/',
+            '<script>{% require_once(\''.WEB_ROOT.'/app/view/js/$1\'); %}</script>', $code);
+
+        $code = preg_replace('/{% css (.*) %}/',
+            '<style>{% require_once(\''.WEB_ROOT.'/app/view/css/$1\'); %}</style>', $code);
+        return $code;
     }
 
     static function compilePHP($code) {
