@@ -10,7 +10,7 @@
 <body>
 <div class="content">
     
-<link rel="stylesheet" href="../css/navbar.css">
+<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
 <div class="topnav">
 
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"

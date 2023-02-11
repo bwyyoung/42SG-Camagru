@@ -2,10 +2,10 @@
 use model\Model;
 class Controller
 {
-    protected Model $model;
+    protected $model;
 
-    function __construct($modelclass) {
-        $this->model = $modelclass;
+    function __construct(Model $model) {
+        $this->model = $model;
     }
 
 }

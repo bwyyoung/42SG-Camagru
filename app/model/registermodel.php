@@ -12,6 +12,7 @@ class RegisterModel extends Model
 
         return false;
     }
+
     public function check_email_exists(string $email) : bool {
         return false;
     }

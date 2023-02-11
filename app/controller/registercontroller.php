@@ -9,6 +9,10 @@ class RegisterController extends Controller
     public function index()
     {
         Security::Block_LoginUser();
+
+        if(isset($_POST['test']))
+            $this->test();
+
         Template::view('register.html', [
             'title' => 'Camagru SG Registration',
             'error' => false,
@@ -16,10 +20,22 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function checkusername() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        if (!isset($_POST['username']))
+            Debug::echo_return('error');
+        else if ($this->model->check_username_exists($_POST['username']))
+            return Debug::echo_return('found');
+        Debug::echo_return('not found');
+    }
+
+    public function test() {
+        $this->model->connect();
+    }
+
+
     public function register_account() {
         Security::Block_LoginUser();
-
-        $this->model->connect();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Debug::print_string($_POST['username']);

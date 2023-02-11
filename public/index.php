@@ -2,7 +2,7 @@
 session_start();
 
 include "../app/util/security.php";
-include "../app/util/debug.php";
+include "../app/util/debug.php";-
 include "../app/model/model.php";
 include "../app/controller/controller.php";
 
@@ -12,14 +12,12 @@ use core\Init as Init;
 
 Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
 
-Debug::print_string("\$_SERVER['REQUEST_URI']: ".$_SERVER['REQUEST_URI']);
-Debug::print_string("\$_SERVER['PATH_INFO']: ".($_SERVER['PATH_INFO'] ?? 'undefined'));
+
 #Debug::print_string(getenv('WEBSITE_PEPPER'));
 
 $path = $_SERVER['REQUEST_URI'];
 
 $path_split = explode('/', ltrim($path));
-Debug::print_string("The request path is : ".print_r($path_split, true));
 Init::getInstance()->req_model = Init::getInstance()->req_controller = $path_split[1];
 if ($path === '/')
     Init::getInstance()->req_model = Init::getInstance()->req_controller = 'index';

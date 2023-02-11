@@ -9,7 +9,7 @@
 .registercontainer input {
     width: 100%;
     padding: 15px;
-    margin: 5px 0 22px 0;
+    margin: 5px 0 5px 0;
     display: inline-block;
     border: none;
     background: #f1f1f1;
@@ -51,4 +51,13 @@
 .registercontainer .signin {
     background-color: #f1f1f1;
     text-align: center;
+}
+
+.registercontainer .registerbtn:disabled
+{
+    cursor: not-allowed ;
+    pointer-events: none;
+    /*Button disabled - CSS color class*/
+    color: white ;
+    background-color: #006944 ;
 }
