@@ -10,11 +10,13 @@ class RegisterModel extends Model
         $this->connect();
     }
 
+    //http://mysqltopgsql.com/post/sql-injection/
     public function check_credential_exists(string $id, string $value) : bool {
         if (!$this->connect())
             return false;
+        $value = pg_escape_string($value);
         $r = pg_query_params(Model::$db, 'select '.$id.' from camagru_glagan.users 
-                where '.$id.' ~* $1', array($value));
+                where LOWER('.$id.') = LOWER(CAST($1 as TEXT))', array($value));
         return pg_num_rows($r) > 0;
     }
 

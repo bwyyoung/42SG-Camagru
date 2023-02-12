@@ -62,6 +62,10 @@ function validate_username() {
         msg_error.innerText += 'Username must not have spaces.\n'
         return false
     }
+    if (/\t/.test(username)) {
+        msg_error.innerText += 'Username must not have tabs.\n'
+        return false
+    }
     return true
 }
 
@@ -69,6 +73,14 @@ function validate_email() {
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!fld_email.value.match(validRegex)) {
         msg_error.innerText += 'Email is invalid.\n'
+        return false
+    }
+    if (/\s/.test(fld_email.value)) {
+        msg_error.innerText += 'Email must not have spaces.\n'
+        return false
+    }
+    if (/\t/.test(fld_email.value)) {
+        msg_error.innerText += 'Email must not have tabs.\n'
         return false
     }
     return true
@@ -99,20 +111,24 @@ window.onload = function () {
 }
 
 function check_param_exists(id) {
-    msg_error.innerText = ''
+    //msg_error.innerText = ''
     var status_text
     var fld
     if (id === 'username') {
-        if (!validate_username())
-            return;
         status_text = username_check
         fld = fld_username
+        if (!validate_username()) {
+            status_text.innerText = ''
+            return;
+        }
     }
     if (id === 'email') {
-        if (!validate_email())
-            return;
         status_text = email_check
         fld = fld_email
+        if (!validate_email()) {
+            status_text.innerText = ''
+            return;
+        }
     }
 
     var request = new XMLHttpRequest();
@@ -141,15 +157,15 @@ function check_param_exists(id) {
 
 fld_username.onchange = function () {
     check_param_exists(fld_username.id);
-    if (username_check.innerText.length == 0)
+    if (username_check.style.color === "green")
         validate_form();
 }
 
 fld_email.onchange = function () {
     check_param_exists(fld_email.id);
-    if (email_check.innerText.length == 0)
+    if (email_check.style.color === "green")
         validate_form();
 }
 
 fld_password.onchange = validate_form;
-fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
+fld_username.onkeyup = fld_email.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;

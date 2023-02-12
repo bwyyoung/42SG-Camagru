@@ -43,10 +43,6 @@
 
 <style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/register.css'); ?></style>
 
-<form method="post">
-    <button type="submit"  class="registercontainer" name="test">Test</button>
-</form>
-
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register">
     <div class="registercontainer">
         <h1>Register</h1>
