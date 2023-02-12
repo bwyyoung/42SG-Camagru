@@ -10,17 +10,14 @@ class RegisterModel extends Model
         $this->connect();
     }
 
-    public function check_username_exists(string $username) : bool {
-
-        $r = pg_query_params(Model::$db, 'select username from camagru_glagan.users 
-                where username ~*  quote_ident(CAST($1 AS text))', array($username));
+    public function check_credential_exists(string $id, string $value) : bool {
+        if (!$this->connect())
+            return false;
+        $r = pg_query_params(Model::$db, 'select '.$id.' from camagru_glagan.users 
+                where '.$id.' ~* $1', array($value));
         return pg_num_rows($r) > 0;
     }
 
-    public function check_email_exists(string $email) : bool {
-
-        return false;
-    }
 
     /*
      * register user as unverified. He canno

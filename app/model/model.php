@@ -26,16 +26,17 @@ class Model
 
     }
 
-    public function connect()
+    public function connect() : bool
     {
         Model::$db = pg_connect($this->DB_HOST .' '.
             $this->DB_PORT.' '.
             $this->DB_NAME.' '.
             $this->DB_USER.' '.
             $this->DB_PASS);
-        if(!Model::$db)
-            Debug::console_log("Error : Unable to open database\n");
-        else
-            Debug::console_log("Opened database successfully\n");
+        if(!Model::$db) {
+            Debug::print_string("Error : Unable to open database\n");
+           return false;
+        }
+        return true;
     }
 }

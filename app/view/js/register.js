@@ -8,7 +8,6 @@ var fld_email = document.getElementById('email')
 var msg_error = document.getElementById('message_error')
 var username_check = document.getElementById('username_check')
 var email_check = document.getElementById('email_check')
-
 var form_register = document.getElementById('form_register')
 btn_register_submit.disabled = true
 
@@ -50,7 +49,6 @@ function validate_username() {
     const isRequired = value => value !== '';
     const isBetween = (length, min, max) => !(length < min || length > max);
     const username = fld_username.value
-    username_check.innerText = ''
     if (!isRequired(username)) {
         msg_error.innerText  += 'Username cannot be blank.\n'
         return false
@@ -85,9 +83,9 @@ function validate_form() {
     var span_message =
     msg_error.innerText = '';
     btn_register_submit.disabled = true
-    if (!validate_username())
+    if (!validate_username() || username_check.style.color === "red")
         return false
-    if (!validate_email())
+    if (!validate_email()|| email_check.style.color === "red")
         return false
     btn_register_submit.disabled = !validate_password()
 }
@@ -100,34 +98,58 @@ window.onload = function () {
     });
 }
 
-function check_username_exists() {
-    if (!validate_username())
-        return
+function check_param_exists(id) {
+    msg_error.innerText = ''
+    var status_text
+    var fld
+    if (id === 'username') {
+        if (!validate_username())
+            return;
+        status_text = username_check
+        fld = fld_username
+    }
+    if (id === 'email') {
+        if (!validate_email())
+            return;
+        status_text = email_check
+        fld = fld_email
+    }
+
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if(request.readyState !== 4)
             return
         console.log(request.responseText)
         if (request.responseText === 'found') {
-            username_check.style.color = 'Red'
-            username_check.innerText = 'Username already exists'
+            status_text.style.color = 'Red'
+            status_text.innerText = id + ' already exists'
             return
         }
         if (request.responseText === 'not found') {
-            username_check.style.color = 'Green'
-            username_check.innerText = 'Username is available'
+            status_text.style.color = 'Green'
+            status_text.innerText =  id + ' is available'
             return
         }
-        username_check.style.color = 'Red'
-        username_check.innerText = 'Unknown Error'
+        status_text.style.color = 'Red'
+        status_text.innerText = 'Unknown Error'
     }
-    request.open("POST","register/checkusername" , true)
-    var data = {username: fld_username.value}
+    request.open("POST","register/check_user_credential" , true)
+    var data = {id: id, value: fld.value}
     request.send(JSON.stringify(data))
 }
 
 
-fld_username.onchange = check_username_exists;
-fld_email.onchange =  validate_form;
+fld_username.onchange = function () {
+    check_param_exists(fld_username.id);
+    if (username_check.innerText.length == 0)
+        validate_form();
+}
+
+fld_email.onchange = function () {
+    check_param_exists(fld_email.id);
+    if (email_check.innerText.length == 0)
+        validate_form();
+}
+
 fld_password.onchange = validate_form;
-fld_username.onkeyup = fld_email.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
+fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;

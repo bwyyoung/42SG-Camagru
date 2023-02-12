@@ -24,8 +24,11 @@ class Debug
     }
 
     public static function console_log(string $a) {
-        if (DEBUG_MODE)
-            error_log( $a);
+        if (!DEBUG_MODE)
+            return;
+        $output = 'console.log(' . json_encode($a) . ');';
+        $output  = sprintf('<script>%s</script>', $output);
+        echo $output;
     }
 
     public static function print_array(array $a) {

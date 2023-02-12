@@ -20,18 +20,16 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function checkusername() {
+    public function check_user_credential() {
         $_POST = json_decode(file_get_contents('php://input'), true);
-        if (!isset($_POST['username']))
+        if (!isset($_POST['id']) || !isset($_POST['value']) )
             Debug::echo_return('error');
-        else if ($this->model->check_username_exists($_POST['username']))
+        else if ($this->model->check_credential_exists($_POST['id'], $_POST['value']))
             return Debug::echo_return('found');
         Debug::echo_return('not found');
     }
 
-    public function test() {
-        $this->model->connect();
-    }
+
 
 
     public function register_account() {
