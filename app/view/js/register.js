@@ -135,7 +135,7 @@ function check_param_exists(id) {
     request.onreadystatechange = function () {
         if(request.readyState !== 4)
             return
-        console.log(request.responseText)
+        console.log('DEBUG |'+ request.responseText + '|')
         if (request.responseText === 'found') {
             status_text.style.color = 'Red'
             status_text.innerText = id + ' already exists'
@@ -144,6 +144,12 @@ function check_param_exists(id) {
         if (request.responseText === 'not found') {
             status_text.style.color = 'Green'
             status_text.innerText =  id + ' is available'
+            return
+        }
+
+        if (request.responseText === 'invalid') {
+            status_text.style.color = 'Red'
+            status_text.innerText =  id + ' is invalid. Please choose another.'
             return
         }
         status_text.style.color = 'Red'

@@ -23,10 +23,13 @@ class RegisterController extends Controller
     public function check_user_credential() {
         $_POST = json_decode(file_get_contents('php://input'), true);
         if (!isset($_POST['id']) || !isset($_POST['value']) )
-            Debug::echo_return('error');
-        else if ($this->model->check_credential_exists($_POST['id'], $_POST['value']))
-            return Debug::echo_return('found');
-        Debug::echo_return('not found');
+            return Debug::echo_return('error');
+        $r = $this->model->check_credential_exists($_POST['id'], $_POST['value']);
+        return match ($r) {
+            1 => Debug::echo_return('found'),
+            -1 => Debug::echo_return('invalid'),
+            default => Debug::echo_return('not found'),
+        };
     }
 
 

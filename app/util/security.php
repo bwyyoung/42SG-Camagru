@@ -27,4 +27,11 @@ class Security
         header("Location: http://camagru.sg");
         exit();
     }
+
+    public static function attack_sql_injection(string $input): bool {
+        if (preg_match("/\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\b/",
+            strtoupper($input)))
+            return true;
+        return 0;
+    }
 }

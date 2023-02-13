@@ -3,7 +3,7 @@ namespace Model;
 
 use PgSql\Connection;
 use util\Debug;
-
+use util\Security as Security;
 class Model
 {
     // DB Params
@@ -23,7 +23,6 @@ class Model
         $this->DB_USER = getenv('DB_USER');
         $this->DB_PASS = getenv('DB_PASS');
         $this->DB_SCHEMA = getenv('DB_SCHEMA');
-
     }
 
     public function connect() : bool

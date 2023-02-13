@@ -10,7 +10,7 @@
 <body>
 <div class="content">
     
-<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
+<style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
 <div class="topnav">
 
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
@@ -41,7 +41,7 @@
 </div>
 
 
-<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/register.css'); ?></style>
+<style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/register.css'); ?></style>
 
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register">
     <div class="registercontainer">
@@ -81,7 +81,7 @@
     </div>
 </form>
 
-<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/register.js'); ?></script>
+<script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/register.js'); ?></script>
 
 
 </div>
