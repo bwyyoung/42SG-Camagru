@@ -2,7 +2,9 @@
 
 namespace util;
 
-include dirname(__FILE__)."/../../config/config.php";
+include dirname(__FILE__) . "/../../config/config.php";
+
+use config\Config_flg;
 use const config\DEBUG_MODE;
 
 
@@ -11,7 +13,7 @@ class Debug
     private static bool $First_Use = false;
 
     private static function check_first() {
-        if (self::$First_Use || !DEBUG_MODE)
+        if (self::$First_Use || !Config_flg::DEBUG_MODE->value)
             return;
         $name = $_GET['name'] ?? 'CAMAGRU';
         header('Content-Type: text/html; charset=utf-8');

@@ -8,7 +8,6 @@ class RegisterModel extends Model
 {
     function __construct() {
         parent::__construct();
-        $this->connect();
     }
 
     //http://mysqltopgsql.com/post/sql-injection/
