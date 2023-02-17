@@ -57,13 +57,13 @@
 <br/>
         <span id = "email_check" style="color:red"></span> <br/>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password (minimum 14 characters, Uppercase, Lowercase, numbers and symbols)" name="psw" id="psw"
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password (minimum 14 characters, Uppercase, Lowercase, numbers and symbols)" name="password" id="password"
                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                required>
         <br/><br/>
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat"
+        <label for="password-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat"
                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                required>
 <br/><br/>

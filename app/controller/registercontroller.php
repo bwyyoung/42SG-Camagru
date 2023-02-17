@@ -44,8 +44,8 @@ class RegisterController extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Debug::print_string($_POST[Config_str::KW_USERNAME->value]);
             Debug::print_string($_POST[Config_str::KW_EMAIL->value]);
-            Debug::print_string($_POST['psw']);
-            Debug::print_string($_POST['psw-repeat']);
+            Debug::print_string($_POST['password']);
+            Debug::print_string($_POST['password-repeat']);
         }
 
         // Check duplicates
@@ -54,9 +54,14 @@ class RegisterController extends Controller
         if ($this->model->check_credential_exists(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Failure to submit: Email already exists.');
         // Check and Hash password
+
+
         // Create the User - Persist?
+
         // Register a new valid session
+
         // Generate a token for the email verification link
+
         // Send mail
     }
 

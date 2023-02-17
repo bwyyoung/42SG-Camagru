@@ -6,6 +6,7 @@ use util\Debug;
 /** Autoloading The required Classes **/
 class RegisterModel extends Model
 {
+
     function __construct() {
         parent::__construct();
     }

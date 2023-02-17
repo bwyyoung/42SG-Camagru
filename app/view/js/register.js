@@ -1,8 +1,8 @@
 
 
 var btn_register_submit = document.getElementById('btn_register_submit')
-var fld_password = document.getElementById('psw')
-var fld_cfmpassword = document.getElementById('psw-repeat')
+var fld_password = document.getElementById('password')
+var fld_cfmpassword = document.getElementById('password-repeat')
 var fld_username = document.getElementById('username')
 var fld_email = document.getElementById('email')
 var msg_error = document.getElementById('message_error')
