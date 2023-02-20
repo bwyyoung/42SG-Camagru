@@ -35,26 +35,22 @@ class RegisterModel extends Model
     public function verify_password($password, $confirmpassword): bool {
         if ($password !== $confirmpassword)
             return false;
-        Debug::print_string('1');
+        Debug::print_string('1 [a-z]');
         if (preg_match_all('/[a-z]/', $password) == 0)
             return false;
-        Debug::print_string('2');
-
+        Debug::print_string('2 [A-Z]');
         if (preg_match_all('/[A-Z]/', $password) == 0)
             return false;
-        Debug::print_string('3');
-
+        Debug::print_string('3 [0-9]');
         if (preg_match_all('/[0-9]/', $password) == 0)
             return false;
-        Debug::print_string('4');
-
+        Debug::print_string('4 \s');
         if (preg_match_all('/\s/', $password) > 0)
             return false;
-        Debug::print_string('5');
-
+        Debug::print_string('5 [#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]');
         if (preg_match_all('/[#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $password) == 0)
             return false;
-        Debug::print_string('6');
+        Debug::print_string('6 <8 >100');
 
         if (strlen($password) < 8)
             return false;
