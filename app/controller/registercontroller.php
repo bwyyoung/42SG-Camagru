@@ -1,11 +1,11 @@
 <?php
-include dirname(__FILE__) . '/../view/template/Template.php';
+namespace Controller;
 
+
+use View\Template as Template;
 use config\Config_str;
-use core\Init as Init;
 use util\Debug as Debug;
 use util\Security as Security;
-
 
 class RegisterController extends Controller
 {
@@ -21,6 +21,7 @@ class RegisterController extends Controller
             'error' => false,
             'errormessage' => ''
         ]);
+      #  $a = new UserModel();
     }
 
     public function check_user_credential() {
@@ -41,12 +42,17 @@ class RegisterController extends Controller
     public function register_account() {
         Security::Block_LoginUser();
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            Debug::print_string($_POST[Config_str::KW_USERNAME->value]);
-            Debug::print_string($_POST[Config_str::KW_EMAIL->value]);
-            Debug::print_string($_POST['password']);
-            Debug::print_string($_POST['password-repeat']);
+        if ($_SERVER["REQUEST_METHOD"] != "POST")
+            return $this->Render_Error_Registration('Failure to submit credentials.');
+        if (count($_POST) == 0 ){
+            header('Location: http://camagru.sg/register');
+            exit();
         }
+        Debug::print_string($_POST[Config_str::KW_USERNAME->value]);
+        Debug::print_string($_POST[Config_str::KW_EMAIL->value]);
+        Debug::print_string($_POST[Config_str::KW_PASSWORD->value]);
+        Debug::print_string($_POST[Config_str::KW_PASSWORD->value.'-repeat']);
+
 
         // Check duplicates
         if ($this->model->check_credential_exists(Config_str::KW_USERNAME->value, $_POST[Config_str::KW_USERNAME->value]))
@@ -54,9 +60,14 @@ class RegisterController extends Controller
         if ($this->model->check_credential_exists(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Failure to submit: Email already exists.');
         // Check and Hash password
-
+        if (!$this->model->verify_password($_POST[Config_str::KW_PASSWORD->value],$_POST[Config_str::KW_PASSWORD->value.'-repeat']))
+            return $this->Render_Error_Registration('Failure to submit: Password invalid.');
 
         // Create the User - Persist?
+        $this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
+            $_POST[Config_str::KW_EMAIL->value],
+    $_POST[Config_str::KW_PASSWORD->value]);
+
 
         // Register a new valid session
 
@@ -71,6 +82,7 @@ class RegisterController extends Controller
             'error' => true,
             'errormessage' => $message
         ]);
+        unset($_POST);
         return true;
     }
 }

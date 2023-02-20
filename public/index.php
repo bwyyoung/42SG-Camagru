@@ -2,12 +2,13 @@
 session_start();
 
 include "../app/util/security.php";
-include "../app/util/debug.php";-
+include "../app/util/debug.php";
 include "../app/model/model.php";
+include "../app/model/table/table.php";
 include "../app/controller/controller.php";
-
-use util\Debug as Debug;
 include  "../app/core/init.php";
+include WEB_ROOT.'/app/view/template/Template.php';
+
 use core\Init as Init;
 
 Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
@@ -33,8 +34,9 @@ if (!file_exists($req_controller_exists))
 
 include WEB_ROOT.'/app/model/'.Init::getInstance()->req_model.'model.php';
 include WEB_ROOT.'/app/controller/'.Init::getInstance()->req_controller.'controller.php';
-$model = ucfirst(Init::getInstance()->req_model).'Model';
-$controller = ucfirst(Init::getInstance()->req_controller).'Controller';
+
+$model = 'Model\\'.ucfirst(Init::getInstance()->req_model).'Model';
+$controller = 'Controller\\'.ucfirst(Init::getInstance()->req_controller).'Controller';
 $obj_controller = new $controller(new $model);
 
 // Methods come after the req_model.

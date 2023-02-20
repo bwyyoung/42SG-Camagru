@@ -1,4 +1,4 @@
-<?php class_exists('Template') or exit; ?>
+<?php class_exists('View\Template') or exit; ?>
 
 <!DOCTYPE html>
 <html>
@@ -58,7 +58,7 @@
         <span id = "email_check" style="color:red"></span> <br/>
 
         <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password (minimum 14 characters, Uppercase, Lowercase, numbers and symbols)" name="password" id="password"
+        <input type="password" placeholder="Enter Password (8-100 characters, UPPERCASE, lowercase, Numbers and Symbols)" name="password" id="password"
                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                required>
         <br/><br/>
@@ -67,7 +67,8 @@
                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                required>
 <br/><br/>
-
+        <!-- if ($error)-->
+            <span id = "reg_error" style="color:orange"> <?php echo htmlentities($errormessage, ENT_QUOTES, 'UTF-8') ?> </span> <br>
 
         <span id = "message_error" style="color:red">Please fill in registration information. </span> <br><br>
         <hr>

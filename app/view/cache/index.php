@@ -1,4 +1,4 @@
-<?php class_exists('Template') or exit; ?>
+<?php class_exists('View\Template') or exit; ?>
 
 <!DOCTYPE html>
 <html>

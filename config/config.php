@@ -14,7 +14,9 @@ const DEBUG_MODE = TRUE;
 enum Config_str:string {
     case KW_USERNAME = 'username';
     case KW_EMAIL = 'email';
-    case KW_password = 'password';
+    case KW_PASSWORD = 'password';
+    case KW_VERIFIED = 'verified';
+    case KW_RECEIVECOMMENTS = 'receiveComments';
 
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';
@@ -23,4 +25,6 @@ enum Config_str:string {
 
 enum Config_flg:int {
     case DEBUG_MODE = 1;
+    case PASSWD_LEN_MIN = 8;
+    case PASSWD_LEN_MAX = 100;
 }

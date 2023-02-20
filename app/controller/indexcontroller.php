@@ -1,5 +1,7 @@
 <?php
-include dirname(__FILE__) . '/../view/template/Template.php';
+
+namespace Controller;
+use View\Template as Template;
 
 class IndexController extends Controller {
 

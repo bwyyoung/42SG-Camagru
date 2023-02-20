@@ -1,5 +1,5 @@
 <?php
-
+namespace View;
 use util\Debug as Debug;
 use core\Init as Init;
 

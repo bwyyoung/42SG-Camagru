@@ -1,5 +1,6 @@
 <?php
-use Model\Model;
+namespace Model;
+
 
 /** Autoloading The required Classes **/
 class IndexModel extends Model

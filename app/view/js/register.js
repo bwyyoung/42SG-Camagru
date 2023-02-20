@@ -25,8 +25,16 @@ function password_complex() {
         msg_error.innerText  += 'Password requires numbers.\n'
         return false
     }
+    if (!fld_password.value.match(/[\\@#$-/:-?{-~!"^_`\[\]]/g)) {
+        msg_error.innerText  += 'Password requires symbols.\n'
+        return false
+    }
     if (fld_password.value.length < 8) {
         msg_error.innerText  += 'Password must have minimum 8 characters.\n'
+        return false
+    }
+    if (fld_password.value.length > 100) {
+        msg_error.innerText  += 'Password must have maximum 100 characters.\n'
         return false
     }
     if (/\s/.test(fld_password.value)) {
