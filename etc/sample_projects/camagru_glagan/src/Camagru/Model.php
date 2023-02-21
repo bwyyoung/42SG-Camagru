@@ -27,7 +27,8 @@ class Model
 	 */
 	protected static $casts = [];
 
-	public function __construct(array $attributes = [])
+
+    public function __construct(array $attributes = [])
 	{
 		$this->attributes = [];
 		foreach ($attributes as $name => $value) {
@@ -156,6 +157,7 @@ class Model
 	 */
 	public function persist(): bool
 	{
+
 		// If there is no ID we INSERT the model
 		if ($this->id === null) {
 			$query = static::insert()

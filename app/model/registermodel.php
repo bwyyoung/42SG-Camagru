@@ -2,6 +2,7 @@
 namespace Model;
 include_once 'table/usertable.php';
 
+use config\Config_str;
 use Model\Table\UserTable;
 use util\Security;
 use util\Debug;
@@ -27,9 +28,10 @@ class RegisterModel extends Model
         if (!$this->connect())
             return 0;
         $value = pg_escape_string($value);
-        $r = pg_query_params(Model::$db, 'select '.$id.' from '.$this->DB_SCHEMA.'.'
-            .$this->table_user->get_tablename().' where LOWER('.$id.') = LOWER(CAST($1 as TEXT))', array($value));
-        return pg_num_rows($r) > 0;
+
+        // TODO: Change to prepared statements?
+        $records = pg_select(static::$db, $this->table_user->get_schema().'.'.$this->table_user::$TABLENAME, [$id => $value]);
+        return (!($records == false) && count($records) > 0);
     }
 
     public function verify_password($password, $confirmpassword): bool {
@@ -61,14 +63,25 @@ class RegisterModel extends Model
     /*
      * register user as unverified. He canno
      */
-    public function register_unverified_user($username, $email, $password) {
+    public function register_unverified_user($username, $email, $password) : bool{
         //Salt is saved with password in this function.
         // Refer to https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
         $hashed = password_hash($password.$this->pepper,
             PASSWORD_ARGON2ID,
             ['memory_cost' => 19456, 'time_cost' => 2, 'threads' => 1]);
-        Debug::print_string($hashed);
+        $user = new UserTable([
+           Config_str::KW_USERNAME->value => $username,
+            Config_str::KW_EMAIL->value => $email,
+            Config_str::KW_PASSWORD->value => $hashed,
+            Config_str::KW_VERIFIED->value => 0,
+            Config_str::KW_RECEIVECOMMENTS->value => 1
+        ]);
+        if (!$this->connect())
+            return false;
+        if (!$user->commit(static::$db))
+            return false;
 
+        return true;
     }
 
     /*

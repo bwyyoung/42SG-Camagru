@@ -4,7 +4,7 @@ use config\Config_str;
 
 class UserTable extends Table
 {
-    static protected $TABLENAME = 'users';
+    static $TABLENAME = 'users';
 
     static protected $attr_names = [
         Config_str::KW_USERNAME->value,

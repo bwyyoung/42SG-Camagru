@@ -21,7 +21,6 @@ class RegisterController extends Controller
             'error' => false,
             'errormessage' => ''
         ]);
-      #  $a = new UserModel();
     }
 
     public function check_user_credential() {

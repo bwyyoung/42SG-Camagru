@@ -13,7 +13,6 @@ class Model
     private $DB_NAME;
     private $DB_USER;
     private $DB_PASS;
-    protected $DB_SCHEMA;
 
 
 
@@ -26,7 +25,6 @@ class Model
         $this->DB_NAME = getenv('DB_NAME');
         $this->DB_USER = getenv('DB_USER');
         $this->DB_PASS = getenv('DB_PASS');
-        $this->DB_SCHEMA = getenv('DB_SCHEMA');
     }
     function __construct() {
         $this->init_db_credentials();
@@ -46,10 +44,14 @@ class Model
         return true;
     }
 
-    /*
-     * commit the fields in this model to the respective database.
-     */
-    public function commit(): bool {
-
+    public function login(): bool {
+        return true;
     }
+
+    public function logout(): bool {
+        return true;
+    }
+
+
+
 }

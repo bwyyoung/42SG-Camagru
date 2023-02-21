@@ -12,11 +12,12 @@ define("WEB_ROOT", dirname(dirname(__FILE__)));
 const DEBUG_MODE = TRUE;
 
 enum Config_str:string {
+    case KW_ID = 'id';
     case KW_USERNAME = 'username';
     case KW_EMAIL = 'email';
     case KW_PASSWORD = 'password';
     case KW_VERIFIED = 'verified';
-    case KW_RECEIVECOMMENTS = 'receiveComments';
+    case KW_RECEIVECOMMENTS = 'receivecomments';
 
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';
