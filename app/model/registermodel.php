@@ -64,6 +64,8 @@ class RegisterModel extends Model
      * register user as unverified. He canno
      */
     public function register_unverified_user($username, $email, $password) : bool{
+        if (Security::attack_sql_injection($username) || Security::attack_sql_injection($email) || Security::attack_sql_injection($password))
+            return false;
         //Salt is saved with password in this function.
         // Refer to https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
         $hashed = password_hash($password.$this->pepper,
