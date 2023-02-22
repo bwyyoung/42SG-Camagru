@@ -3,6 +3,7 @@ namespace Model;
 include_once 'table/usertable.php';
 
 use config\Config_str;
+use Model\Table\UserSessionTable;
 use Model\Table\UserTable;
 use util\Security;
 use util\Debug;
@@ -82,6 +83,16 @@ class RegisterModel extends Model
             return false;
         if (!$user->commit(static::$db))
             return false;
+        // Register a new valid session
+        $session = new UserSessionTable([
+            Config_str::KW_USER->value => $user->id,
+            Config_str::KW_SESSION->value => session_id(),
+            Config_str::KW_ISSUED->value => new \DateTime(),
+            Config_str::KW_REMEMBERME->value => false
+        ]);
+        $session->commit();
+        $session->setcookie();
+
 
         return true;
     }

@@ -15,8 +15,8 @@ class UserTable extends Table
     ];
 
      static protected $attr_casts = [
-        Config_str::KW_VERIFIED->value => 'bool',
-        Config_str::KW_RECEIVECOMMENTS->value => 'bool',
+        Config_str::KW_VERIFIED->value => Config_str::KW_BOOL->value,
+        Config_str::KW_RECEIVECOMMENTS->value => Config_str::KW_BOOL->value,
     ];
 
      static protected $searchable = [

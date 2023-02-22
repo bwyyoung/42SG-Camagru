@@ -65,10 +65,9 @@ Class Table {
                 case 'id':
                     $value = (int) $value;
             }
-        if (in_array($key, $this->attr))
-            if (!in_array($key, $this->dirty_keys))
+        if (array_key_exists($key, $this->attr))
                 if ($this->attr[$key] != $value)
-                    $this->dirty_keys[] = $key;
+                    $this->dirty_keys[$key] = $value;
         $this->attr[$key] = $value;
     }
 
@@ -88,11 +87,19 @@ Class Table {
             $result =  pg_query_params($db,$query, $this->attr);
             if (is_bool($result))
                 return false;
-            $this->id = pg_fetch_result($result, 0 ,0);
+            $result= pg_fetch_result($result, 0 ,0);
+            if (is_bool($result))
+                return false;
+            $this->id = $result;
             Debug::print_string(pg_fetch_result($result, 0 ,0));
+            return true;
         }
-
-
-        return true;
+        if (count($this->dirty_keys) == 0)
+            return true;
+        $result = pg_update($db, $this->SCHEMA.'.'.static::$TABLENAME,
+        $this->dirty_keys, [Config_str::KW_ID->value => $this->id]);
+        if ($result)
+            $this->dirty_keys = [];
+        return $result;
     }
 }

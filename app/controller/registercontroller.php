@@ -2,6 +2,7 @@
 namespace Controller;
 
 
+use Model\Table\UserSessionTable;
 use View\Template as Template;
 use config\Config_str;
 use util\Debug as Debug;
@@ -62,13 +63,13 @@ class RegisterController extends Controller
         if (!$this->model->verify_password($_POST[Config_str::KW_PASSWORD->value],$_POST[Config_str::KW_PASSWORD->value.'-repeat']))
             return $this->Render_Error_Registration('Failure to submit: Password invalid.');
 
-        // Create the User - Persist?
+        // Create the User and Persist
         $this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
             $_POST[Config_str::KW_EMAIL->value],
     $_POST[Config_str::KW_PASSWORD->value]);
 
 
-        // Register a new valid session
+
 
         // Generate a token for the email verification link
 

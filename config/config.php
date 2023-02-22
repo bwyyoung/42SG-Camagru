@@ -18,6 +18,13 @@ enum Config_str:string {
     case KW_PASSWORD = 'password';
     case KW_VERIFIED = 'verified';
     case KW_RECEIVECOMMENTS = 'receivecomments';
+    case KW_USER = 'user';
+    case KW_SESSION = 'session';
+    case KW_ISSUED = 'issued';
+    case KW_REMEMBERME = 'rememberme';
+    case KW_BOOL = 'bool';
+    case KW_DATE = 'date';
+
 
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';
