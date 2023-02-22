@@ -22,7 +22,7 @@ Class Table {
         return $this->SCHEMA;
     }
     public function get_tablename():string {
-        return self::TABLENAME;
+        return static::$TABLENAME;
     }
     function key_searcheable($key): bool {
         return in_array($key, static::$searchable);
