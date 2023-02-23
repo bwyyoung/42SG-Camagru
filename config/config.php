@@ -18,7 +18,7 @@ enum Config_str:string {
     case KW_PASSWORD = 'password';
     case KW_VERIFIED = 'verified';
     case KW_RECEIVECOMMENTS = 'receivecomments';
-    case KW_USER = 'user';
+    case KW_USERSID = 'usersid';
     case KW_SESSION = 'session';
     case KW_ISSUED = 'issued';
     case KW_REMEMBERME = 'rememberme';
@@ -33,6 +33,7 @@ enum Config_str:string {
 
 enum Config_flg:int {
     case DEBUG_MODE = 1;
+    case ID_NULL = -1;
     case PASSWD_LEN_MIN = 8;
     case PASSWD_LEN_MAX = 100;
 }

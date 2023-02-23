@@ -1,5 +1,5 @@
 <?php
-session_start();
+$session_started = session_start();
 
 include "../app/util/security.php";
 include "../app/util/debug.php";
@@ -10,6 +10,7 @@ include  "../app/core/init.php";
 include WEB_ROOT.'/app/view/template/Template.php';
 
 use core\Init as Init;
+use util\Debug as Debug;
 
 Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
 

@@ -740,7 +740,7 @@ COPY camagru_glagan.users (id, username, email, password, verified, receivecomme
 -- Data for Name: usersessions; Type: TABLE DATA; Schema: camagru_glagan; Owner: postgres
 --
 
-COPY camagru_glagan.usersessions (id, "user", session, issued, rememberme) FROM stdin;
+COPY camagru_glagan.usersessions (id, usersid, session, issued, rememberme) FROM stdin;
 \.
 
 
@@ -941,7 +941,7 @@ CREATE UNIQUE INDEX idx_16737_username ON camagru_glagan.users USING btree (user
 -- Name: idx_16746_user; Type: INDEX; Schema: camagru_glagan; Owner: postgres
 --
 
-CREATE INDEX idx_16746_user ON camagru_glagan.usersessions USING btree ("user");
+CREATE INDEX idx_16746_user ON camagru_glagan.usersessions USING btree (usersid);
 
 
 --
@@ -1003,7 +1003,7 @@ ALTER TABLE ONLY camagru_glagan.likes
 --
 
 ALTER TABLE ONLY camagru_glagan.usersessions
-    ADD CONSTRAINT usersessions_ibfk_1 FOREIGN KEY ("user") REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ADD CONSTRAINT usersessions_ibfk_1 FOREIGN KEY (usersid) REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 
 
 --

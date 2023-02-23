@@ -1,6 +1,7 @@
 <?php
 namespace Model\Table;
 
+use config\Config_flg;
 use config\Config_str;
 use PgSql\Result;
 use PSpell\Config;
@@ -11,6 +12,7 @@ Class Table {
     protected $SCHEMA;
     protected $attr;
     protected $dirty_keys = [];
+    protected int $id;
 
     protected static $attr_default_values = [];
     protected static $attr_casts = [];
@@ -37,6 +39,7 @@ Class Table {
 
     function init_table_field() {
         $this->attr = array_fill_keys(static::$attr_names, null);
+        $this->id = Config_flg::ID_NULL->value;
     }
 
     function init_table_attr(array $attr) {
@@ -49,18 +52,18 @@ Class Table {
         $this->dirty_keys = [];
     }
 
-    public function __set(string $key, string $value) {
+    public function __set($key, $value) {
         if ($key != Config_str::KW_ID->value)
             if (!in_array($key, static::$attr_names))
                 throw new \Exception('Invalid Key Set '.$key.' in Model '.get_class($this));;
-        if (isset($key, static::$attr_casts))
-            switch ($key) {
+        if (array_key_exists($key, static::$attr_casts))
+            switch (static::$attr_casts[$key]) {
                 case 'bool':
-                    $value = !!$value;
+                    $value = (int)$value;
                     break;
                 case 'date':
-                    if (!($value instanceof \DateTime))
-                        $value = new \DateTime($value);
+              #      if ($value instanceof \DateTime)
+               #         $value = $value->format('Y-m-d H:i:s');
                     break;
                 case 'id':
                     $value = (int) $value;
@@ -69,6 +72,10 @@ Class Table {
                 if ($this->attr[$key] != $value)
                     $this->dirty_keys[$key] = $value;
         $this->attr[$key] = $value;
+    }
+
+    public function id() {
+        return $this->id;
     }
 
     public function __get(string $key) {
@@ -81,17 +88,24 @@ Class Table {
        * commit the fields in this model to the respective database.
        */
     public function commit($db): bool {
-        if ($this->id == null) {
+        if ($this->id == Config_flg::ID_NULL->value) {
             $values = '$' . implode(',$', range(1, count($this->attr)));
-            $query = 'INSERT INTO '.$this->SCHEMA.'.'.static::$TABLENAME.'('.implode(',', static::$attr_names).')'.' VALUES('.$values.') RETURNING '.Config_str::KW_ID->value;
+
+            $query = 'INSERT INTO '.$this->SCHEMA.'.'.static::$TABLENAME.
+                '('.implode(',', static::$attr_names). ')'.
+                ' VALUES('.$values.') RETURNING '.Config_str::KW_ID->value;
+            Debug::print_string($query);
+            var_dump($this->attr);
             $result =  pg_query_params($db,$query, $this->attr);
+
             if (is_bool($result))
                 return false;
             $result= pg_fetch_result($result, 0 ,0);
             if (is_bool($result))
                 return false;
-            $this->id = $result;
-            Debug::print_string(pg_fetch_result($result, 0 ,0));
+            $this->id = (int)$result;
+            Debug::print_string('result: '. $result);
+            Debug::print_string('id: '.$this->id);
             return true;
         }
         if (count($this->dirty_keys) == 0)

@@ -1,6 +1,7 @@
 <?php
 namespace Model;
 include_once 'table/usertable.php';
+include_once 'table/usersessiontable.php';
 
 use config\Config_str;
 use Model\Table\UserSessionTable;
@@ -76,21 +77,24 @@ class RegisterModel extends Model
            Config_str::KW_USERNAME->value => $username,
             Config_str::KW_EMAIL->value => $email,
             Config_str::KW_PASSWORD->value => $hashed,
-            Config_str::KW_VERIFIED->value => 0,
-            Config_str::KW_RECEIVECOMMENTS->value => 1
+            Config_str::KW_VERIFIED->value => false,
+            Config_str::KW_RECEIVECOMMENTS->value => true
         ]);
         if (!$this->connect())
             return false;
         if (!$user->commit(static::$db))
             return false;
         // Register a new valid session
+        Debug::print_string('Session ID '.session_id());
+
         $session = new UserSessionTable([
-            Config_str::KW_USER->value => $user->id,
+            Config_str::KW_USERSID->value => $user->id(),
             Config_str::KW_SESSION->value => session_id(),
-            Config_str::KW_ISSUED->value => new \DateTime(),
+            Config_str::KW_ISSUED->value => date('Y-m-d H:i:s'),
             Config_str::KW_REMEMBERME->value => false
         ]);
-        $session->commit();
+        $session->commit(static::$db);
+
         $session->setcookie();
 
 
