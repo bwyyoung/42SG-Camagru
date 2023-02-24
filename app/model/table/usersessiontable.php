@@ -22,9 +22,22 @@ class UserSessionTable extends Table
         Config_str::KW_REMEMBERME->value => Config_str::KW_BOOL->value
     ];
 
-    public function setcookie() {
-        $lifetime = $this->rememberme ? (60 * 60 * 24 * 365) : (60 * 60);
-        Debug::print_string('lifetime: '.$lifetime);
+    public static function setcookie($rememberme) : bool {
+
+        $lifetime = $rememberme ? (60 * 60 * 24 * 365) : (60 * 60);
+        $cookiedomain =  (\strpos($_SERVER['HTTP_HOST'], 'localhost') === false) ? $_SERVER['HTTP_HOST'] : false;
+        $secure =
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || $_SERVER['SERVER_PORT'] == 443;
+        $result = setcookie('session', session_id(), [
+            'expires' => time() + $lifetime,
+            'path' => '/',
+            'domain' => $cookiedomain,
+            'secure' => $secure,
+            'httponly' => true,
+            'samesite' => 'Strict',
+        ]);
+        return $result;
     }
 
 

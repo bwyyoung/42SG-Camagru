@@ -407,7 +407,7 @@ ALTER TABLE ONLY camagru_glagan.usertokens ALTER COLUMN id SET DEFAULT nextval('
 -- Data for Name: comments; Type: TABLE DATA; Schema: camagru_glagan; Owner: postgres
 --
 
-COPY camagru_glagan.comments (id, image, "user", message, at) FROM stdin;
+COPY camagru_glagan.comments (id, image, usersid, message, at) FROM stdin;
 1	1	4	alienPls	2021-04-12 19:19:00+08
 2	7	4	What anime is this ?	2021-04-12 19:19:28+08
 3	10	4	I don't even know what this means.	2021-04-12 19:19:45+08
@@ -457,7 +457,7 @@ COPY camagru_glagan.comments (id, image, "user", message, at) FROM stdin;
 -- Data for Name: creations; Type: TABLE DATA; Schema: camagru_glagan; Owner: postgres
 --
 
-COPY camagru_glagan.creations (id, "user", name, animated, at) FROM stdin;
+COPY camagru_glagan.creations (id, usersid, name, animated, at) FROM stdin;
 1	1	155146_70b2e33292.webm	1	2021-04-12 15:52:04+08
 2	2	155316_b6b0ff339f.png	0	2021-04-12 15:53:17+08
 3	1	155510_47a3c95e21.webm	1	2021-04-12 15:55:12+08
@@ -653,7 +653,7 @@ COPY camagru_glagan.decorations (id, name, animated, public, "position") FROM st
 -- Data for Name: likes; Type: TABLE DATA; Schema: camagru_glagan; Owner: postgres
 --
 
-COPY camagru_glagan.likes (id, "user", image, at) FROM stdin;
+COPY camagru_glagan.likes (id, usersid, image, at) FROM stdin;
 1	4	1	2021-04-12 19:19:02+08
 2	4	7	2021-04-12 19:19:30+08
 3	4	15	2021-04-12 19:22:09+08
@@ -750,7 +750,7 @@ COPY camagru_glagan.usersessions (id, usersid, session, issued, rememberme) FROM
 -- Data for Name: usertokens; Type: TABLE DATA; Schema: camagru_glagan; Owner: postgres
 --
 
-COPY camagru_glagan.usertokens (id, "user", token, scope, issued) FROM stdin;
+COPY camagru_glagan.usertokens (id, usersid, token, scope, issued) FROM stdin;
 \.
 
 
@@ -893,7 +893,7 @@ CREATE INDEX idx_16708_image ON camagru_glagan.comments USING btree (image);
 -- Name: idx_16708_user; Type: INDEX; Schema: camagru_glagan; Owner: postgres
 --
 
-CREATE INDEX idx_16708_user ON camagru_glagan.comments USING btree ("user");
+CREATE INDEX idx_16708_user ON camagru_glagan.comments USING btree (usersid);
 
 
 --
@@ -901,7 +901,7 @@ CREATE INDEX idx_16708_user ON camagru_glagan.comments USING btree ("user");
 -- Name: idx_16716_user; Type: INDEX; Schema: camagru_glagan; Owner: postgres
 --
 
-CREATE INDEX idx_16716_user ON camagru_glagan.creations USING btree ("user");
+CREATE INDEX idx_16716_user ON camagru_glagan.creations USING btree (usersid);
 
 
 --
@@ -917,7 +917,7 @@ CREATE INDEX idx_16731_image ON camagru_glagan.likes USING btree (image);
 -- Name: idx_16731_user; Type: INDEX; Schema: camagru_glagan; Owner: postgres
 --
 
-CREATE INDEX idx_16731_user ON camagru_glagan.likes USING btree ("user");
+CREATE INDEX idx_16731_user ON camagru_glagan.likes USING btree (usersid);
 
 
 --
@@ -949,7 +949,7 @@ CREATE INDEX idx_16746_user ON camagru_glagan.usersessions USING btree (usersid)
 -- Name: idx_16753_user; Type: INDEX; Schema: camagru_glagan; Owner: postgres
 --
 
-CREATE INDEX idx_16753_user ON camagru_glagan.usertokens USING btree ("user");
+CREATE INDEX idx_16753_user ON camagru_glagan.usertokens USING btree (usersid);
 
 
 --
@@ -967,7 +967,7 @@ ALTER TABLE ONLY camagru_glagan.comments
 --
 
 ALTER TABLE ONLY camagru_glagan.comments
-    ADD CONSTRAINT comments_ibfk_2 FOREIGN KEY ("user") REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ADD CONSTRAINT comments_ibfk_2 FOREIGN KEY (usersid) REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 
 
 --
@@ -976,7 +976,7 @@ ALTER TABLE ONLY camagru_glagan.comments
 --
 
 ALTER TABLE ONLY camagru_glagan.creations
-    ADD CONSTRAINT creations_ibfk_1 FOREIGN KEY ("user") REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ADD CONSTRAINT creations_ibfk_1 FOREIGN KEY (usersid) REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 
 
 --
@@ -994,7 +994,7 @@ ALTER TABLE ONLY camagru_glagan.likes
 --
 
 ALTER TABLE ONLY camagru_glagan.likes
-    ADD CONSTRAINT likes_ibfk_2 FOREIGN KEY ("user") REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ADD CONSTRAINT likes_ibfk_2 FOREIGN KEY (usersid) REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 
 
 --
@@ -1012,7 +1012,7 @@ ALTER TABLE ONLY camagru_glagan.usersessions
 --
 
 ALTER TABLE ONLY camagru_glagan.usertokens
-    ADD CONSTRAINT usertokens_ibfk_1 FOREIGN KEY ("user") REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+    ADD CONSTRAINT usertokens_ibfk_1 FOREIGN KEY (usersid) REFERENCES camagru_glagan.users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
 
 
 -- Completed on 2023-02-01 15:54:19

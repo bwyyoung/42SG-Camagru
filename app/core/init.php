@@ -11,6 +11,8 @@ class Init
     public $req_method = '';
     public $req_controller = '';
     public $req_model = '';
+
+
     public bool $login = false;
 
     private static $instances = [];

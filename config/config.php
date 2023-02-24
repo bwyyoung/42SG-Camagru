@@ -24,7 +24,16 @@ enum Config_str:string {
     case KW_REMEMBERME = 'rememberme';
     case KW_BOOL = 'bool';
     case KW_DATE = 'date';
-
+    case KW_TOKEN = 'token';
+    case KW_SCOPE = 'scope';
+    case KW_AT = 'at';
+    case KW_CREATION = 'creation';
+    case KW_NAME = 'name';
+    case KW_ANIMATED = 'animated';
+    case KW_PUBLIC = 'public';
+    case KW_MESSAGE = 'message';
+    case KW_IMAGE = 'image';
+    case KW_POSITION ='position';
 
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';

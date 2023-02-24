@@ -94,8 +94,7 @@ class RegisterModel extends Model
             Config_str::KW_REMEMBERME->value => false
         ]);
         $session->commit(static::$db);
-
-        $session->setcookie();
+        $session->setcookie($session->rememberme);
 
 
         return true;
