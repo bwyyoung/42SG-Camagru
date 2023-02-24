@@ -36,6 +36,10 @@ enum Config_str:string {
     case KW_POSITION ='position';
     case KW_VERIFICATION = 'verification';
 
+    case KW_DOMAIN = 'camagru.sg';
+
+    case SENDER_EMAIL_ADDRESS = 'noreply@camagru.sg';
+
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';
     case SITE_NAME = 'Camagru SG';

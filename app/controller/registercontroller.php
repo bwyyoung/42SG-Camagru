@@ -45,7 +45,7 @@ class RegisterController extends Controller
         if ($_SERVER["REQUEST_METHOD"] != "POST")
             return $this->Render_Error_Registration('Failure to submit credentials.');
         if (count($_POST) == 0 ){
-            header('Location: http://camagru.sg/register');
+            header('Location: http://'.Config_str::KW_DOMAIN->value.'/register');
             exit();
         }
         Debug::print_string($_POST[Config_str::KW_USERNAME->value]);

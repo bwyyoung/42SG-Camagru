@@ -1,6 +1,7 @@
 <?php
 
 namespace util;
+use config\Config_str;
 use core\Init as Init;
 
 class Security
@@ -24,7 +25,7 @@ class Security
     {
         if (Init::getInstance()->login)
             return;
-        header("Location: http://camagru.sg");
+        header("Location: http://".Config_str::KW_DOMAIN->value);
         exit();
     }
 
