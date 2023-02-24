@@ -6,6 +6,7 @@ include_once 'table/usersessiontable.php';
 use config\Config_str;
 use Model\Table\UserSessionTable;
 use Model\Table\UserTable;
+use Model\Table\UserTokenTable;
 use util\Security;
 use util\Debug;
 
@@ -70,6 +71,10 @@ class RegisterModel extends Model
             return false;
         //Salt is saved with password in this function.
         // Refer to https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+
+        if (!$this->connect())
+            return false;
+
         $hashed = password_hash($password.$this->pepper,
             PASSWORD_ARGON2ID,
             ['memory_cost' => 19456, 'time_cost' => 2, 'threads' => 1]);
@@ -80,8 +85,6 @@ class RegisterModel extends Model
             Config_str::KW_VERIFIED->value => false,
             Config_str::KW_RECEIVECOMMENTS->value => true
         ]);
-        if (!$this->connect())
-            return false;
         if (!$user->commit(static::$db))
             return false;
         // Register a new valid session
@@ -95,6 +98,13 @@ class RegisterModel extends Model
         ]);
         $session->commit(static::$db);
         $session->setcookie($session->rememberme);
+
+        $token = new UserTokenTable([
+            Config_str::KW_USERSID->value => $user->id(),
+            Config_str::KW_SCOPE->value => Config_str::KW_VERIFICATION
+        ]);
+        $token->generate_token();
+        $token->commit(static::$db);
 
 
         return true;

@@ -14,8 +14,13 @@ class UserTokenTable extends Table {
         Config_str::KW_ISSUED->value
     ];
 
-    protected static $attr_casts = [
+    public function generate_token() {
+        $this->token = bin2hex(random_bytes(25));
+        $this->issued = date('Y-m-d H:i:s');
+    }
 
-        ];
+    protected static $attr_casts = [
+        'issued' => 'date'
+    ];
 
 }

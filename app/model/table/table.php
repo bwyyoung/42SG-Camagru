@@ -62,8 +62,8 @@ Class Table {
                     $value = (int)$value;
                     break;
                 case 'date':
-              #      if ($value instanceof \DateTime)
-               #         $value = $value->format('Y-m-d H:i:s');
+                    if (strtotime($value) <= strtotime(0))
+                        $value = date('Y-m-d H:i:s');
                     break;
                 case 'id':
                     $value = (int) $value;

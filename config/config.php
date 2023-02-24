@@ -34,6 +34,7 @@ enum Config_str:string {
     case KW_MESSAGE = 'message';
     case KW_IMAGE = 'image';
     case KW_POSITION ='position';
+    case KW_VERIFICATION = 'verification';
 
     case URL_ROOT = '/';
     case URL_SUBFOLDER = '';
