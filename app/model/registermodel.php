@@ -106,7 +106,7 @@ class RegisterModel extends Model
         ]);
         $token->generate_token();
         $token->commit(static::$db);
-        if (!Email::send_activation_email($email, $token->token()))
+        if (!Email::send_activation_email($username, $email, $token->token()))
             return false;
 
         exit();
