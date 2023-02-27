@@ -3,7 +3,7 @@
 namespace Model\Table;
 
 use config\Config_str;
-
+use util\Debug;
 class UserTokenTable extends Table {
     static $TABLENAME = 'usertokens';
 
@@ -22,5 +22,10 @@ class UserTokenTable extends Table {
     protected static $attr_casts = [
         'issued' => 'date'
     ];
+
+    public function token(): string
+    {
+        return $this->token;
+    }
 
 }

@@ -4,6 +4,7 @@
 
 include "../app/util/security.php";
 include "../app/util/debug.php";
+include "../app/util/email.php";
 include "../app/model/model.php";
 include "../app/model/table/table.php";
 include "../app/model/table/usersessiontable.php";

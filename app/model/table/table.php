@@ -79,7 +79,7 @@ Class Table {
     }
 
     public function __get(string $key) {
-        if (in_array($key, $this->attr))
+        if (array_key_exists($key, $this->attr))
             return $this->attr[$key];
         return null;
     }
@@ -89,8 +89,12 @@ Class Table {
        */
     public function commit($db): bool {
         if ($this->id == Config_flg::ID_NULL->value) {
+            //Ensure that inserted attributes are in same order as attr_names
+            $temp = [];
+            foreach (static::$attr_names as $key)
+                $temp[$key] = $this->attr[$key];
+            $this->attr = $temp;
             $values = '$' . implode(',$', range(1, count($this->attr)));
-
             $query = 'INSERT INTO '.$this->SCHEMA.'.'.static::$TABLENAME.
                 '('.implode(',', static::$attr_names). ')'.
                 ' VALUES('.$values.') RETURNING '.Config_str::KW_ID->value;

@@ -3,9 +3,10 @@
 namespace util;
 
 use config\Config_str;
+use const config\DEBUG_MODE;
 
 class Email {
-    public static function send_activation_email(string $useremail, string $activation_code)
+    public static function send_activation_email(string $useremail, string $activation_code) : bool
     {
         $link = Config_str::KW_DOMAIN->value.'/register/activate?email=$email&activation_code=$activation_code';
         // set email subject & body
@@ -19,6 +20,11 @@ class Email {
         $header = "From:" . Config_str::SENDER_EMAIL_ADDRESS->value;
 
         // send the email
-        mail($useremail, $subject, nl2br($message), $header);
+        if (!mail($useremail, $subject, nl2br($message), $header)) {
+            if (DEBUG_MODE)
+                exit();
+            return false;
+        }
+        return true;
     }
 }

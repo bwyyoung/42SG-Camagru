@@ -2,11 +2,13 @@
 namespace Model;
 include_once 'table/usertable.php';
 include_once 'table/usersessiontable.php';
+include_once 'table/usertokentable.php';
 
 use config\Config_str;
 use Model\Table\UserSessionTable;
 use Model\Table\UserTable;
 use Model\Table\UserTokenTable;
+use util\Email;
 use util\Security;
 use util\Debug;
 
@@ -71,7 +73,6 @@ class RegisterModel extends Model
             return false;
         //Salt is saved with password in this function.
         // Refer to https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-
         if (!$this->connect())
             return false;
 
@@ -101,12 +102,14 @@ class RegisterModel extends Model
 
         $token = new UserTokenTable([
             Config_str::KW_USERSID->value => $user->id(),
-            Config_str::KW_SCOPE->value => Config_str::KW_VERIFICATION
+            Config_str::KW_SCOPE->value =>  Config_str::KW_VERIFICATION->value
         ]);
         $token->generate_token();
         $token->commit(static::$db);
+        if (!Email::send_activation_email($email, $token->token()))
+            return false;
 
-
+        exit();
         return true;
     }
 
