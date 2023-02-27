@@ -53,7 +53,6 @@ class RegisterController extends Controller
         Debug::print_string($_POST[Config_str::KW_PASSWORD->value]);
         Debug::print_string($_POST[Config_str::KW_PASSWORD->value.'-repeat']);
 
-
         // Check duplicates
         if ($this->model->check_credential_exists(Config_str::KW_USERNAME->value, $_POST[Config_str::KW_USERNAME->value]))
             return $this->Render_Error_Registration('Failure to submit: Username already exists.');
@@ -65,15 +64,13 @@ class RegisterController extends Controller
 
         // Create the User and Persist
         $this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
-            $_POST[Config_str::KW_EMAIL->value],
-    $_POST[Config_str::KW_PASSWORD->value]);
-
-
-
-
+            $_POST[Config_str::KW_EMAIL->value], $_POST[Config_str::KW_PASSWORD->value]);
+        $this->model->create_new_session();
         // Generate a token for the email verification link
+        $this->model->generate_token();
+        // Send email
+        $this->model->send_verification_email();
 
-        // Send mail
     }
 
     private function Render_Error_Registration(string $message) {

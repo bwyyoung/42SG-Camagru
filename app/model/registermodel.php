@@ -16,6 +16,8 @@ use util\Debug;
 class RegisterModel extends Model
 {
     private UserTable $table_user;
+    private UserSessionTable $table_session;
+    private UserTokenTable $table_token;
     private $pepper;
 
     function __construct() {
@@ -79,38 +81,42 @@ class RegisterModel extends Model
         $hashed = password_hash($password.$this->pepper,
             PASSWORD_ARGON2ID,
             ['memory_cost' => 19456, 'time_cost' => 2, 'threads' => 1]);
-        $user = new UserTable([
+        $this->table_user = new UserTable([
            Config_str::KW_USERNAME->value => $username,
             Config_str::KW_EMAIL->value => $email,
             Config_str::KW_PASSWORD->value => $hashed,
             Config_str::KW_VERIFIED->value => false,
             Config_str::KW_RECEIVECOMMENTS->value => true
         ]);
-        if (!$user->commit(static::$db))
-            return false;
+        return $this->table_user->commit(static::$db);
+    }
+
+    public function create_new_session() : bool {
         // Register a new valid session
         Debug::print_string('Session ID '.session_id());
 
-        $session = new UserSessionTable([
-            Config_str::KW_USERSID->value => $user->id(),
+        $this->table_session = new UserSessionTable([
+            Config_str::KW_USERSID->value => $this->table_user->id(),
             Config_str::KW_SESSION->value => session_id(),
             Config_str::KW_ISSUED->value => date('Y-m-d H:i:s'),
             Config_str::KW_REMEMBERME->value => false
         ]);
-        $session->commit(static::$db);
-        $session->setcookie($session->rememberme);
+        if (!$this->table_session->commit(static::$db))
+            return false;
+        return $this->table_session->setcookie($this->table_session->rememberme);
+    }
 
-        $token = new UserTokenTable([
-            Config_str::KW_USERSID->value => $user->id(),
+    public function generate_token(): bool {
+        $this->table_token = new UserTokenTable([
+            Config_str::KW_USERSID->value => $this->table_user->id(),
             Config_str::KW_SCOPE->value =>  Config_str::KW_VERIFICATION->value
         ]);
-        $token->generate_token();
-        $token->commit(static::$db);
-        if (!Email::send_activation_email($username, $email, $token->token()))
-            return false;
+        $this->table_token->generate_token();
+        return $this->table_token->commit(static::$db);
+    }
 
-        exit();
-        return true;
+    public function send_verification_email() : bool {
+        return Email::send_activation_email($this->table_user->username, $this->table_user->email, $this->table_token->token());
     }
 
     /*

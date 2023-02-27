@@ -45,6 +45,10 @@ enum Config_str:string {
     case SITE_NAME = 'Camagru SG';
 }
 
+enum Config_error:int {
+    case OK = 0;
+}
+
 enum Config_flg:int {
     case DEBUG_MODE = 1;
     case ID_NULL = -1;
