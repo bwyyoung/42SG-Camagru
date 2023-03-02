@@ -3,6 +3,7 @@ namespace Controller;
 
 
 use Model\Table\UserSessionTable;
+use PSpell\Config;
 use View\Template as Template;
 use config\Config_str;
 use util\Debug as Debug;
@@ -10,25 +11,45 @@ use util\Security as Security;
 
 class RegisterController extends Controller
 {
-    public function index()
+    public function index() : bool
     {
         Security::Block_LoginUser();
-
-        if(isset($_POST['test']))
-            $this->test();
 
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Camagru SG Registration',
             Config_str::KW_STATE->value => Config_str::STATE_DEFAULT->value,
             Config_str::KW_MESSAGE->value => ''
         ]);
+        return true;
+    }
+
+    public function activate() {
+        if ($_SERVER["REQUEST_METHOD"] != "GET") {
+            header("Location: http://camagru.sg/register");
+            return true;
+        }
+        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+            return $this->Render_Error_Registration('Invalid Activation.');
+        Debug::print_string($_GET[Config_str::KW_EMAIL->value]);
+        Debug::print_string($_GET[Config_str::KW_ACTIVATION_CODE->value]);
+        if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_GET[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Registration('Invalid Activation.');
+        if ($this->model->get_user()->verified)
+            return $this->Render_Error_Registration('Account already verified.');
+        if (!$this->model->check_token($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+            return $this->Render_Error_Registration('Invalid activation code, please request new code.');
+        Template::view('register.html', [
+            Config_str::KW_TITLE->value  => 'Activation Success',
+            Config_str::KW_STATE->value  => Config_str::STATE_ACTIVATED->value,
+            Config_str::KW_MESSAGE->value => 'Congratulations! '.$_GET[Config_str::KW_EMAIL->value].' has been activated. Please login to continue.'
+        ]);
     }
 
     public function check_user_credential() {
         $_POST = json_decode(file_get_contents('php://input'), true);
-        if (!isset($_POST['id']) || !isset($_POST['value']) )
+        if (!isset($_POST[Config_str::KW_ID->value]) || !isset($_POST['value']) )
             return Debug::echo_return('error');
-        $r = $this->model->check_credential_exists($_POST['id'], $_POST['value']);
+        $r = $this->model->check_credential_exists($_POST[Config_str::KW_ID->value], $_POST[Config_str::KW_VALUE->value]);
         return match ($r) {
             1 => Debug::echo_return('found'),
             -1 => Debug::echo_return('invalid'),
@@ -36,12 +57,34 @@ class RegisterController extends Controller
         };
     }
 
+
+
     public function resend_verification_email () {
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Resend Verification Email',
             Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value,
             Config_str::KW_MESSAGE->value => ''
         ]);
+    }
+
+    public function resend_verification_email_sent() {
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            header("Location: http://camagru.sg/register");
+            return true;
+        }
+        if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Verification_Email_Sent();
+        if (!$this->model->create_new_session())
+            return $this->Render_Error_Registration('Unable to create new session.');
+        if ($this->model->get_user()->verified)
+            return $this->Render_Error_Registration('User has already been verified.');
+        // Generate a token for the email verification link
+        if (!$this->model->generate_token())
+            return $this->Render_Error_Registration('Unable to generate new token.');
+        // Send email
+        if (!$this->model->send_verification_email())
+            return $this->Render_Error_Registration('Unable to send verification email.');
+        $this->Render_Verification_Email_Sent();
     }
 
 
@@ -80,12 +123,15 @@ class RegisterController extends Controller
         // Send email
         if (!$this->model->send_verification_email())
             return $this->Render_Error_Registration('Unable to send verification email.');
+        $this->Render_Verification_Email_Sent();
+    }
+
+    private function Render_Verification_Email_Sent() {
+        $message = 'If it was previously registered, we will email '.$_POST[Config_str::KW_EMAIL->value].' to verify your email address and activate your account.';
         Template::view('register.html', [
-            Config_str::KW_TITLE->value  => 'Verify your email',
+            Config_str::KW_TITLE->value  => 'Verification Email Sent',
             Config_str::KW_STATE->value  => Config_str::STATE_REGISTERED->value,
-            Config_str::KW_MESSAGE->value => 'We\'ve emailed '.$_POST[Config_str::KW_EMAIL->value].' to verify your email address and activate your account.<br>
-            The link in the email will expire in 24 hours. <br>
-            If you did not receive your verification email, please <a href="http://camagru.sg/register/resend_verification_email">Click Here.</a>'
+            Config_str::KW_MESSAGE->value => $message
         ]);
         unset($_POST);
         return true;
@@ -93,7 +139,7 @@ class RegisterController extends Controller
 
     private function Render_Error_Registration(string $message) {
         Template::view('register.html', [
-            Config_str::KW_TITLE->value  => 'Camagru SG Registration',
+            Config_str::KW_TITLE->value  => 'Error :(',
             Config_str::KW_STATE->value => Config_str::STATE_ERROR->value,
             Config_str::KW_MESSAGE->value => $message
         ]);

@@ -42,13 +42,19 @@
 
 
 <style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/register.css'); ?></style>
-<?php if (($state == 'error')) : ?>
+<div class="registercontainer">
+<?php if (($state == 'state_error')) : ?>
 <span id = "reg_error" style="color:orange"> <?php echo htmlentities($message, ENT_QUOTES, 'UTF-8') ?> </span> <br>
-<?php elseif (($state == 'registered')) : ?>
+<?php elseif (($state == 'state_activated')) : ?>
 <span id = "reg_success" style="color:greenyellow"> <?php echo htmlentities($message, ENT_QUOTES, 'UTF-8') ?> </span> <br>
+<?php elseif (($state == 'state_registered')) : ?>
+<span id = "reg_success" style="color:greenyellow"> <?php echo htmlentities($message, ENT_QUOTES, 'UTF-8') ?> <br>
+    The link in the email will expire in 24 hours. <br>
+    If you did not receive your verification email, please <a href="http://camagru.sg/register/resend_verification_email">Click Here.</a>
+</span> <br>
+
 <?php elseif (($state == 'state_resend_verification_email')) : ?>
-<form action="http://camagru.sg/register/state_resend_verification_email_sent" method="post" id="form_resend_verification_email">
-    <div class="registercontainer">
+<form action="http://camagru.sg/register/resend_verification_email_sent" method="post" id="form_resend_verification_email">
         <h1>Resend Verification Email</h1>
         <p>Enter your email address and click Resend Verification Email. <br>
             An email will be sent to your address containing a link that you can follow to verify your account.<br>
@@ -61,12 +67,10 @@
         <span id = "message_error" style="color:red">Please fill in email address. </span>
         <hr>
         <button type="submit" class="registerbtn" id="btn_register_submit">Resend Verification Email</button>
-    </div>
 
 </form>
 <?php else : ?>
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register">
-    <div class="registercontainer">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
@@ -94,13 +98,15 @@
 
         <p>By creating an account you agree to our <a href="http://camagru.sg/index/about">Terms & Privacy</a>.</p>
         <button type="submit" class="registerbtn" id="btn_register_submit">Register</button>
-    </div>
+
 
     <div class="registercontainer signin">
         <p>Already have an account? <a href="http://camagru.sg/">Sign in</a>.</p>
     </div>
 </form>
 <?php endif; ?>
+
+</div>
 <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/register.js'); ?></script>
 
 

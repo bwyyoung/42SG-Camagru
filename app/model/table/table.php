@@ -47,6 +47,8 @@ Class Table {
         foreach ($attr as $k => $v)
             if (in_array($k, static::$attr_names))
                 $this->__set($k, $v);
+            else if ($k === Config_str::KW_ID->value)
+                $this->id = $v;
             else
                 throw new \Exception('Invalid Key '.$k.' in Model '.get_class($this));
         $this->dirty_keys = [];

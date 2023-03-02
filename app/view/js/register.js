@@ -9,7 +9,6 @@ var msg_error = document.getElementById('message_error')
 var username_check = document.getElementById('username_check')
 var email_check = document.getElementById('email_check')
 var form_register = document.getElementById('form_register')
-btn_register_submit.disabled = true
 var state = '<?php echo $state; ?>'
 
 function password_complex() {
@@ -203,3 +202,5 @@ if (fld_username !== null) {
     }
     fld_username.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
 }
+if (btn_register_submit != null)
+    btn_register_submit.disabled = true
