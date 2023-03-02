@@ -38,6 +38,15 @@ enum Config_str:string {
 
     case KW_DOMAIN = 'camagru.sg';
 
+    case KW_STATE = 'state';
+    case KW_TITLE = 'title';
+    case STATE_RESEND_VERIFICATION_EMAIL = 'state_resend_verification_email';
+
+    case STATE_ERROR = 'state_error';
+    case STATE_DEFAULT = 'state_default';
+
+    case STATE_REGISTERED = 'state_registered';
+
     case SENDER_EMAIL_ADDRESS = 'noreply@camagru.sg';
 
     case URL_ROOT = '/';

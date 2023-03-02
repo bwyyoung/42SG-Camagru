@@ -18,9 +18,9 @@ class RegisterController extends Controller
             $this->test();
 
         Template::view('register.html', [
-            'title' => 'Camagru SG Registration',
-            'error' => false,
-            'errormessage' => ''
+            Config_str::KW_TITLE->value => 'Camagru SG Registration',
+            Config_str::KW_STATE->value => Config_str::STATE_DEFAULT->value,
+            Config_str::KW_MESSAGE->value => ''
         ]);
     }
 
@@ -36,7 +36,13 @@ class RegisterController extends Controller
         };
     }
 
-
+    public function resend_verification_email () {
+        Template::view('register.html', [
+            Config_str::KW_TITLE->value => 'Resend Verification Email',
+            Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value,
+            Config_str::KW_MESSAGE->value => ''
+        ]);
+    }
 
 
     public function register_account() {
@@ -63,21 +69,33 @@ class RegisterController extends Controller
             return $this->Render_Error_Registration('Failure to submit: Password invalid.');
 
         // Create the User and Persist
-        $this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
-            $_POST[Config_str::KW_EMAIL->value], $_POST[Config_str::KW_PASSWORD->value]);
-        $this->model->create_new_session();
+        if (!$this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
+            $_POST[Config_str::KW_EMAIL->value], $_POST[Config_str::KW_PASSWORD->value]))
+            return $this->Render_Error_Registration('Unable to create new user.');
+        if (!$this->model->create_new_session())
+            return $this->Render_Error_Registration('Unable to create new session.');
         // Generate a token for the email verification link
-        $this->model->generate_token();
+        if (!$this->model->generate_token())
+            return $this->Render_Error_Registration('Unable to generate new token.');
         // Send email
-        $this->model->send_verification_email();
-
+        if (!$this->model->send_verification_email())
+            return $this->Render_Error_Registration('Unable to send verification email.');
+        Template::view('register.html', [
+            Config_str::KW_TITLE->value  => 'Verify your email',
+            Config_str::KW_STATE->value  => Config_str::STATE_REGISTERED->value,
+            Config_str::KW_MESSAGE->value => 'We\'ve emailed '.$_POST[Config_str::KW_EMAIL->value].' to verify your email address and activate your account.<br>
+            The link in the email will expire in 24 hours. <br>
+            If you did not receive your verification email, please <a href="http://camagru.sg/register/resend_verification_email">Click Here.</a>'
+        ]);
+        unset($_POST);
+        return true;
     }
 
     private function Render_Error_Registration(string $message) {
         Template::view('register.html', [
-            'title' => 'Camagru SG Registration',
-            'error' => true,
-            'errormessage' => $message
+            Config_str::KW_TITLE->value  => 'Camagru SG Registration',
+            Config_str::KW_STATE->value => Config_str::STATE_ERROR->value,
+            Config_str::KW_MESSAGE->value => $message
         ]);
         unset($_POST);
         return true;

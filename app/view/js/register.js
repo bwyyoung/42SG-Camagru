@@ -10,7 +10,7 @@ var username_check = document.getElementById('username_check')
 var email_check = document.getElementById('email_check')
 var form_register = document.getElementById('form_register')
 btn_register_submit.disabled = true
-
+var state = '<?php echo $state; ?>'
 
 function password_complex() {
     if (!fld_password.value.match(/[a-z]/g)) {
@@ -53,6 +53,8 @@ function password_match() {
 }
 
 function validate_username() {
+    if (fld_username == null)
+        return true
     const min = 3, max = 25;
     const isRequired = value => value !== '';
     const isBetween = (length, min, max) => !(length < min || length > max);
@@ -100,9 +102,17 @@ function validate_password() {
     return password_match();
 }
 function validate_form() {
-    var span_message =
+
+
     msg_error.innerText = '';
     btn_register_submit.disabled = true
+    if (state === 'state_resend_verification_email')
+    {
+        if (!validate_email())
+            return false
+        btn_register_submit.disabled = !validate_email()
+        return
+    }
     if (!validate_username() || username_check.style.color === "red")
         return false
     if (!validate_email()|| email_check.style.color === "red")
@@ -111,11 +121,13 @@ function validate_form() {
 }
 
 window.onload = function () {
-    btn_register_submit.disabled = true
-    form_register.addEventListener('submit', function (e) {
-        // prevent the form from submitting
-        //e.preventDefault();
-    });
+    if (btn_register_submit != null)
+        btn_register_submit.disabled = true
+    if (form_register != null)
+        form_register.addEventListener('submit', function (e) {
+            // prevent the form from submitting
+            //e.preventDefault();
+        });
 }
 
 function check_param_exists(id) {
@@ -138,6 +150,8 @@ function check_param_exists(id) {
             return;
         }
     }
+    if (state === 'state_resend_verification_email')
+        return;
 
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -169,17 +183,23 @@ function check_param_exists(id) {
 }
 
 
-fld_username.onchange = function () {
-    check_param_exists(fld_username.id);
-    if (username_check.style.color === "green")
-        validate_form();
+if (fld_email !== null) {
+    fld_email.onchange = function () {
+        check_param_exists(fld_email.id);
+        if (state !== 'state_resend_verification_email')
+            if (email_check.style.color === "green")
+                validate_form();
+    }
+    fld_email.onkeyup = validate_form;
 }
 
-fld_email.onchange = function () {
-    check_param_exists(fld_email.id);
-    if (email_check.style.color === "green")
-        validate_form();
+if (fld_password !== null)
+    fld_password.onchange = validate_form;
+if (fld_username !== null) {
+    fld_username.onchange = function () {
+        check_param_exists(fld_username.id);
+        if (username_check.style.color === "green")
+            validate_form();
+    }
+    fld_username.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
 }
-
-fld_password.onchange = validate_form;
-fld_username.onkeyup = fld_email.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
