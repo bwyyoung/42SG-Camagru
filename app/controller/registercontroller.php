@@ -14,7 +14,6 @@ class RegisterController extends Controller
     public function index() : bool
     {
         Security::Block_LoginUser();
-
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Camagru SG Registration',
             Config_str::KW_STATE->value => Config_str::STATE_DEFAULT->value,
