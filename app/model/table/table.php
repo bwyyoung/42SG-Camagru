@@ -9,7 +9,7 @@ use util\Debug;
 
 Class Table {
     static  $TABLENAME = 'Table';
-    protected $SCHEMA;
+    protected static $SCHEMA = null;
     protected $attr;
     protected $dirty_keys = [];
     protected int $id;
@@ -20,8 +20,10 @@ Class Table {
     protected static $searchable =[];
 
 
-    public function get_schema():string {
-        return $this->SCHEMA;
+    public static function get_schema():string {
+        if (self::$SCHEMA === null)
+            self::$SCHEMA = getenv('DB_SCHEMA');
+        return self::$SCHEMA;
     }
     public function get_tablename():string {
         return static::$TABLENAME;
@@ -31,8 +33,6 @@ Class Table {
     }
 
     function __construct(array $attrs = []) {
-
-        $this->SCHEMA = getenv('DB_SCHEMA');
         $this->init_table_field();
         $this->init_table_attr($attrs);
     }
@@ -47,6 +47,8 @@ Class Table {
         foreach ($attr as $k => $v)
             if (in_array($k, static::$attr_names))
                 $this->__set($k, $v);
+            else if ($k === Config_str::KW_ID->value)
+                $this->id = $v;
             else
                 throw new \Exception('Invalid Key '.$k.' in Model '.get_class($this));
         $this->dirty_keys = [];

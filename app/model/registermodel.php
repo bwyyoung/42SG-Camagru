@@ -5,6 +5,7 @@ include_once 'table/usersessiontable.php';
 include_once 'table/usertokentable.php';
 
 use config\Config_str;
+use Couchbase\User;
 use Model\Table\UserSessionTable;
 use Model\Table\UserTable;
 use Model\Table\UserTokenTable;
@@ -16,6 +17,7 @@ use util\Debug;
 class RegisterModel extends Model
 {
     private UserTable $table_user;
+    private $table_records;
     private UserSessionTable $table_session;
     private UserTokenTable $table_token;
     private $pepper;
@@ -38,7 +40,20 @@ class RegisterModel extends Model
 
         // TODO: Change to prepared statements?
         $records = pg_select(static::$db, $this->table_user->get_schema().'.'.$this->table_user::$TABLENAME, [$id => $value]);
+        if (!is_bool($records))
+            $this->table_records = $records;
         return (!($records == false) && count($records) > 0);
+    }
+
+    public function set_current_user($id, $value) : bool{
+        if (!$this->check_credential_exists($id, $value))
+            return false;
+        $this->table_user = new UserTable($this->table_records[0]);
+        return true;
+    }
+
+    public function get_user():UserTable {
+        return $this->table_user;
     }
 
     public function verify_password($password, $confirmpassword): bool {
@@ -91,9 +106,14 @@ class RegisterModel extends Model
         return $this->table_user->commit(static::$db);
     }
 
+
+
     public function create_new_session() : bool {
         // Register a new valid session
         Debug::print_string('Session ID '.session_id());
+
+        pg_delete(static::$db, $this->table_user->get_schema().'.'.UserSessionTable::$TABLENAME,
+            [Config_str::KW_USERSID->value => $this->table_user->id()]);
 
         $this->table_session = new UserSessionTable([
             Config_str::KW_USERSID->value => $this->table_user->id(),
@@ -107,6 +127,8 @@ class RegisterModel extends Model
     }
 
     public function generate_token(): bool {
+        pg_delete(static::$db, $this->table_user->get_schema().'.'.UserTokenTable::$TABLENAME,
+            [Config_str::KW_USERSID->value => $this->table_user->id()]);
         $this->table_token = new UserTokenTable([
             Config_str::KW_USERSID->value => $this->table_user->id(),
             Config_str::KW_SCOPE->value =>  Config_str::KW_VERIFICATION->value
@@ -122,8 +144,26 @@ class RegisterModel extends Model
     /*
      * Set user as verified after email registration.
      */
-    public function verify_user () {
-
+    public function check_token($token) : bool {
+        if (Security::attack_sql_injection($token))
+            return false;
+        $records = pg_select(static::$db, $this->table_user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $this->table_user->id()]);
+        if (is_bool($records))
+            return false;
+        if (count($records) == 0)
+            return false;
+        $this->table_token = new UserTokenTable($records[0]);
+        if ($this->table_token->token != $token)
+            return false;
+        pg_delete(static::$db, $this->table_user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $this->table_user->id()]);
+        $now = new \DateTime();
+        $tokentime= new \DateTime($this->table_token->issued);
+        Debug::print_string($tokentime->format(DATE_RFC2822));
+        if ($now->diff($tokentime, true)->days > 1)
+            return false;
+        $this->table_user->verified = true;
+        $this->table_user->commit(static::$db);
+        return true;
     }
 
 }

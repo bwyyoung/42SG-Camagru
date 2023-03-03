@@ -2,7 +2,9 @@
 
 namespace Model\Table;
 
+use Cassandra\Date;
 use config\Config_str;
+use Model\Model;
 use util\Debug;
 
 class UserSessionTable extends Table
@@ -38,6 +40,29 @@ class UserSessionTable extends Table
             'samesite' => 'Strict',
         ]);
         return $result;
+    }
+
+    public function renew() {
+        $this->issued = new \DateTime();
+        $this->commit(Model::get_db());
+    }
+
+    public static function get_session($sessionid) : ?UserSessionTable{
+        $results = pg_select(Model::get_db(), self::get_schema().self::$TABLENAME,
+            [
+                Config_str::KW_SESSION->value => $sessionid
+                ] );
+        if (is_bool($results))
+            return null;
+        if (count($results) == 0)
+            return null;
+
+        $session = new UserSessionTable($results[0]);
+        $issued = $session->issued;
+        $earliest = new \DateTime();
+        $earliest = $session->rememberme ? $earliest->modify('-1 year') : $earliest->modify('-1 hour');
+
+        return ($issued >= $earliest ? $session : null);
     }
 
 

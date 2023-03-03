@@ -20,6 +20,7 @@ enum Config_str:string {
     case KW_RECEIVECOMMENTS = 'receivecomments';
     case KW_USERSID = 'usersid';
     case KW_SESSION = 'session';
+    case KW_VALUE = 'value';
     case KW_ISSUED = 'issued';
     case KW_REMEMBERME = 'rememberme';
     case KW_BOOL = 'bool';
@@ -35,8 +36,19 @@ enum Config_str:string {
     case KW_IMAGE = 'image';
     case KW_POSITION ='position';
     case KW_VERIFICATION = 'verification';
+    case KW_ACTIVATION_CODE = 'activation_code';
 
     case KW_DOMAIN = 'camagru.sg';
+
+    case KW_STATE = 'state';
+    case KW_TITLE = 'title';
+    case STATE_RESEND_VERIFICATION_EMAIL = 'state_resend_verification_email';
+
+    case STATE_ERROR = 'state_error';
+    case STATE_DEFAULT = 'state_default';
+
+    case STATE_REGISTERED = 'state_registered';
+    case STATE_ACTIVATED = 'state_activated';
 
     case SENDER_EMAIL_ADDRESS = 'noreply@camagru.sg';
 
