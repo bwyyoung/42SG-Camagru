@@ -23,7 +23,7 @@
     <?php if (($controller != 'register')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/index/login">
+        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login">
             <input  type="text" placeholder="Username" name="username">
             <input type="password" minlength="14" placeholder="Password" name="password">
             <button type="submit">Login</button>

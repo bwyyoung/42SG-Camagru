@@ -9,7 +9,7 @@ use util\Debug;
 
 Class Table {
     static  $TABLENAME = 'Table';
-    protected $SCHEMA;
+    protected static $SCHEMA = null;
     protected $attr;
     protected $dirty_keys = [];
     protected int $id;
@@ -20,8 +20,10 @@ Class Table {
     protected static $searchable =[];
 
 
-    public function get_schema():string {
-        return $this->SCHEMA;
+    public static function get_schema():string {
+        if (self::$SCHEMA === null)
+            self::$SCHEMA = getenv('DB_SCHEMA');
+        return self::$SCHEMA;
     }
     public function get_tablename():string {
         return static::$TABLENAME;
@@ -31,8 +33,6 @@ Class Table {
     }
 
     function __construct(array $attrs = []) {
-
-        $this->SCHEMA = getenv('DB_SCHEMA');
         $this->init_table_field();
         $this->init_table_attr($attrs);
     }

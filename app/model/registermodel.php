@@ -29,7 +29,7 @@ class RegisterModel extends Model
     }
 
     //http://mysqltopgsql.com/post/sql-injection/
-    public function check_credential_exists(string $id, string $value) : bool {
+    public function check_credential_exists(string $id, string $value) : int {
         if (Security::attack_sql_injection($id) || Security::attack_sql_injection($value))
             return -1;
         if (!$this->table_user->key_searcheable($id))
@@ -145,6 +145,8 @@ class RegisterModel extends Model
      * Set user as verified after email registration.
      */
     public function check_token($token) : bool {
+        if (Security::attack_sql_injection($token))
+            return false;
         $records = pg_select(static::$db, $this->table_user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $this->table_user->id()]);
         if (is_bool($records))
             return false;

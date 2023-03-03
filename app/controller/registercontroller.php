@@ -23,6 +23,7 @@ class RegisterController extends Controller
     }
 
     public function activate() {
+        Security::Block_LoginUser();
         if ($_SERVER["REQUEST_METHOD"] != "GET") {
             header("Location: http://camagru.sg/register");
             return true;
@@ -45,6 +46,7 @@ class RegisterController extends Controller
     }
 
     public function check_user_credential() {
+        Security::Block_LoginUser();
         $_POST = json_decode(file_get_contents('php://input'), true);
         if (!isset($_POST[Config_str::KW_ID->value]) || !isset($_POST['value']) )
             return Debug::echo_return('error');
@@ -59,6 +61,7 @@ class RegisterController extends Controller
 
 
     public function resend_verification_email () {
+        Security::Block_LoginUser();
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Resend Verification Email',
             Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value,
@@ -67,6 +70,7 @@ class RegisterController extends Controller
     }
 
     public function resend_verification_email_sent() {
+
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
             header("Location: http://camagru.sg/register");
             return true;
