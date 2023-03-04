@@ -88,12 +88,12 @@ function check_param_exists(id) {
 
 
 if (fld_email !== null) {
-    fld_email.onchange = function () {
-        check_param_exists(fld_email.id);
-        if (state !== 'state_resend_verification_email')
-            if (email_check.style.color === "green")
-                validate_form();
-    }
+    if (state !== 'state_resend_verification_email')
+        fld_email.onchange = function () {
+            check_param_exists(fld_email.id);
+                if (email_check.style.color === "green")
+                    validate_form();
+        }
     fld_email.onkeyup = validate_form;
 }
 

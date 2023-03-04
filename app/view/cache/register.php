@@ -86,7 +86,10 @@
 <?php else : ?>
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
-        <p>Please fill in this form to create an account.</p>
+        <p>Please fill in this form to create an account.<br>
+            If you registered, but did not receive your verification email,
+            please <a href="http://camagru.sg/register/resend_verification_email">Click Here.</a>
+        </p>
         <hr>
         <label for="username"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="username" id="username" required>

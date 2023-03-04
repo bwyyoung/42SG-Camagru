@@ -122,6 +122,7 @@ body {
 }
 
 .topnav .dropdown .dropbtn {
+    width: fit-content;
     font-size: 16px;
     border: none;
     outline: none;
