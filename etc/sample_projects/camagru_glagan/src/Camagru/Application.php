@@ -52,7 +52,6 @@ class Application
 					'You need to be logged in to access this page.' :
 					'You need to be logged out to access this page.';
 					throw new AuthException($reason);
-
 				}
 
 				// Call the route

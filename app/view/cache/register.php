@@ -10,11 +10,11 @@
 <body>
 <div class="content">
     
-<style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
+<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
 <div class="topnav">
 
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
-    <?php endif; ?> href="http://www.camagru.sg/">Home</a>
+    <?php endif; ?> href="http://camagru.sg/">Home</a>
     <a <?php if (($method == 'about')) : ?> class="active"
     <?php endif; ?> href="http://camagru.sg/index/about">About</a>
     <a <?php if (($method == 'contact')) : ?> class="active"
@@ -30,18 +30,28 @@
             <div class="login_outside_form">
                 <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
-                <?php else : ?>
+        <?php else : ?>
+                <div class="dropdown">
+                    <button class="dropbtn">Dropdown
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
                 <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
-                <?php endif; ?>
+        <?php endif; ?>
             </div>
         </form>
 
     </div>
     <?php endif; ?>
 </div>
+<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
 
-
-<style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/register.css'); ?></style>
+<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/register.css'); ?></style>
 <div class="registercontainer">
 <?php if (($state == 'state_error')) : ?>
 <span id = "reg_error" style="color:orange"> <?php echo htmlentities($message, ENT_QUOTES, 'UTF-8') ?> </span> <br>
@@ -107,7 +117,7 @@
 <?php endif; ?>
 
 </div>
-<script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/register.js'); ?></script>
+<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/register.js'); ?></script>
 
 
 </div>

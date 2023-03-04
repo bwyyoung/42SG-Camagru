@@ -2,7 +2,18 @@
 
 namespace core;
 
-include WEB_ROOT.'/app/util/dotenv.php';
+include_once WEB_ROOT.'/app/util/dotenv.php';
+include_once WEB_ROOT.'/app/util/security.php';
+include_once WEB_ROOT.'/app/util/debug.php';
+include_once WEB_ROOT.'/app/util/email.php';
+include_once WEB_ROOT.'/app/model/model.php';
+include_once WEB_ROOT.'/app/model/table/table.php';
+include_once WEB_ROOT.'/app/model/table/usertable.php';
+include_once WEB_ROOT.'/app/model/table/usersessiontable.php';
+include_once WEB_ROOT.'/app/controller/controller.php';
+include_once WEB_ROOT.'/app/view/template/Template.php';
+
+use util\Debug;
 use util\DotEnv;
 
 class Init
@@ -11,7 +22,6 @@ class Init
     public $req_method = '';
     public $req_controller = '';
     public $req_model = '';
-
 
     public bool $login = false;
 
@@ -45,7 +55,7 @@ class Init
      */
     public function __wakeup()
     {
-        throw new \Exception("Cannot unserialize a singleton.");
+        throw new \Exception('Cannot unserialize a singleton.');
     }
 
     /**

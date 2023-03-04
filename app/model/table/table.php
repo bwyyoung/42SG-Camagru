@@ -3,6 +3,7 @@ namespace Model\Table;
 
 use config\Config_flg;
 use config\Config_str;
+use Model\Model;
 use PgSql\Result;
 use PSpell\Config;
 use util\Debug;
@@ -25,7 +26,22 @@ Class Table {
             self::$SCHEMA = getenv('DB_SCHEMA');
         return self::$SCHEMA;
     }
-    public function get_tablename():string {
+
+    public static function gettable_keyval($key, $val) : ?Table {
+        $records = pg_select(Model::get_db(), self::get_schema() .'.'.self::get_tablename(), [$key => $val]);
+        if (is_bool($records))
+            return null;
+        if (count($records) == 0)
+            return null;
+        $child = static::class;
+        return new $child($records[0]);
+    }
+
+    public static function gettable_id($id) : ?Table {
+        return self::gettable_keyval(Config_str::KW_ID->value, $id);
+    }
+
+    public static function get_tablename():string {
         return static::$TABLENAME;
     }
     function key_searcheable($key): bool {
@@ -97,7 +113,7 @@ Class Table {
                 $temp[$key] = $this->attr[$key];
             $this->attr = $temp;
             $values = '$' . implode(',$', range(1, count($this->attr)));
-            $query = 'INSERT INTO '.$this->SCHEMA.'.'.static::$TABLENAME.
+            $query = 'INSERT INTO '.static::$SCHEMA.'.'.static::$TABLENAME.
                 '('.implode(',', static::$attr_names). ')'.
                 ' VALUES('.$values.') RETURNING '.Config_str::KW_ID->value;
             Debug::print_string($query);
@@ -116,7 +132,7 @@ Class Table {
         }
         if (count($this->dirty_keys) == 0)
             return true;
-        $result = pg_update($db, $this->SCHEMA.'.'.static::$TABLENAME,
+        $result = pg_update($db, self::$SCHEMA.'.'.static::$TABLENAME,
         $this->dirty_keys, [Config_str::KW_ID->value => $this->id]);
         if ($result)
             $this->dirty_keys = [];

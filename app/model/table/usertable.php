@@ -24,5 +24,9 @@ class UserTable extends Table
          Config_str::KW_EMAIL->value
      ];
 
+     public static function get_user($id): ?UserTable {
+
+         return null;
+     }
 
 }

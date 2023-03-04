@@ -2,13 +2,6 @@
 
 namespace config;
 
-
-
-//App Root
-define("WEB_ROOT", dirname(dirname(__FILE__)));
-
-
-
 const DEBUG_MODE = TRUE;
 
 enum Config_str:string {

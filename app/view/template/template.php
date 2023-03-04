@@ -2,7 +2,7 @@
 namespace View;
 use util\Debug as Debug;
 use core\Init as Init;
-
+use Model\Model as Model;
 
 // Adapted from:
 // https://codeshack.io/lightweight-template-engine-php/
@@ -32,6 +32,7 @@ class Template {
         $file = self::get_viewdir_file($file);
         $cached_file = self::cache($file);
         $data ['login'] = Init::getInstance()->login;
+        $data ['username'] = Model::get_username();
         $data ['controller'] = Init::getInstance()->req_controller;
         $data ['method'] = Init::getInstance()->req_method;
 

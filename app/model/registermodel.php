@@ -38,6 +38,7 @@ class RegisterModel extends Model
             return 0;
         $value = pg_escape_string($value);
 
+
         // TODO: Change to prepared statements?
         $records = pg_select(static::$db, $this->table_user->get_schema().'.'.$this->table_user::$TABLENAME, [$id => $value]);
         if (!is_bool($records))

@@ -1,22 +1,14 @@
 <?php
+define("WEB_ROOT", dirname(dirname(__FILE__)));
 
-
-
-include "../app/util/security.php";
-include "../app/util/debug.php";
-include "../app/util/email.php";
-include "../app/model/model.php";
-include "../app/model/table/table.php";
-include "../app/model/table/usersessiontable.php";
-include "../app/controller/controller.php";
 include  "../app/core/init.php";
-include WEB_ROOT.'/app/view/template/Template.php';
-
 use core\Init as Init;
+
 use util\Debug as Debug;
 
+\session_name('camagru');
 \Model\Table\UserSessionTable::setcookie(false);
-$session_started = session_start();
+session_start();
 
 
 Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));

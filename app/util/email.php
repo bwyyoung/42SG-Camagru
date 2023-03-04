@@ -30,8 +30,6 @@ class Email {
 
         // send the email
         if (!mail($useremail, $subject, $message, $header)) {
-            if (DEBUG_MODE)
-                exit();
             return false;
         }
         return true;

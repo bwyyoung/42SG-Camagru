@@ -23,7 +23,6 @@ class RegisterController extends Controller
     }
 
     public function activate() {
-        Security::Block_LoginUser();
         if ($_SERVER["REQUEST_METHOD"] != "GET") {
             header("Location: http://camagru.sg/register");
             return true;
@@ -61,7 +60,7 @@ class RegisterController extends Controller
 
 
     public function resend_verification_email () {
-        Security::Block_LoginUser();
+
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Resend Verification Email',
             Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value,
@@ -125,7 +124,7 @@ class RegisterController extends Controller
             return $this->Render_Error_Registration('Unable to generate new token.');
         // Send email
         if (!$this->model->send_verification_email())
-            return $this->Render_Error_Registration('Unable to send verification email.');
+            return $this->Render_Error_Registration('Unable to send verification email. Please go to this link to resend: http://camagru.sg/register/resend_verification_email');
         $this->Render_Verification_Email_Sent();
     }
 
