@@ -23,25 +23,26 @@
     <?php if (($controller != 'register')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login">
-            <input  type="text" placeholder="Username" name="username">
-            <input type="password" minlength="14" placeholder="Password" name="password">
-            <button type="submit">Login</button>
+        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
+            <input type="text" placeholder="Username" name="username" id="username" title='Login' >
+            <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
+            <input type="checkbox" value="lsRememberMe" title='Remember Me' id="rememberMe">
+            <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
                 <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
         <?php else : ?>
                 <div class="dropdown">
-                    <button class="dropbtn">Dropdown
+                    <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+                        <a href="http://camagru.sg/account/upload">Upload Image</a>
+                        <a href="http://camagru.sg/account/">Profile</a>
+                        <a href="http://camagru.sg/account/settings">Settings</a>
                     </div>
                 </div>
-                <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
+                <a style="padding: unset" href="http://camagru.sg/account/logout" class="logout"> <button type="submit">Logout</button></a>
         <?php endif; ?>
             </div>
         </form>
@@ -64,7 +65,7 @@
 </span> <br>
 
 <?php elseif (($state == 'state_resend_verification_email')) : ?>
-<form action="http://camagru.sg/register/resend_verification_email_sent" method="post" id="form_resend_verification_email">
+<form action="http://camagru.sg/register/resend_verification_email_sent" method="post" id="form_resend_verification_email" novalidate="novalidate" >
         <h1>Resend Verification Email</h1>
         <p>Enter your email address and click Resend Verification Email. <br>
             An email will be sent to your address containing a link that you can follow to verify your account.<br>
@@ -80,7 +81,7 @@
 
 </form>
 <?php else : ?>
-<form action="http://camagru.sg/register/register_account" method="post" id="form_register">
+<form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>

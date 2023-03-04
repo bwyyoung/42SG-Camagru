@@ -61,6 +61,7 @@ body {
     padding: 6px 10px;
     margin-top: 8px;
     background-color: #555;
+    width: 6em;
     color: white;
     font-size: 17px;
     border: none;
@@ -69,6 +70,15 @@ body {
 
 .topnav .login-container button:hover {
     background-color: green;
+}
+
+.topnav .login-container button:disabled
+{
+    cursor: not-allowed ;
+    pointer-events: none;
+    /*Button disabled - CSS color class*/
+    color: white ;
+    background-color: #252424;
 }
 
 .login_outside_form {
@@ -106,6 +116,30 @@ body {
     }
 }
 
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.topnav .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: green;
+}
+
+.topnav .login-container .logout button:hover {
+    background-color: red;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -130,4 +164,9 @@ body {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+input[type="checkbox" i] {
+    width: 20px !important;
+    height: 20px !important;
 }

@@ -37,6 +37,10 @@ Class Table {
         return new $child($records[0]);
     }
 
+    public static function deletetable_keyval($key, $val) : bool {
+        return pg_delete(Model::get_db(), self::get_schema() .'.'.self::get_tablename(), [$key => $val]);
+    }
+
     public static function gettable_id($id) : ?Table {
         return self::gettable_keyval(Config_str::KW_ID->value, $id);
     }

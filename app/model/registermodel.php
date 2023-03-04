@@ -20,12 +20,10 @@ class RegisterModel extends Model
     private $table_records;
     private UserSessionTable $table_session;
     private UserTokenTable $table_token;
-    private $pepper;
 
     function __construct() {
         parent::__construct();
         $this->table_user = new UserTable();
-        $this->pepper = getenv('WEBSITE_PEPPER');
     }
 
     //http://mysqltopgsql.com/post/sql-injection/
@@ -57,32 +55,7 @@ class RegisterModel extends Model
         return $this->table_user;
     }
 
-    public function verify_password($password, $confirmpassword): bool {
-        if ($password !== $confirmpassword)
-            return false;
-        Debug::print_string('1 [a-z]');
-        if (preg_match_all('/[a-z]/', $password) == 0)
-            return false;
-        Debug::print_string('2 [A-Z]');
-        if (preg_match_all('/[A-Z]/', $password) == 0)
-            return false;
-        Debug::print_string('3 [0-9]');
-        if (preg_match_all('/[0-9]/', $password) == 0)
-            return false;
-        Debug::print_string('4 \s');
-        if (preg_match_all('/\s/', $password) > 0)
-            return false;
-        Debug::print_string('5 [#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]');
-        if (preg_match_all('/[#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $password) == 0)
-            return false;
-        Debug::print_string('6 <8 >100');
 
-        if (strlen($password) < 8)
-            return false;
-        if (strlen($password) > 100)
-            return false;
-        return true;
-    }
     /*
      * register user as unverified. He canno
      */
@@ -94,7 +67,7 @@ class RegisterModel extends Model
         if (!$this->connect())
             return false;
 
-        $hashed = password_hash($password.$this->pepper,
+        $hashed = password_hash($password.Security::get_pepper(),
             PASSWORD_ARGON2ID,
             ['memory_cost' => 19456, 'time_cost' => 2, 'threads' => 1]);
         $this->table_user = new UserTable([
@@ -109,23 +82,7 @@ class RegisterModel extends Model
 
 
 
-    public function create_new_session() : bool {
-        // Register a new valid session
-        Debug::print_string('Session ID '.session_id());
 
-        pg_delete(static::$db, $this->table_user->get_schema().'.'.UserSessionTable::$TABLENAME,
-            [Config_str::KW_USERSID->value => $this->table_user->id()]);
-
-        $this->table_session = new UserSessionTable([
-            Config_str::KW_USERSID->value => $this->table_user->id(),
-            Config_str::KW_SESSION->value => session_id(),
-            Config_str::KW_ISSUED->value => date('Y-m-d H:i:s'),
-            Config_str::KW_REMEMBERME->value => false
-        ]);
-        if (!$this->table_session->commit(static::$db))
-            return false;
-        return $this->table_session->setcookie($this->table_session->rememberme);
-    }
 
     public function generate_token(): bool {
         pg_delete(static::$db, $this->table_user->get_schema().'.'.UserTokenTable::$TABLENAME,

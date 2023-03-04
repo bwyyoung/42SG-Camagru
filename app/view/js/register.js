@@ -101,8 +101,6 @@ function validate_password() {
     return password_match();
 }
 function validate_form() {
-
-
     msg_error.innerText = '';
     btn_register_submit.disabled = true
     if (state === 'state_resend_verification_email')

@@ -15,9 +15,7 @@ class RegisterController extends Controller
     {
         Security::Block_LoginUser();
         Template::view('register.html', [
-            Config_str::KW_TITLE->value => 'Camagru SG Registration',
-            Config_str::KW_STATE->value => Config_str::STATE_DEFAULT->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_TITLE->value => 'Camagru SG Registration'
         ]);
         return true;
     }
@@ -76,7 +74,7 @@ class RegisterController extends Controller
         }
         if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Verification_Email_Sent();
-        if (!$this->model->create_new_session())
+        if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
             return $this->Render_Error_Registration('Unable to create new session.');
         if ($this->model->get_user()->verified)
             return $this->Render_Error_Registration('User has already been verified.');
@@ -99,25 +97,26 @@ class RegisterController extends Controller
             header('Location: http://'.Config_str::KW_DOMAIN->value.'/register');
             exit();
         }
-        Debug::print_string($_POST[Config_str::KW_USERNAME->value]);
-        Debug::print_string($_POST[Config_str::KW_EMAIL->value]);
-        Debug::print_string($_POST[Config_str::KW_PASSWORD->value]);
-        Debug::print_string($_POST[Config_str::KW_PASSWORD->value.'-repeat']);
 
         // Check duplicates
         if ($this->model->check_credential_exists(Config_str::KW_USERNAME->value, $_POST[Config_str::KW_USERNAME->value]))
             return $this->Render_Error_Registration('Failure to submit: Username already exists.');
         if ($this->model->check_credential_exists(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Failure to submit: Email already exists.');
+
         // Check and Hash password
-        if (!$this->model->verify_password($_POST[Config_str::KW_PASSWORD->value],$_POST[Config_str::KW_PASSWORD->value.'-repeat']))
+        if (!Security::verify_password($_POST[Config_str::KW_PASSWORD->value],$_POST[Config_str::KW_PASSWORD->value.'-repeat']))
             return $this->Render_Error_Registration('Failure to submit: Password invalid.');
+        if (!Security::verify_username($_POST[Config_str::KW_USERNAME->value]))
+            return $this->Render_Error_Registration('Failure to submit: Username invalid.');
+        if (!Security::verify_email($_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Registration('Failure to submit: Email invalid.');
 
         // Create the User and Persist
         if (!$this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
             $_POST[Config_str::KW_EMAIL->value], $_POST[Config_str::KW_PASSWORD->value]))
             return $this->Render_Error_Registration('Unable to create new user.');
-        if (!$this->model->create_new_session())
+        if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
             return $this->Render_Error_Registration('Unable to create new session.');
         // Generate a token for the email verification link
         if (!$this->model->generate_token())

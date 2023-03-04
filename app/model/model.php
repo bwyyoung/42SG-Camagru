@@ -1,11 +1,13 @@
 <?php
 namespace Model;
 
+use config\Config_str;
 use core\Init;
 use http\Exception;
 use Model\Table\UserSessionTable;
 use Model\Table\UserTable;
 use PgSql\Connection;
+use PSpell\Config;
 use util\Debug;
 
 class Model
@@ -15,6 +17,7 @@ class Model
 
 
     function __construct() {
+        self::$USER_DATA = null;
         $this->retrieve_session();
         Init::getInstance()->login = true;
         if (self::$USER_DATA === null)
@@ -49,7 +52,7 @@ class Model
     }
 
     public function logout(): bool {
-        return true;
+        return UserSessionTable::deletetable_keyval(Config_str::KW_SESSION->value, session_id());
     }
 
     public static function get_db() {

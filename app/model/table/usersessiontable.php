@@ -61,5 +61,19 @@ class UserSessionTable extends Table
         return ($issued >= $earliest ? $session : null);
     }
 
+    public static function create_new_session($id, $rememberme) : bool {
 
+        pg_delete(Model::get_db(), self::get_schema().'.'.UserSessionTable::$TABLENAME,
+            [Config_str::KW_USERSID->value => $id]);
+
+        $table_session = new UserSessionTable([
+            Config_str::KW_USERSID->value => $id,
+            Config_str::KW_SESSION->value => session_id(),
+            Config_str::KW_ISSUED->value => date('Y-m-d H:i:s'),
+            Config_str::KW_REMEMBERME->value => $rememberme
+        ]);
+        if (!$table_session->commit(Model::get_db()))
+            return false;
+        return $table_session->setcookie($table_session->rememberme);
+    }
 }

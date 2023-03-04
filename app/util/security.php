@@ -10,12 +10,20 @@ class Security
      * Blocking the users who are already logged in, and don't need to see this page.
      * For example: Registration page.
      */
+    public static function Home() {
+        header("Location: http://".Config_str::KW_DOMAIN->value);
+        exit();
+    }
+
     public static function Block_LoginUser()
     {
         if (!Init::getInstance()->login)
             return;
-        header("Location: http://camagru.sg");
-        exit();
+        self::Home();
+    }
+
+    public static function get_pepper(): string {
+        return  getenv('WEBSITE_PEPPER');
     }
 
     /*
@@ -25,8 +33,7 @@ class Security
     {
         if (Init::getInstance()->login)
             return;
-        header("Location: http://".Config_str::KW_DOMAIN->value);
-        exit();
+        self::Home();
     }
 
     public static function attack_sql_injection(string $input): bool {
@@ -34,5 +41,47 @@ class Security
             strtoupper($input)))
             return true;
         return 0;
+    }
+
+    public static function verify_password($password, $confirmpassword): bool {
+        if ($password !== $confirmpassword)
+            return false;
+        Debug::print_string('1 [a-z]');
+        if (preg_match_all('/[a-z]/', $password) == 0)
+            return false;
+        Debug::print_string('2 [A-Z]');
+        if (preg_match_all('/[A-Z]/', $password) == 0)
+            return false;
+        Debug::print_string('3 [0-9]');
+        if (preg_match_all('/[0-9]/', $password) == 0)
+            return false;
+        Debug::print_string('4 \s');
+        if (preg_match_all('/\s/', $password) > 0)
+            return false;
+        Debug::print_string('5 [#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]');
+        if (preg_match_all('/[#$%@^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $password) == 0)
+            return false;
+        Debug::print_string('6 <8 >100');
+        if (strlen($password) < 8)
+            return false;
+        if (strlen($password) > 100)
+            return false;
+        return true;
+    }
+
+    public static function verify_username($username): bool {
+        if (preg_match_all('/\s/', $username) > 0)
+            return false;
+        if (strlen($username) < 3)
+            return false;
+        if (strlen($username) > 25)
+            return false;
+        return true;
+    }
+
+    public static function verify_email($email): bool {
+        if (preg_match_all('/\s/', $email) > 0)
+            return false;
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }

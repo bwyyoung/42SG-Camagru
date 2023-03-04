@@ -1,5 +1,6 @@
 <?php
 namespace View;
+use config\Config_str;
 use util\Debug as Debug;
 use core\Init as Init;
 use Model\Model as Model;
@@ -32,9 +33,13 @@ class Template {
         $file = self::get_viewdir_file($file);
         $cached_file = self::cache($file);
         $data ['login'] = Init::getInstance()->login;
-        $data ['username'] = Model::get_username();
+        $data [Config_str::KW_USERNAME->value] = Model::get_username();
         $data ['controller'] = Init::getInstance()->req_controller;
         $data ['method'] = Init::getInstance()->req_method;
+        if (!array_key_exists(Config_str::KW_STATE->value, $data)) {
+            $data [Config_str::KW_STATE->value] = Config_str::STATE_DEFAULT->value;
+            $data [Config_str::KW_MESSAGE->value] = '';
+        }
 
         extract($data, EXTR_SKIP);
         require $cached_file;

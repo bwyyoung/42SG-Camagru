@@ -23,10 +23,11 @@
     <?php if (($controller != 'register')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login">
-            <input  type="text" placeholder="Username" name="username">
-            <input type="password" minlength="14" placeholder="Password" name="password">
-            <button type="submit">Login</button>
+        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
+            <input type="text" placeholder="Username" name="username" id="username" title='Login' >
+            <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
+            <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
+            <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
                 <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
@@ -36,12 +37,12 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-content">
-                        <a href="#">Upload Image</a>
-                        <a href="#">Profile</a>
-                        <a href="#">Settings</a>
+                        <a href="http://camagru.sg/account/upload">Upload Image</a>
+                        <a href="http://camagru.sg/account/">Profile</a>
+                        <a href="http://camagru.sg/account/settings">Settings</a>
                     </div>
                 </div>
-                <a style="padding: unset" href="http://camagru.sg/index/logout"> <button type="submit">Logout</button></a>
+                <a style="padding: unset" href="http://camagru.sg/account/logout" class="logout"> <button type="submit">Logout</button></a>
         <?php endif; ?>
             </div>
         </form>
