@@ -17,8 +17,10 @@
             <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
             <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
+                <a class="forgotpassword" href="http://camagru.sg/account/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                {% js validate.js %}
+                {% js navbar.js %}
         <!-- else -->
                 <div class="dropdown">
                     <button class="dropbtn">{{{ $username }}}
@@ -38,4 +40,3 @@
     </div>
     <!-- endif -->
 </div>
-{% js navbar.js %}

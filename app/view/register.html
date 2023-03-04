@@ -32,6 +32,7 @@
         <button type="submit" class="registerbtn" id="btn_register_submit">Resend Verification Email</button>
 
 </form>
+
 <!-- else -->
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
@@ -70,6 +71,7 @@
 <!-- endif -->
 
 </div>
+{% js validate.js %}
 {% js register.js %}
 
 {% endblock %}

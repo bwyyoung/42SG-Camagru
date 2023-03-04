@@ -36,12 +36,15 @@ enum Config_str:string {
     case KW_STATE = 'state';
     case KW_TITLE = 'title';
     case STATE_RESEND_VERIFICATION_EMAIL = 'state_resend_verification_email';
-
     case STATE_ERROR = 'state_error';
     case STATE_DEFAULT = 'state_default';
-
     case STATE_REGISTERED = 'state_registered';
     case STATE_ACTIVATED = 'state_activated';
+
+    case STATE_PROFILE = 'state_profile';
+    case STATE_SETTINGS = 'state_settings';
+    case STATE_FORGOTPASSWORD = 'state_forgotpassword';
+    case STATE_UPLOAD = 'state_upload';
 
     case SENDER_EMAIL_ADDRESS = 'noreply@camagru.sg';
 

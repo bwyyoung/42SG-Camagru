@@ -23,7 +23,7 @@ class Security
     }
 
     public static function get_pepper(): string {
-        return  getenv('WEBSITE_PEPPER');
+        return getenv('WEBSITE_PEPPER');
     }
 
     /*
@@ -45,6 +45,8 @@ class Security
 
     public static function verify_password($password, $confirmpassword): bool {
         if ($password !== $confirmpassword)
+            return false;
+        if (self::attack_sql_injection($password))
             return false;
         Debug::print_string('1 [a-z]');
         if (preg_match_all('/[a-z]/', $password) == 0)
@@ -70,6 +72,8 @@ class Security
     }
 
     public static function verify_username($username): bool {
+        if (self::attack_sql_injection($username))
+            return false;
         if (preg_match_all('/\s/', $username) > 0)
             return false;
         if (strlen($username) < 3)
@@ -80,6 +84,8 @@ class Security
     }
 
     public static function verify_email($email): bool {
+        if (self::attack_sql_injection($email))
+            return false;
         if (preg_match_all('/\s/', $email) > 0)
             return false;
         return filter_var($email, FILTER_VALIDATE_EMAIL);

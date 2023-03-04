@@ -1,0 +1,22 @@
+{% extends template/layout.html %}
+{% block title %}{{{ $title }}}{% endblock %}
+
+{% block content %}
+{% js validate.js %}
+{% include component/navbar.html %}
+{% css account.css %}
+
+<!-- if ($state == 'state_forgotpassword') -->
+FORGOTPASSWORD
+<!-- elseif ($state == 'state_settings') -->
+    {% include component/settings.html %}
+
+<!-- elseif ($state == 'state_upload') -->
+    {% include component/upload.html %}
+
+<!-- else -->
+    {% include component/profile.html %}
+<!-- endif -->
+
+{% js account.js %}
+{% endblock %}

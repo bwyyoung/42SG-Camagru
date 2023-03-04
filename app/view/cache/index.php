@@ -29,8 +29,10 @@
             <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
             <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
+                <a class="forgotpassword" href="http://camagru.sg/account/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
+                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
         <?php else : ?>
                 <div class="dropdown">
                     <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
@@ -50,7 +52,7 @@
     </div>
     <?php endif; ?>
 </div>
-<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
+
 
 <?php if (($method == '')) : ?>
 <h1>Home</h1>
@@ -65,6 +67,7 @@
 <h1>Contact</h1>
 <p>Contact our staff here</p>
 <?php endif; ?>
+
 
 
 </div>

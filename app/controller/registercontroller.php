@@ -25,7 +25,10 @@ class RegisterController extends Controller
             header("Location: http://camagru.sg/register");
             return true;
         }
+
         if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+            return $this->Render_Error_Registration('Invalid Activation.');
+        if (Security::attack_sql_injection($_POST[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_POST[Config_str::KW_ACTIVATION_CODE->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
         Debug::print_string($_GET[Config_str::KW_EMAIL->value]);
         Debug::print_string($_GET[Config_str::KW_ACTIVATION_CODE->value]);
@@ -72,10 +75,12 @@ class RegisterController extends Controller
             header("Location: http://camagru.sg/register");
             return true;
         }
+        if (!isset($_GET[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Registration('Invalid Email.');
         if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
-            return $this->Render_Verification_Email_Sent();
-        if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
-            return $this->Render_Error_Registration('Unable to create new session.');
+            return $this->Render_Error_Registration('Invalid Email.');
+        #if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
+         #   return $this->Render_Error_Registration('Unable to create new session.');
         if ($this->model->get_user()->verified)
             return $this->Render_Error_Registration('User has already been verified.');
         // Generate a token for the email verification link

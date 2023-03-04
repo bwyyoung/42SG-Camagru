@@ -26,11 +26,13 @@
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
             <input type="text" placeholder="Username" name="username" id="username" title='Login' >
             <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
-            <input type="checkbox" value="lsRememberMe" title='Remember Me' id="rememberMe">
+            <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
             <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/forgotpassword"> Forgot <br/> password? </a>
+                <a class="forgotpassword" href="http://camagru.sg/account/forgotpassword"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
+                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
         <?php else : ?>
                 <div class="dropdown">
                     <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
@@ -50,7 +52,7 @@
     </div>
     <?php endif; ?>
 </div>
-<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
+
 
 <style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/register.css'); ?></style>
 <div class="registercontainer">
@@ -80,6 +82,7 @@
         <button type="submit" class="registerbtn" id="btn_register_submit">Resend Verification Email</button>
 
 </form>
+
 <?php else : ?>
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
@@ -118,6 +121,7 @@
 <?php endif; ?>
 
 </div>
+<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/register.js'); ?></script>
 
 
