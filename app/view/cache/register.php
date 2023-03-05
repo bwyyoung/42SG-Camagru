@@ -20,7 +20,7 @@
     <a <?php if (($method == 'contact')) : ?> class="active"
     <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
-    <?php if (($controller != 'register')) : ?>
+    <?php if (($controller != 'register' && $method != 'forgot_password')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
@@ -29,7 +29,7 @@
             <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
             <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/account/forgotpassword"> Forgot <br/> password? </a>
+                <a class="forgotpassword" href="http://camagru.sg/account/forgot_password"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
                 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
                 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
@@ -54,8 +54,8 @@
 </div>
 
 
-<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/register.css'); ?></style>
-<div class="registercontainer">
+<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/form.css'); ?></style>
+<div class="formcontainer">
 <?php if (($state == 'state_error')) : ?>
 <span id = "reg_error" style="color:orange"> <?php echo htmlentities($message, ENT_QUOTES, 'UTF-8') ?> </span> <br>
 <?php elseif (($state == 'state_activated')) : ?>
@@ -67,7 +67,7 @@
 </span> <br>
 
 <?php elseif (($state == 'state_resend_verification_email')) : ?>
-<form action="http://camagru.sg/register/resend_verification_email_sent" method="post" id="form_resend_verification_email" novalidate="novalidate" >
+<form action="http://camagru.sg/register/resend_verification_email_submit" method="post" id="form_resend_verification_email" novalidate="novalidate" >
         <h1>Resend Verification Email</h1>
         <p>Enter your email address and click Resend Verification Email. <br>
             An email will be sent to your address containing a link that you can follow to verify your account.<br>
@@ -75,12 +75,13 @@
         </p>
         <hr>
         <label for="email"><b>Email</b></label>
-        <input type='email' placeholder="Enter Email" name="email" id="email" required>
-        <br/>
-        <span id = "message_error" style="color:red">Please fill in email address. </span>
-        <hr>
-        <button type="submit" class="registerbtn" id="btn_register_submit">Resend Verification Email</button>
+<input type='email' placeholder="Enter Email" name="email" id="email" required>
+<br/>
+<span id = "email_check" style="color:red"></span> <br/>
 
+        <span id = "message_error" style="color:red"> </span>
+<hr>
+<button type="submit" class="formbtn" id="btn_submit">Submit</button>
 </form>
 
 <?php else : ?>
@@ -96,28 +97,29 @@
 
         <span id = "username_check" style="color:red"></span> <br/><br/>
         <label for="email"><b>Email</b></label>
-        <input type='email' placeholder="Enter Email" name="email" id="email" required>
+<input type='email' placeholder="Enter Email" name="email" id="email" required>
 <br/>
-        <span id = "email_check" style="color:red"></span> <br/>
+<span id = "email_check" style="color:red"></span> <br/>
 
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password (8-100 characters, UPPERCASE, lowercase, Numbers and Symbols)" name="password" id="password"
-               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-               required>
-        <br/><br/>
-        <label for="password-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat"
-               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-               required>
+        
+<label for="password"><b>Password</b></label>
+<input type="password" placeholder="Enter Password (8-100 characters, UPPERCASE, lowercase, Numbers and Symbols)" name="password" id="password"
+       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+       required>
 <br/><br/>
-        <span id = "message_error" style="color:red">Please fill in registration information. </span> <br><br>
-        <hr>
+<label for="password-repeat"><b>Repeat Password</b></label>
+<input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat"
+       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+       required>
+<br/><br/>
 
-        <p>By creating an account you agree to our <a href="http://camagru.sg/index/about">Terms & Privacy</a>.</p>
-        <button type="submit" class="registerbtn" id="btn_register_submit">Register</button>
 
+        <span id = "message_error" style="color:red"> </span>
+<hr>
+<button type="submit" class="formbtn" id="btn_submit">Submit</button>
 
-    <div class="registercontainer signin">
+    <p>By creating an account you agree to our <a href="http://camagru.sg/index/about">Terms & Privacy</a>.</p>
+    <div class="formcontainer signin">
         <p>Already have an account? <a href="http://camagru.sg/">Sign in</a>.</p>
     </div>
 </form>
@@ -125,7 +127,7 @@
 
 </div>
 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
-<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/register.js'); ?></script>
+<script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/form.js'); ?></script>
 
 
 </div>

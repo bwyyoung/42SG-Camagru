@@ -1,12 +1,12 @@
 * {box-sizing: border-box}
 
 /* Add padding to containers */
-.registercontainer {
+.formcontainer {
     padding: 16px;
 }
 
 /* Full-width input fields */
-.registercontainer input {
+.formcontainer input {
     width: 100%;
     padding: 15px;
     margin: 5px 0 5px 0;
@@ -15,19 +15,19 @@
     background: #f1f1f1;
 }
 
-.registercontainer  input:focus {
+.formcontainer  input:focus {
     background-color: #ddd;
     outline: none;
 }
 
 /* Overwrite default styles of hr */
-.registercontainer hr {
+.formcontainer hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
 }
 
 /* Set a style for the submit/register button */
-.registercontainer .registerbtn {
+.formcontainer .formbtn {
     background-color: #04AA6D;
     color: white;
     padding: 16px 20px;
@@ -38,22 +38,22 @@
     opacity: 0.9;
 }
 
-.registercontainer  .registerbtn:hover {
+.formcontainer  .formbtn:hover {
     opacity:1;
 }
 
 /* Add a blue text color to links */
-.registercontainer a {
+.formcontainer a {
     color: dodgerblue;
 }
 
 /* Set a grey background color and center the text of the "sign in" section */
-.registercontainer .signin {
+.formcontainer .signin {
     background-color: #f1f1f1;
     text-align: center;
 }
 
-.registercontainer .registerbtn:disabled
+.formcontainer .formbtn:disabled
 {
     cursor: not-allowed ;
     pointer-events: none;

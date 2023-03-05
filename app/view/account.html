@@ -2,12 +2,12 @@
 {% block title %}{{{ $title }}}{% endblock %}
 
 {% block content %}
-{% js validate.js %}
 {% include component/navbar.html %}
 {% css account.css %}
 
-<!-- if ($state == 'state_forgotpassword') -->
-FORGOTPASSWORD
+<!-- if ($state == 'state_forgotpassword' || $state == 'state_resetpassword' ||  $state == 'state_forgotpassword_submit') -->
+    {% include component/forgotpassword.html %}
+
 <!-- elseif ($state == 'state_settings') -->
     {% include component/settings.html %}
 

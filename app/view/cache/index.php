@@ -20,7 +20,7 @@
     <a <?php if (($method == 'contact')) : ?> class="active"
     <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
-    <?php if (($controller != 'register')) : ?>
+    <?php if (($controller != 'register' && $method != 'forgot_password')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
@@ -29,7 +29,7 @@
             <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
             <button type="submit" id="btn_login_submit">Login</button>
             <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/account/forgotpassword"> Forgot <br/> password? </a>
+                <a class="forgotpassword" href="http://camagru.sg/account/forgot_password"> Forgot <br/> password? </a>
                 <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
                 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
                 <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>

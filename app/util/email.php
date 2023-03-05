@@ -23,7 +23,29 @@ class Email {
             
             Camagru SG Team
             MESSAGE;
-        // email header
+        return self::sendmail($useremail,$subject, $message);
+    }
+    public static function send_password_email(string $username, string $useremail, string $activation_code) : bool
+    {
+        $link = Config_str::KW_DOMAIN->value.'/account/resetpassword?email='.$useremail.'&activation_code='.$activation_code;
+        // set email subject & body
+        $subject = 'Camagru.sg: Reset Your Password';
+        $message = <<<MESSAGE
+            Hi $username,
+            
+            Please click the following link to reset your password:
+            $link
+            
+            If you did not initiate this request for password reset, please ignore this email.
+            
+            Thanks fam,
+            
+            Camagru SG Team
+            MESSAGE;
+        return self::sendmail($useremail,$subject, $message);
+    }
+
+    private static function sendmail($useremail, $subject, $message) : bool {
         $header = "From:" . Config_str::SENDER_EMAIL_ADDRESS->value. "\r\n" .
             'Reply-To: '.Config_str::SENDER_EMAIL_ADDRESS->value. "\r\n" .
             'X-Mailer: PHP/' . phpversion();

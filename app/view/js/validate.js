@@ -45,7 +45,10 @@ function password_complex() {
 
 
 function validate_email() {
+    if (fld_email == null)
+        return true
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
     if (!fld_email.value.match(validRegex)) {
         if (msg_error !== null)
             msg_error.innerText += 'Email is invalid.\n'
@@ -108,5 +111,7 @@ function validate_username() {
 function validate_password() {
     if (!password_complex())
         return false
+    if (fld_cfmpassword == null)
+        return true;
     return password_match();
 }

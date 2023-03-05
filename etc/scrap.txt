@@ -12,7 +12,7 @@
     return print $obj_controller->$method(Init::getInstance()->req_param);
 
 
-    <script type="text/javascript" src="../../app/view/js/register.js" ></script>
+    <script type="text/javascript" src="../../app/view/js/form.js" ></script>
 
 
        ## $r = pg_query_params(Model::$db, 'select '.$id.' from '.$this->table_user->get_schema().'.'.$this->table_user::TABLENAME.' where LOWER('.$id.') = LOWER(CAST($1 as TEXT))', array($value));

@@ -1,33 +1,36 @@
 
 
-var btn_register_submit = document.getElementById('btn_register_submit')
-var username_check = document.getElementById('username_check')
-var email_check = document.getElementById('email_check')
+var btn_submit = document.getElementById('btn_submit')
 var form_register = document.getElementById('form_register')
 var state = '<?php echo $state; ?>'
-
-
-
+var username_check = document.getElementById('username_check')
+var email_check = document.getElementById('email_check')
 function validate_form() {
-    msg_error.innerText = '';
-    btn_register_submit.disabled = true
-    if (state === 'state_resend_verification_email')
-    {
-        if (!validate_email())
-            return false
-        btn_register_submit.disabled = !validate_email()
-        return
-    }
-    if (!validate_username() || username_check.style.color === "red")
+    if (msg_error != null)
+        msg_error.innerText = '';
+    btn_submit.disabled = true
+
+    if (fld_email !== null)
+        if (username_check == null || email_check == null) {
+            if (!validate_email())
+                return false
+            btn_submit.disabled = false
+            return;
+        }
+    if (!validate_username())
         return false
-    if (!validate_email()|| email_check.style.color === "red")
+    if  (username_check !== null && username_check.style.color === "red")
         return false
-    btn_register_submit.disabled = !validate_password()
+    if (!validate_email())
+        return false
+    if  (email_check !== null && email_check.style.color === "red")
+        return false
+    btn_submit.disabled = !validate_password()
 }
 
 window.onload = function () {
-    if (btn_register_submit != null)
-        btn_register_submit.disabled = true
+    if (btn_submit != null)
+        btn_submit.disabled = true
     if (form_register != null)
         form_register.addEventListener('submit', function (e) {
             // prevent the form from submitting
@@ -36,6 +39,8 @@ window.onload = function () {
 }
 
 function check_param_exists(id) {
+    if (username_check == null || email_check == null)
+        return;
     var status_text
     var fld
     if (id === 'username') {
@@ -54,8 +59,7 @@ function check_param_exists(id) {
             return;
         }
     }
-    if (state === 'state_resend_verification_email')
-        return;
+
 
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -87,25 +91,35 @@ function check_param_exists(id) {
 }
 
 
-if (fld_email !== null) {
-    if (state !== 'state_resend_verification_email')
-        fld_email.onchange = function () {
-            check_param_exists(fld_email.id);
-                if (email_check.style.color === "green")
-                    validate_form();
-        }
+if (fld_email !== null )
+{
+    if (state === 'state_registration')
+        if (email_check !== null)
+            fld_email.onchange = function ()
+            {
+                check_param_exists(fld_email.id);
+                    if (email_check.style.color === "green")
+                        validate_form();
+            }
     fld_email.onkeyup = validate_form;
 }
 
-if (fld_password !== null)
-    fld_password.onchange = validate_form;
-if (fld_username !== null) {
-    fld_username.onchange = function () {
-        check_param_exists(fld_username.id);
-        if (username_check.style.color === "green")
-            validate_form();
+if (state === 'state_registration')
+    if (fld_username !== null && username_check !== null) {
+        fld_username.onchange = function () {
+            check_param_exists(fld_username.id);
+            if (username_check.style.color === "green")
+                validate_form();
+        }
+        fld_username.onkeyup;
     }
-    fld_username.onkeyup = fld_password.onkeyup = fld_cfmpassword.onkeyup = validate_form;
+if (fld_password !== null) {
+    fld_password.onkeyup = validate_form;
+    fld_password.onchange = validate_form;
 }
-if (btn_register_submit != null)
-    btn_register_submit.disabled = true
+if ( fld_cfmpassword !== null) {
+    fld_cfmpassword.onkeyup = validate_form;
+    fld_cfmpassword.onchange = validate_form;
+}
+if (btn_submit != null)
+    btn_submit.disabled = true

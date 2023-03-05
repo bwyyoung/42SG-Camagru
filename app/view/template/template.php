@@ -32,15 +32,14 @@ class Template {
     static function view($file, $data = array()) {
         $file = self::get_viewdir_file($file);
         $cached_file = self::cache($file);
-        $data ['login'] = Init::getInstance()->login;
-        $data [Config_str::KW_USERNAME->value] = Model::get_username();
-        $data ['controller'] = Init::getInstance()->req_controller;
-        $data ['method'] = Init::getInstance()->req_method;
-        if (!array_key_exists(Config_str::KW_STATE->value, $data)) {
-            $data [Config_str::KW_STATE->value] = Config_str::STATE_DEFAULT->value;
-            $data [Config_str::KW_MESSAGE->value] = '';
-        }
-
+        $data['login'] = Init::getInstance()->login;
+        $data[Config_str::KW_USERNAME->value] = Model::get_username();
+        $data['controller'] = Init::getInstance()->req_controller;
+        $data['method'] = Init::getInstance()->req_method;
+        if (!array_key_exists(Config_str::KW_STATE->value, $data))
+            $data[Config_str::KW_STATE->value] = Config_str::STATE_DEFAULT->value;
+        if (!array_key_exists(Config_str::KW_MESSAGE->value, $data))
+            $data[Config_str::KW_MESSAGE->value] = '';
         extract($data, EXTR_SKIP);
         require $cached_file;
     }

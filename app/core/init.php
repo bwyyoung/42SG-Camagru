@@ -10,6 +10,8 @@ include_once WEB_ROOT.'/app/model/model.php';
 include_once WEB_ROOT.'/app/model/table/table.php';
 include_once WEB_ROOT.'/app/model/table/usertable.php';
 include_once WEB_ROOT.'/app/model/table/usersessiontable.php';
+include_once WEB_ROOT.'/app/model/table/usertokentable.php';
+
 include_once WEB_ROOT.'/app/controller/controller.php';
 include_once WEB_ROOT.'/app/view/template/Template.php';
 

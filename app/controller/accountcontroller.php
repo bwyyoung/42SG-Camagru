@@ -18,38 +18,26 @@ class AccountController extends Controller
         // Show the user profile page.
         Template::view('account.html', [
             Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
-            Config_str::KW_STATE->value => Config_str::STATE_PROFILE->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_STATE->value => Config_str::STATE_PROFILE->value
         ]);
         return true;
     }
 
     public function login() : bool{
         Security::Block_LoginUser();
-
+        $rememberme = (isset($_POST[Config_str::KW_REMEMBERME->value]) ? 1 : 0);
         if ($_SERVER["REQUEST_METHOD"] != "POST")
             Security::Home();
         if (!isset($_POST[Config_str::KW_PASSWORD->value]) || !isset($_POST[Config_str::KW_USERNAME->value]))
             Security::Home();
         //login function when user clicks login
         // Check and Hash password
-        if (Security::attack_sql_injection($_POST[Config_str::KW_PASSWORD->value]) || Security::attack_sql_injection($_POST[Config_str::KW_USERNAME->value]))
-            return $this->Render_Error_Login('Invalid Username / Password');
         if (!Security::verify_password($_POST[Config_str::KW_PASSWORD->value], $_POST[Config_str::KW_PASSWORD->value]))
-            return $this->Render_Error_Login('Failure to submit: Password invalid.');
+            return $this->Render_Error_Account('Failure to submit: Password invalid.');
         if (!Security::verify_username($_POST[Config_str::KW_USERNAME->value]))
-            return $this->Render_Error_Login('Failure to submit: Username invalid.');
-        $rememberme = (isset($_POST[Config_str::KW_REMEMBERME->value]) ? 1 : 0);
-        $user = UserTable::gettable_keyval(Config_str::KW_USERNAME->value, $_POST[Config_str::KW_USERNAME->value]);
-        if ($user === null)
-            return $this->Render_Error_Login('Invalid Username / Password');
-        if (!password_verify($_POST[Config_str::KW_PASSWORD->value].Security::get_pepper(), $user->password))
-            return $this->Render_Error_Login('Invalid Username / Password');
-        if (\password_needs_rehash($user->password, \PASSWORD_BCRYPT)) {
-            $user->password = \password_hash($_POST[Config_str::KW_PASSWORD->value].Security::get_pepper(), \PASSWORD_ARGON2ID);
-            $user->commit(Model::get_db());
-        }
-        UserSessionTable::create_new_session($user->id(), $rememberme);
+            return $this->Render_Error_Account('Failure to submit: Username invalid.');
+        if (!$this->model->login($_POST[Config_str::KW_USERNAME->value], $_POST[Config_str::KW_PASSWORD->value], $rememberme))
+            return $this->Render_Error_Account('Invalid Username / Password');
         Security::Home();
         return true;
     }
@@ -66,8 +54,7 @@ class AccountController extends Controller
         Security::Block_GuestUser();
         Template::view('account.html', [
             Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
-            Config_str::KW_STATE->value => Config_str::STATE_SETTINGS->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_STATE->value => Config_str::STATE_SETTINGS->value
         ]);
     }
 
@@ -75,21 +62,60 @@ class AccountController extends Controller
         Security::Block_GuestUser();
         Template::view('account.html', [
             Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
-            Config_str::KW_STATE->value => Config_str::STATE_UPLOAD->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_STATE->value => Config_str::STATE_UPLOAD->value
         ]);
     }
 
-    public function forgotpassword() {
+    public function forgot_password() {
         Security::Block_LoginUser();
         Template::view('account.html', [
             Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
-            Config_str::KW_STATE->value => Config_str::STATE_FORGOTPASSWORD->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_STATE->value => Config_str::STATE_FORGOTPASSWORD->value
         ]);
     }
 
-    private function Render_Error_Login(string $message)
+    public function forgot_password_submit() {
+        Security::Block_LoginUser();
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            header("Location: http://camagru.sg/account/forgot_password");
+            return true;
+        }
+        if (!isset($_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Invalid Email.');
+        if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Invalid Email.');
+        if (!$this->model->generate_token(Config_str::KW_PASSWORD->value))
+            return $this->Render_Error_Account('Unable to generate new token.');
+        if (!$this->model->send_password_email())
+            return $this->Render_Error_Account('Unable to send verification email.');
+        $this->Render_ForgotPassword_Email_Sent();
+    }
+
+    public function reset_password()
+    {
+        Security::Block_LoginUser();
+        if ($_SERVER["REQUEST_METHOD"] != "GET") {
+            header("Location: http://camagru.sg/register");
+            return true;
+        }
+        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+            return $this->Render_Error_Account('Invalid Reset Password.');
+        if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+            return $this->Render_Error_Account('Invalid Reset Password.');
+    }
+
+    private function Render_ForgotPassword_Email_Sent() {
+        $message = 'If it was previously registered, we will email '.$_POST[Config_str::KW_EMAIL->value].' to reset your password.';
+        Template::view('account.html', [
+            Config_str::KW_TITLE->value  => 'Reset Password Email Sent',
+            Config_str::KW_STATE->value  => Config_str::STATE_FORGOTPASSWORD_SUBMIT->value,
+            Config_str::KW_MESSAGE->value => $message
+        ]);
+        unset($_POST);
+        return true;
+    }
+
+    private function Render_Error_Account(string $message)
     {
         unset($_POST);
         Template::view('index.html', [
@@ -99,4 +125,6 @@ class AccountController extends Controller
         ]);
         return true;
     }
+
+
 }

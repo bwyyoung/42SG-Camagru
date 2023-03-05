@@ -8,19 +8,19 @@ function login_alert(message) {
     alert(message);
 }
 
-function validate_form() {
+function validate_login_form() {
+    btn_login_submit.disabled = true
     if (!validate_username())
         return false;
-    btn_login_submit.disabled = !validate_username()
+    btn_login_submit.disabled = !validate_password()
 }
 
 if (fld_username != null)
     if (fld_password !== null)
         if (btn_login_submit !== null) {
-            console.log("GOT")
-            fld_password.onchange = validate_form
-            fld_username.onchange = validate_form
-            fld_username.onkeyup = fld_password.onkeyup = validate_form
+            fld_password.onchange = validate_login_form
+            fld_username.onchange = validate_login_form
+            fld_username.onkeyup = fld_password.onkeyup = validate_login_form
             btn_login_submit.disabled = true
         }
 if (state === 'state_error') {

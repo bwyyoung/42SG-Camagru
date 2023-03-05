@@ -16,7 +16,8 @@ class RegisterController extends Controller
     {
         Security::Block_LoginUser();
         Template::view('register.html', [
-            Config_str::KW_TITLE->value => 'Camagru SG Registration'
+            Config_str::KW_TITLE->value => 'Camagru SG Registration',
+            Config_str::KW_STATE->value => Config_str::STATE_REGISTRATION->value
         ]);
         return true;
     }
@@ -31,15 +32,13 @@ class RegisterController extends Controller
             return $this->Render_Error_Registration('Invalid Activation.');
         if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_ACTIVATION_CODE->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
-        Debug::print_string($_GET[Config_str::KW_EMAIL->value]);
-        Debug::print_string($_GET[Config_str::KW_ACTIVATION_CODE->value]);
-        if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_GET[Config_str::KW_EMAIL->value]))
+        if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_GET[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
-        if ($this->model->get_user()->verified)
+        if ($this->model->get_temp_user()->verified)
             return $this->Render_Error_Registration('Account already verified.');
-        $this->model->get_user()->verified = true;
-        $this->model->get_user()->commit(Model::get_db());
-        if (!$this->model->check_token($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+    #    $this->model->get_temp_user()->verified = true;
+     #   $this->model->get_temp_user()->commit(Model::get_db());
+        if (!$this->model->verify_user($_GET[Config_str::KW_ACTIVATION_CODE->value]))
             return $this->Render_Error_Registration('Invalid activation code, please request new code.');
         Template::view('register.html', [
             Config_str::KW_TITLE->value  => 'Activation Success',
@@ -67,12 +66,11 @@ class RegisterController extends Controller
 
         Template::view('register.html', [
             Config_str::KW_TITLE->value => 'Resend Verification Email',
-            Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value,
-            Config_str::KW_MESSAGE->value => ''
+            Config_str::KW_STATE->value => Config_str::STATE_RESEND_VERIFICATION_EMAIL->value
         ]);
     }
 
-    public function resend_verification_email_sent() {
+    public function resend_verification_email_submit() {
 
         if ($_SERVER["REQUEST_METHOD"] != "POST") {
             header("Location: http://camagru.sg/register");
@@ -80,14 +78,14 @@ class RegisterController extends Controller
         }
         if (!isset($_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Invalid Email.');
-        if (!$this->model->set_current_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
+        if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Invalid Email.');
         #if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
          #   return $this->Render_Error_Registration('Unable to create new session.');
-        if ($this->model->get_user()->verified)
+        if ($this->model->get_temp_user()->verified)
             return $this->Render_Verification_Email_Sent();
         // Generate a token for the email verification link
-        if (!$this->model->generate_token())
+        if (!$this->model->generate_token(Config_str::KW_VERIFICATION->value))
             return $this->Render_Error_Registration('Unable to generate new token.');
         // Send email
         if (!$this->model->send_verification_email())
@@ -124,10 +122,10 @@ class RegisterController extends Controller
         if (!$this->model->register_unverified_user($_POST[Config_str::KW_USERNAME->value],
             $_POST[Config_str::KW_EMAIL->value], $_POST[Config_str::KW_PASSWORD->value]))
             return $this->Render_Error_Registration('Unable to create new user.');
-        if (!UserSessionTable::create_new_session($this->model->get_user()->id(), false))
+        if (!UserSessionTable::create_new_session($this->model->get_temp_user()->id(), false))
             return $this->Render_Error_Registration('Unable to create new session.');
         // Generate a token for the email verification link
-        if (!$this->model->generate_token())
+        if (!$this->model->generate_token(Config_str::KW_VERIFICATION->value))
             return $this->Render_Error_Registration('Unable to generate new token.');
         // Send email
         if (!$this->model->send_verification_email())
