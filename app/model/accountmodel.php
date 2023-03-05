@@ -30,4 +30,13 @@ class AccountModel extends Model {
     public function send_password_email() : bool {
         return Email::send_password_email($this->temp_user->username, $this->temp_user->email, $this->temp_token->token());
     }
+
+    public function change_password($user, $password, $token) : bool {
+        if (!$this->verify_token($user, $token, Config_str::KW_PASSWORD->value))
+            return false;
+        $this->delete_token($user);
+        $user->password = password_hash($password.Security::get_pepper(), \PASSWORD_ARGON2ID);;
+        $user->commit(static::$db);
+        return true;
+    }
 }

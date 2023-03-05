@@ -29,7 +29,6 @@ enum Config_str:string {
     case KW_IMAGE = 'image';
     case KW_POSITION ='position';
     case KW_VERIFICATION = 'verification';
-    case KW_ACTIVATION_CODE = 'activation_code';
 
     case KW_DOMAIN = 'camagru.sg';
 
@@ -46,6 +45,7 @@ enum Config_str:string {
     case STATE_SETTINGS = 'state_settings';
     case STATE_FORGOTPASSWORD = 'state_forgotpassword';
     case STATE_FORGOTPASSWORD_SUBMIT = 'state_forgotpassword_submit';
+    case STATE_RESETPASSWORD = 'state_resetpassword';
     case STATE_UPLOAD = 'state_upload';
 
     case SENDER_EMAIL_ADDRESS = 'noreply@camagru.sg';

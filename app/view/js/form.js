@@ -5,28 +5,7 @@ var form_register = document.getElementById('form_register')
 var state = '<?php echo $state; ?>'
 var username_check = document.getElementById('username_check')
 var email_check = document.getElementById('email_check')
-function validate_form() {
-    if (msg_error != null)
-        msg_error.innerText = '';
-    btn_submit.disabled = true
 
-    if (fld_email !== null)
-        if (username_check == null || email_check == null) {
-            if (!validate_email())
-                return false
-            btn_submit.disabled = false
-            return;
-        }
-    if (!validate_username())
-        return false
-    if  (username_check !== null && username_check.style.color === "red")
-        return false
-    if (!validate_email())
-        return false
-    if  (email_check !== null && email_check.style.color === "red")
-        return false
-    btn_submit.disabled = !validate_password()
-}
 
 window.onload = function () {
     if (btn_submit != null)
@@ -89,7 +68,34 @@ function check_param_exists(id) {
     var data = {id: id, value: fld.value}
     request.send(JSON.stringify(data))
 }
+function validate_form() {
+    btn_submit.disabled = true
+    if (msg_error != null)
+        msg_error.innerText = '';
 
+    //FOR Email Reset Password and Email Verification Only.
+    if (fld_email !== null && fld_password == null)
+        if (username_check == null || email_check == null) {
+            if (!validate_email())
+                return false
+            btn_submit.disabled = false
+            return;
+        }
+
+    if (!validate_username())
+        return false
+
+    if  (username_check !== null && username_check.style.color === "red")
+        return false
+
+    if (!validate_email())
+        return false
+
+    if  (email_check !== null && email_check.style.color === "red")
+        return false
+
+    btn_submit.disabled = !validate_password()
+}
 
 if (fld_email !== null )
 {

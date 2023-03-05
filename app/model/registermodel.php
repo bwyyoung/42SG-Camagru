@@ -49,13 +49,12 @@ class RegisterModel extends Model
     /*
      * Set user as verified after email registration.
      */
-    public function verify_user($token) : bool {
-        if (Security::attack_sql_injection($token))
+    public function verify_user($user, $token) : bool {
+        if (!$this->verify_token($user, $token, Config_str::KW_VERIFICATION->value))
             return false;
-        if (!$this->verify_token($token, Config_str::KW_VERIFICATION->value))
-            return false;
-        $this->temp_user->verified = true;
-        $this->temp_user->commit(static::$db);
+        $this->delete_token($user);
+        $user->verified = true;
+        $user->commit(static::$db);
         return true;
     }
 

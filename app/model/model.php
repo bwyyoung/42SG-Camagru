@@ -106,8 +106,10 @@ class Model
         return $this->temp_token->commit(static::$db);
     }
 
-    protected function verify_token($token, $scope) : bool {
-        $records = pg_select(static::$db, $this->temp_user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $this->temp_user->id()]);
+    public function verify_token($user, $token, $scope) : bool {
+        if (Security::attack_sql_injection($token))
+            return false;
+        $records = pg_select(static::$db, $user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $user->id()]);
         if (is_bool($records))
             return false;
         if (count($records) == 0)
@@ -117,9 +119,12 @@ class Model
             return false;
         if ($this->temp_token->scope != $scope)
             return false;
-        pg_delete(static::$db, $this->temp_user->get_schema().'.'.UserTokenTable::$TABLENAME, [Config_str::KW_USERSID->value => $this->temp_user->id()]);
         $now = new \DateTime();
         $tokentime= new \DateTime($this->temp_token->issued);
         return  !($now->diff($tokentime, true)->days > 1);
+    }
+    public function delete_token($user) : bool {
+        return pg_delete(static::$db, $user->get_schema().'.'.UserTokenTable::$TABLENAME,
+            [Config_str::KW_USERSID->value => $user->id()]);
     }
 }

@@ -8,7 +8,7 @@
     <a <!-- if ($method == 'contact') --> class="active"
     <!-- endif -->  href="http://camagru.sg/index/contact">Contact</a>
 
-    <!-- if ($controller != 'register' && $method != 'forgot_password') -->
+    <!-- if ($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password') -->
     <div class="login-container flex">
         <!-- if !($login) -->
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >

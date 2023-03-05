@@ -88,7 +88,15 @@ class AccountController extends Controller
             return $this->Render_Error_Account('Unable to generate new token.');
         if (!$this->model->send_password_email())
             return $this->Render_Error_Account('Unable to send verification email.');
-        $this->Render_ForgotPassword_Email_Sent();
+
+        $message = 'If it was previously registered, we will email '.$_POST[Config_str::KW_EMAIL->value].' to reset your password.';
+        Template::view('account.html', [
+            Config_str::KW_TITLE->value  => 'Forgot Password Email Sent',
+            Config_str::KW_STATE->value  => Config_str::STATE_FORGOTPASSWORD_SUBMIT->value,
+            Config_str::KW_MESSAGE->value => $message
+        ]);
+        unset($_POST);
+        return true;
     }
 
     public function reset_password()
@@ -98,22 +106,49 @@ class AccountController extends Controller
             header("Location: http://camagru.sg/register");
             return true;
         }
-        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_ACTIVATION_CODE->value]))
-            return $this->Render_Error_Account('Invalid Reset Password.');
-        if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_ACTIVATION_CODE->value]))
-            return $this->Render_Error_Account('Invalid Reset Password.');
+        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_TOKEN->value]))
+            return $this->Render_Error_Account('Invalid Reset Password - 1');
+        if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_TOKEN->value]))
+            return $this->Render_Error_Account('Invalid Reset Password - 2');
+        if (!Security::verify_email($_GET[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Invalid Reset Password - 3');
+        if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_GET[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Invalid Reset Password - 4');
+        if (!$this->model->verify_token($this->model->get_temp_user(), $_GET[Config_str::KW_TOKEN->value], Config_str::KW_PASSWORD->value))
+            return $this->Render_Error_Account('Invalid Reset Password - 5');
+        Template::view('account.html', [
+            Config_str::KW_TITLE->value  => 'Reset Password',
+            Config_str::KW_STATE->value  => Config_str::STATE_RESETPASSWORD->value
+        ]);
     }
 
-    private function Render_ForgotPassword_Email_Sent() {
-        $message = 'If it was previously registered, we will email '.$_POST[Config_str::KW_EMAIL->value].' to reset your password.';
-        Template::view('account.html', [
-            Config_str::KW_TITLE->value  => 'Reset Password Email Sent',
-            Config_str::KW_STATE->value  => Config_str::STATE_FORGOTPASSWORD_SUBMIT->value,
-            Config_str::KW_MESSAGE->value => $message
+    public function reset_password_submit()
+    {
+        Security::Block_LoginUser();
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            header("Location: http://camagru.sg/account/forgot_password");
+            return true;
+        }
+        if (!isset($_POST[Config_str::KW_EMAIL->value]) || !isset($_POST[Config_str::KW_TOKEN->value])
+        ||  !isset($_POST[Config_str::KW_PASSWORD->value]) || !isset($_POST[Config_str::KW_PASSWORD->value.'-repeat']))
+            return $this->Render_Error_Account('Failure to submit: missing parameter.');
+        if (!Security::verify_email($_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Failure to submit: Email invalid.');
+        if (!Security::verify_password($_POST[Config_str::KW_PASSWORD->value],$_POST[Config_str::KW_PASSWORD->value.'-repeat']))
+            return $this->Render_Error_Account('Failure to submit: Password invalid.');
+        if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
+            return $this->Render_Error_Account('Invalid Reset Password Submit - 1');
+        if (!$this->model->change_password($this->model->get_temp_user(), $_POST[Config_str::KW_PASSWORD->value], $_POST[Config_str::KW_TOKEN->value]))
+            return $this->Render_Error_Account('Invalid Reset Password Submit - 2');
+        $this->model->logout();
+        Template::view('index.html', [
+            Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
+            Config_str::KW_STATE->value => Config_str::STATE_ERROR->value,
+            Config_str::KW_MESSAGE->value => 'Password has been reset. Please login with your new password.'
         ]);
-        unset($_POST);
-        return true;
     }
+
+
 
     private function Render_Error_Account(string $message)
     {

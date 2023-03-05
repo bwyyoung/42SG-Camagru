@@ -20,7 +20,7 @@
     <a <?php if (($method == 'contact')) : ?> class="active"
     <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
-    <?php if (($controller != 'register' && $method != 'forgot_password')) : ?>
+    <?php if (($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
@@ -61,7 +61,7 @@
 <div class="formcontainer">
     <?php if (($state == 'state_forgotpassword')) : ?>
         <form action="http://camagru.sg/account/forgot_password_submit" method="post" id="form_forgot_password" novalidate="novalidate" >
-            <h1>Reset Password</h1>
+            <h1>Forgot Password</h1>
             <p>Enter your email address and click Submit. <br>
                 An email will be sent to your address containing a link that you can follow to reset your password.<br>
                 <b>Remember to check your junk or spam folder if the email doesn't appear in your inbox.</b>
@@ -82,7 +82,11 @@
         If you did not receive your password reset email, please <a href="http://camagru.sg/account/forgot_password">Click Here.</a>
         </span> <br>
     <?php elseif (($state == 'state_resetpassword')) : ?>
-    <form action="http://camagru.sg/account/forgot_password_submit" method="post" id="form_reset_password" novalidate="novalidate" >
+    <form action="http://camagru.sg/account/reset_password_submit" method="post" id="form_reset_password" novalidate="novalidate" >
+        <h1>Reset Password</h1>
+        <p>Enter your new password and click Submit.
+        </p>
+        <hr>
         
 <label for="password"><b>Password</b></label>
 <input type="password" placeholder="Enter Password (8-100 characters, UPPERCASE, lowercase, Numbers and Symbols)" name="password" id="password"

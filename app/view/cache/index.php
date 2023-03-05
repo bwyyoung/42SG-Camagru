@@ -20,7 +20,7 @@
     <a <?php if (($method == 'contact')) : ?> class="active"
     <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
-    <?php if (($controller != 'register' && $method != 'forgot_password')) : ?>
+    <?php if (($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
         <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >

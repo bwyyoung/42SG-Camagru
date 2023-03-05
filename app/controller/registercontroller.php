@@ -28,17 +28,15 @@ class RegisterController extends Controller
             return true;
         }
 
-        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+        if (!isset($_GET[Config_str::KW_EMAIL->value]) || !isset($_GET[Config_str::KW_TOKEN->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
-        if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+        if (Security::attack_sql_injection($_GET[Config_str::KW_EMAIL->value]) || Security::attack_sql_injection($_GET[Config_str::KW_TOKEN->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
         if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_GET[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Registration('Invalid Activation.');
         if ($this->model->get_temp_user()->verified)
             return $this->Render_Error_Registration('Account already verified.');
-    #    $this->model->get_temp_user()->verified = true;
-     #   $this->model->get_temp_user()->commit(Model::get_db());
-        if (!$this->model->verify_user($_GET[Config_str::KW_ACTIVATION_CODE->value]))
+        if (!$this->model->verify_user($this->model->get_temp_user(), $_GET[Config_str::KW_TOKEN->value]))
             return $this->Render_Error_Registration('Invalid activation code, please request new code.');
         Template::view('register.html', [
             Config_str::KW_TITLE->value  => 'Activation Success',
@@ -103,7 +101,9 @@ class RegisterController extends Controller
             header('Location: http://'.Config_str::KW_DOMAIN->value.'/register');
             exit();
         }
-
+        if (!isset($_POST[Config_str::KW_USERNAME->value]) || !isset($_POST[Config_str::KW_EMAIL->value]) ||
+        !isset($_POST[Config_str::KW_PASSWORD->value]) || !isset($_POST[Config_str::KW_PASSWORD->value.'-repeat']))
+            return $this->Render_Error_Registration('Failure to submit: missing parameter.');
         // Check duplicates
         if ($this->model->check_credential_exists(Config_str::KW_USERNAME->value, $_POST[Config_str::KW_USERNAME->value]))
             return $this->Render_Error_Registration('Failure to submit: Username already exists.');
