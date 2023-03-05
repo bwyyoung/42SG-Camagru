@@ -34,3 +34,8 @@ function load_form()
     script.src= '/app/view/js/form.js';
     head.appendChild(script);
 }
+let message = '<?php echo $message; ?>'
+if (message.length > 0)
+    alert(message)
+
+

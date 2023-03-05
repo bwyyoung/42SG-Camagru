@@ -13,7 +13,9 @@
         </div>
 
         <div id="Edit Email Address" class="tabcontent">
-                {% include component/form_email.html %}
+            <p>Current Email  : {{{ $email }}}</p>
+            <p>Email Verified : {{{ $verified }}}</p>
+            {% include component/form_email.html %}
         </div>
 
         <div id="Edit Password" class="tabcontent">

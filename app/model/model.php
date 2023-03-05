@@ -52,7 +52,17 @@ class Model
             return self::$USER_DATA->username;
         return '';
     }
+    public static function get_email() : string {
+        if (self::$USER_DATA != null)
+            return self::$USER_DATA->email;
+        return '';
+    }
 
+    public static function get_verified() : string {
+        if (self::$USER_DATA != null)
+            return self::$USER_DATA->verified;
+        return '';
+    }
 
     public static function get_db() {
         if (Model::$db === null)

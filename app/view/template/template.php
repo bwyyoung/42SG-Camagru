@@ -34,6 +34,8 @@ class Template {
         $cached_file = self::cache($file);
         $data['login'] = Init::getInstance()->login;
         $data[Config_str::KW_USERNAME->value] = Model::get_username();
+        $data[Config_str::KW_EMAIL->value] = Model::get_email();
+        $data[Config_str::KW_VERIFIED->value] = Model::get_verified() ? "Yes" : "No";
         $data['controller'] = Init::getInstance()->req_controller;
         $data['method'] = Init::getInstance()->req_method;
         if (!array_key_exists(Config_str::KW_STATE->value, $data))
