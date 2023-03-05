@@ -52,16 +52,22 @@ function validate_email() {
     if (!fld_email.value.match(validRegex)) {
         if (msg_error !== null)
             msg_error.innerText += 'Email is invalid.\n'
+        if (email_check !== null)
+            email_check.innerText = ''
         return false
     }
     if (/\s/.test(fld_email.value)) {
         if (msg_error !== null)
             msg_error.innerText += 'Email must not have spaces.\n'
+        if (email_check !== null)
+            email_check.innerText = ''
         return false
     }
     if (/\t/.test(fld_email.value)) {
         if (msg_error !== null)
             msg_error.innerText += 'Email must not have tabs.\n'
+        if (email_check !== null)
+            email_check.innerText = ''
         return false
     }
     return true
@@ -92,16 +98,22 @@ function validate_username() {
         if (msg_error !== null)
             msg_error.innerText  += 'Username must be between ' + min + ' and '
                 + max +' characters.\n'
+        if (username_check !== null)
+            username_check.innerText = ''
         return false
     }
     if (/\s/.test(username)) {
         if (msg_error !== null)
             msg_error.innerText += 'Username must not have spaces.\n'
+        if (username_check !== null)
+            username_check.innerText = ''
         return false
     }
     if (/\t/.test(username)) {
         if (msg_error !== null)
             msg_error.innerText += 'Username must not have tabs.\n'
+        if (username_check !== null)
+            username_check.innerText = ''
         return false
     }
     return true
@@ -109,9 +121,15 @@ function validate_username() {
 
 
 function validate_password() {
+    if (fld_password == null)
+        return true;
     if (!password_complex())
         return false
     if (fld_cfmpassword == null)
         return true;
     return password_match();
+}
+
+function reload_validate() {
+
 }

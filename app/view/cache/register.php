@@ -80,7 +80,7 @@
 <span id = "email_check" style="color:red"></span> <br/>
 
         <span id = "message_error" style="color:red"> </span>
-<hr>
+
 <button type="submit" class="formbtn" id="btn_submit">Submit</button>
 </form>
 
@@ -93,9 +93,8 @@
         </p>
         <hr>
         <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-        <span id = "username_check" style="color:red"></span> <br/><br/>
+<input type="text" placeholder="Enter Username" name="username" id="username" required>
+<span id = "username_check" style="color:red"></span> <br/><br/>
         <label for="email"><b>Email</b></label>
 <input type='email' placeholder="Enter Email" name="email" id="email" required>
 <br/>
@@ -115,7 +114,7 @@
 
 
         <span id = "message_error" style="color:red"> </span>
-<hr>
+
 <button type="submit" class="formbtn" id="btn_submit">Submit</button>
 
     <p>By creating an account you agree to our <a href="http://camagru.sg/index/about">Terms & Privacy</a>.</p>

@@ -46,7 +46,6 @@ class RegisterController extends Controller
     }
 
     public function check_user_credential() {
-        Security::Block_LoginUser();
         $_POST = json_decode(file_get_contents('php://input'), true);
         if (!isset($_POST[Config_str::KW_ID->value]) || !isset($_POST['value']) )
             return Debug::echo_return('error');

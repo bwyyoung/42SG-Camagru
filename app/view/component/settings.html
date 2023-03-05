@@ -1,1 +1,28 @@
-SETTINGS
+{% css form.css %}
+{% css settings.css %}
+<div class="formcontainer">
+    <h2>Settings</h2>
+    <div class="tab">
+        <button class="tablinks active" onclick="openTab(event, 'Edit Username')">Edit Username</button>
+        <button class="tablinks" onclick="openTab(event, 'Edit Email Address')">Edit Email Address</button>
+        <button class="tablinks" onclick="openTab(event, 'Edit Password')">Edit Password</button>
+    </div>
+    <form action="http://camagru.sg/account/edit_user" method="post" id="form_settings_username" novalidate="novalidate" >
+        <div id="Edit Username" class="tabcontent">
+                {% include component/form_username.html %}
+        </div>
+
+        <div id="Edit Email Address" class="tabcontent">
+                {% include component/form_email.html %}
+        </div>
+
+        <div id="Edit Password" class="tabcontent">
+                {% include component/form_password.html %}
+        </div>
+        {% include component/form_submit.html %}
+    </form>
+
+</div>
+{% js settings.js %}
+{% js validate.js %}
+{% js form.js %}

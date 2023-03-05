@@ -36,10 +36,7 @@
             please <a href="http://camagru.sg/register/resend_verification_email">Click Here.</a>
         </p>
         <hr>
-        <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-        <span id = "username_check" style="color:red"></span> <br/><br/>
+        {% include component/form_username.html %}
         {% include component/form_email.html %}
         {% include component/form_password.html %}
         {% include component/form_submit.html %}

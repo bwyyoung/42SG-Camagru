@@ -56,6 +56,7 @@ class AccountController extends Controller
             Config_str::KW_TITLE->value  => 'Camagru SG Home Page',
             Config_str::KW_STATE->value => Config_str::STATE_SETTINGS->value
         ]);
+
     }
 
     public function upload() {
