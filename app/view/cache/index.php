@@ -10,7 +10,7 @@
 <body>
 <div class="content">
     
-<style><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
+<style><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/css/navbar.css'); ?></style>
 <div class="topnav">
 
     <a <?php if (($method == '' && $controller == 'index')) : ?> class="active"
@@ -20,37 +20,37 @@
     <a <?php if (($method == 'contact')) : ?> class="active"
     <?php endif; ?>  href="http://camagru.sg/index/contact">Contact</a>
 
-    <?php if (($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password')) : ?>
     <div class="login-container flex">
         <?php if (!($login)) : ?>
-        <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
-            <input type="text" placeholder="Username" name="username" id="username" title='Login' >
-            <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
-            <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
-            <button type="submit" id="btn_login_submit">Login</button>
-            <div class="login_outside_form">
-                <a class="forgotpassword" href="http://camagru.sg/account/forgot_password"> Forgot <br/> password? </a>
-                <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
-                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/validate.js'); ?></script>
-                <script><?php require_once('E:\PHPStorm\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
+            <?php if (($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password')) : ?>
+            <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
+                <input type="text" placeholder="Username" name="username" id="username" title='Login' >
+                <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
+                <input type="checkbox"  value="1" title='Remember Me' id="rememberme" name="rememberme">
+                <button type="submit" id="btn_login_submit">Login</button>
+                <div class="login_outside_form">
+                    <a class="forgotpassword" href="http://camagru.sg/account/forgot_password"> Forgot <br/> password? </a>
+                    <a style="padding: unset" href="http://camagru.sg/register">  <button type="button">Register</button></a>
+                    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/validate.js'); ?></script>
+                    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/navbar.js'); ?></script>
+            <?php endif; ?>
         <?php else : ?>
-                <div class="dropdown">
-                    <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="http://camagru.sg/account/upload">Upload Image</a>
-                        <a href="http://camagru.sg/account/">Profile</a>
-                        <a href="http://camagru.sg/account/settings">Settings</a>
-                    </div>
+            <div class="dropdown">
+                <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="http://camagru.sg/account/upload">Upload Image</a>
+                    <a href="http://camagru.sg/account/">Profile</a>
+                    <a href="http://camagru.sg/account/settings">Settings</a>
                 </div>
-                <a style="padding: unset" href="http://camagru.sg/account/logout" class="logout"> <button type="submit">Logout</button></a>
+            </div>
+            <a style="padding: unset" href="http://camagru.sg/account/logout" class="logout"> <button type="submit">Logout</button></a>
         <?php endif; ?>
             </div>
         </form>
 
     </div>
-    <?php endif; ?>
 </div>
 
 

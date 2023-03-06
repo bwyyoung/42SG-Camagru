@@ -18,7 +18,7 @@ class AccountModel extends Model {
             return false;
         if (!password_verify($password.Security::get_pepper(), $user->password))
             return false;
-        if (\password_needs_rehash($user->password, \PASSWORD_BCRYPT)) {
+        if (\password_needs_rehash($user->password, \PASSWORD_ARGON2ID)) {
             $user->password = \password_hash($_POST[Config_str::KW_PASSWORD->value].Security::get_pepper(), \PASSWORD_ARGON2ID);
             $user->commit(Model::get_db());
         }

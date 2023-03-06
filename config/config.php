@@ -2,7 +2,7 @@
 
 namespace config;
 
-const DEBUG_MODE = TRUE;
+const DEBUG_MODE = FALSE;
 
 enum Config_str:string {
     case KW_ID = 'id';
