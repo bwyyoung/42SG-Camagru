@@ -7,6 +7,7 @@ use Model\Model;
 use PgSql\Result;
 use PSpell\Config;
 use util\Debug;
+use const config\DEBUG_MODE;
 
 Class Table {
     static  $TABLENAME = 'Table';
@@ -121,7 +122,8 @@ Class Table {
                 '('.implode(',', static::$attr_names). ')'.
                 ' VALUES('.$values.') RETURNING '.Config_str::KW_ID->value;
             Debug::print_string($query);
-            var_dump($this->attr);
+            if (DEBUG_MODE)
+                var_dump($this->attr);
             $result =  pg_query_params($db,$query, $this->attr);
 
             if (is_bool($result))

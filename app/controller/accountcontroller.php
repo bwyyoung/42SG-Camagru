@@ -88,12 +88,14 @@ class AccountController extends Controller
         if (!isset($_POST[Config_str::KW_EMAIL->value]))
             return $this->Render_Error_Account('Invalid Email.');
         if (!$this->model->set_temp_user(Config_str::KW_EMAIL->value, $_POST[Config_str::KW_EMAIL->value]))
-            return $this->Render_Error_Account('Invalid Email.');
+            return $this->Render_forgot_password_sent_email();
         if (!$this->model->generate_token(Config_str::KW_PASSWORD->value))
             return $this->Render_Error_Account('Unable to generate new token.');
         if (!$this->model->send_password_email())
             return $this->Render_Error_Account('Unable to send verification email.');
-
+        return $this->Render_forgot_password_sent_email();
+    }
+    private function Render_forgot_password_sent_email(){
         $message = 'If it was previously registered, we will email '.$_POST[Config_str::KW_EMAIL->value].' to reset your password.';
         Template::view('account.html', [
             Config_str::KW_TITLE->value  => 'Forgot Password Email Sent',
