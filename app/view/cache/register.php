@@ -22,7 +22,7 @@
 
     <div class="login-container flex">
         <?php if (!($login)) : ?>
-            <?php if ((($controller != 'register' && $method != 'forgot_password' && $method != 'reset_password'))) : ?>
+            <?php if ((($state != 'state_registration' && $method != 'forgot_password' && $method != 'reset_password'))) : ?>
             <form name="navbar_login" id="navbar_login" method="post" action="http://camagru.sg/account/login" novalidate="novalidate" >
                 <input type="text" placeholder="Username" name="username" id="username" title='Login' >
                 <input type="password" minlength="14" placeholder="Password" name="password" id="password" title='Password' >
@@ -90,7 +90,8 @@
 
 <button type="submit" class="formbtn" id="btn_submit">Submit</button>
 </form>
-
+    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/validate.js'); ?></script>
+    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/form.js'); ?></script>
 <?php else : ?>
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
@@ -129,11 +130,12 @@
         <p>Already have an account? <a href="http://camagru.sg/">Sign in</a>.</p>
     </div>
 </form>
+    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/validate.js'); ?></script>
+    <script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/form.js'); ?></script>
 <?php endif; ?>
 
 </div>
-<script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/validate.js'); ?></script>
-<script><?php require_once('D:\PhpstormProjects\DSTA_Build-1/app/view/js/form.js'); ?></script>
+
 
 
 </div>

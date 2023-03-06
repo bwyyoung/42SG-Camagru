@@ -27,7 +27,8 @@
         {% include component/form_email.html %}
         {% include component/form_submit.html %}
 </form>
-
+    {% js validate.js %}
+    {% js form.js %}
 <!-- else -->
 <form action="http://camagru.sg/register/register_account" method="post" id="form_register" novalidate="novalidate" >
         <h1>Register</h1>
@@ -46,10 +47,11 @@
         <p>Already have an account? <a href="http://camagru.sg/">Sign in</a>.</p>
     </div>
 </form>
+    {% js validate.js %}
+    {% js form.js %}
 <!-- endif -->
 
 </div>
-{% js validate.js %}
-{% js form.js %}
+
 
 {% endblock %}
