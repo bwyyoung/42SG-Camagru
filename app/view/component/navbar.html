@@ -24,8 +24,15 @@
             <!-- endif -->
         <!-- else -->
             <div class="dropdown">
-                <button class="dropbtn">{{{ $username }}}
+                <button class="dropbtn"> {{{ $username }}}&nbsp;
                     <i class="fa fa-caret-down"></i>
+                        <img id="image-verified"
+                        <!-- if ($verified) -->
+                            src='<?= Media::image_site_svg("verified"); ?>'
+                        <!-- else -->
+                            src='<?= Media::image_site_svg("unverified"); ?>'
+                        <!-- endif -->
+                    >
                 </button>
                 <div class="dropdown-content">
                     <a href="http://camagru.sg/account/upload">Upload Image</a>

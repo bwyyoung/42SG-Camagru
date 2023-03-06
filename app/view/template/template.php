@@ -19,6 +19,9 @@ class Template {
 
     static $template_dir = __DIR__;
 
+    static $template_include = '<?php include(WEB_ROOT."/app/view/template/template_include.php"); ?>';
+    static $template_use = '<?php use loader\Media as Media; ?>';
+
     static private function get_viewdir_file($file) {
        # $fileParts = pathinfo($file);
         return self::$view_dir.$file;
@@ -27,6 +30,7 @@ class Template {
     static private function get_filename($file) {
         $fileParts = pathinfo($file);
         return $fileParts['basename'];
+
     }
 
     static function view($file, $data = array()) {
@@ -35,7 +39,7 @@ class Template {
         $data['login'] = Init::getInstance()->login;
         $data[Config_str::KW_USERNAME->value] = Model::get_username();
         $data[Config_str::KW_EMAIL->value] = Model::get_email();
-        $data[Config_str::KW_VERIFIED->value] = Model::get_verified() ? "Yes" : "No";
+        $data[Config_str::KW_VERIFIED->value] = Model::get_verified();
         $data['controller'] = Init::getInstance()->req_controller;
         $data['method'] = Init::getInstance()->req_method;
         if (!array_key_exists(Config_str::KW_STATE->value, $data))
@@ -55,7 +59,11 @@ class Template {
         if (!self::$cache_enabled || !file_exists($cached_file) || filemtime($cached_file) < filemtime(self::get_viewdir_file($file))) {
             $code = self::includeFiles($file);
             $code = self::compileCode($code);
-            file_put_contents($cached_file, '<?php class_exists(\'' . __CLASS__ . '\') or exit; ?>' . PHP_EOL . $code);
+            file_put_contents($cached_file,
+                '<?php class_exists(\'' . __CLASS__ . '\') or exit;?>'.
+                self::$template_include.
+                self::$template_use
+                . PHP_EOL . $code);
         }
         return $cached_file;
     }

@@ -70,7 +70,7 @@ class Model
         return Model::$db;
     }
 
-    protected function retrieve_session() {
+    public function retrieve_session() {
         $session = UserSessionTable::get_session(session_id());
         if ($session === null)
             return;

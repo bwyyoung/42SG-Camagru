@@ -14,7 +14,7 @@
 
         <div id="Edit Email Address" class="tabcontent">
             <p>Current Email  : {{{ $email }}}</p>
-            <p>Email Verified : {{{ $verified }}}</p>
+            <p>Email Verified : {{{ $verified ? "Yes" : "No" }}}</p>
             {% include component/form_email.html %}
         </div>
 

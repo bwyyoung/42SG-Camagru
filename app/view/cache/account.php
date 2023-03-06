@@ -1,4 +1,4 @@
-<?php class_exists('View\Template') or exit; ?>
+<?php class_exists('View\Template') or exit;?><?php include(WEB_ROOT."/app/view/template/template_include.php"); ?><?php use loader\Media as Media; ?>
 
 <!DOCTYPE html>
 <html>
@@ -36,8 +36,15 @@
             <?php endif; ?>
         <?php else : ?>
             <div class="dropdown">
-                <button class="dropbtn"><?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>
+                <button class="dropbtn"> <?php echo htmlentities($username, ENT_QUOTES, 'UTF-8') ?>&nbsp;
                     <i class="fa fa-caret-down"></i>
+                        <img id="image-verified"
+                        <?php if (($verified)) : ?>
+                            src='<?= Media::image_site_svg("verified"); ?>'
+                        <?php else : ?>
+                            src='<?= Media::image_site_svg("unverified"); ?>'
+                        <?php endif; ?>
+                    >
                 </button>
                 <div class="dropdown-content">
                     <a href="http://camagru.sg/account/upload">Upload Image</a>
@@ -130,7 +137,7 @@
 
         <div id="Edit Email Address" class="tabcontent">
             <p>Current Email  : <?php echo htmlentities($email, ENT_QUOTES, 'UTF-8') ?></p>
-            <p>Email Verified : <?php echo htmlentities($verified, ENT_QUOTES, 'UTF-8') ?></p>
+            <p>Email Verified : <?php echo htmlentities($verified ? "Yes" : "No", ENT_QUOTES, 'UTF-8') ?></p>
             <label for="email"><b>Email</b></label>
 <input type='email' placeholder="Enter Email" name="email" id="email" required>
 <br/>

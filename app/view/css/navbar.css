@@ -13,6 +13,11 @@ body {
 .topnav {
     overflow: hidden;
     background-color: #e9e9e9;
+    height: 48px;
+}
+#image-verified {
+    height: 100%;
+    width: auto;
 }
 
 .topnav a {
@@ -123,6 +128,7 @@ body {
 
 .topnav .dropdown .dropbtn {
     width: fit-content;
+    height: 48px;
     font-size: 16px;
     border: none;
     outline: none;
@@ -131,6 +137,8 @@ body {
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    display: inline-flex;
+    align-items: center;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {

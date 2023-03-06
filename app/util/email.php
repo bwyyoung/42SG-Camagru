@@ -12,11 +12,11 @@ class Email {
     {
         $link = Config_str::KW_DOMAIN->value.'/register/activate?email='.$useremail.'&token='.$token;
         // set email subject & body
-        $subject = 'Camagru.sg: Please activate your account';
+        $subject = 'Camagru.sg: Please verify your account';
         $message = <<<MESSAGE
             Hi $username,
             
-            Please click the following link to activate your account:
+            Please click the following link to verify your account:
             $link
             
             Thanks fam,

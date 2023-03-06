@@ -38,10 +38,11 @@ class RegisterController extends Controller
             return $this->Render_Error_Registration('Account already verified.');
         if (!$this->model->verify_user($this->model->get_temp_user(), $_GET[Config_str::KW_TOKEN->value]))
             return $this->Render_Error_Registration('Invalid activation code, please request new code.');
+        $this->model->retrieve_session();
         Template::view('register.html', [
             Config_str::KW_TITLE->value  => 'Activation Success',
             Config_str::KW_STATE->value  => Config_str::STATE_ACTIVATED->value,
-            Config_str::KW_MESSAGE->value => 'Congratulations! '.$_GET[Config_str::KW_EMAIL->value].' has been activated. Please login to continue.'
+            Config_str::KW_MESSAGE->value => 'Congratulations! '.$_GET[Config_str::KW_EMAIL->value].' has been verified. Please login to continue.'
         ]);
     }
 
