@@ -15,6 +15,11 @@ class Security
         exit();
     }
 
+    public static function password_hash($password) : string {
+        return password_hash($password.Security::get_pepper(), \PASSWORD_ARGON2ID,
+            ["memory_cost" => 19456, "time_cost" => 2, "threads" => 1] );
+    }
+
     public static function Block_LoginUser()
     {
         if (!Init::getInstance()->login)

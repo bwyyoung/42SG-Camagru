@@ -127,6 +127,7 @@ class RegisterController extends Controller
         // Generate a token for the email verification link
         if (!$this->model->generate_token(Config_str::KW_VERIFICATION->value))
             return $this->Render_Error_Registration('Unable to generate new token.');
+        $this->model->retrieve_session();
         // Send email
         if (!$this->model->send_verification_email())
             return $this->Render_Error_Registration('Unable to send verification email. Please go to this link to resend: http://camagru.sg/register/resend_verification_email');

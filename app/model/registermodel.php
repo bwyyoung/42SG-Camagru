@@ -27,9 +27,7 @@ class RegisterModel extends Model
         if (!$this->connect())
             return false;
 
-        $hashed = password_hash($password.Security::get_pepper(),
-            PASSWORD_ARGON2ID,
-            ['memory_cost' => 19456, 'time_cost' => 2, 'threads' => 1]);
+        $hashed = Security::password_hash($password);
         $this->temp_user = new UserTable([
            Config_str::KW_USERNAME->value => $username,
             Config_str::KW_EMAIL->value => $email,

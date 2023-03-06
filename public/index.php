@@ -11,7 +11,7 @@ use util\Debug as Debug;
 session_start();
 
 
-Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
+#Init::getInstance()->login = !(!isset($_SESSION['login']) || $_SESSION['login'] == NULL || !($_SESSION['login']));
 
 
 #Debug::print_string(getenv('WEBSITE_PEPPER'));

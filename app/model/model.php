@@ -25,9 +25,6 @@ class Model
         self::$USER_DATA = null;
         $this->temp_user = new UserTable();
         $this->retrieve_session();
-        Init::getInstance()->login = true;
-        if (self::$USER_DATA === null)
-            Init::getInstance()->login = false;
     }
 
     public static function connect() : bool
@@ -76,6 +73,7 @@ class Model
             return;
         $session->renew();
         self::$USER_DATA = UserTable::gettable_id($session->usersid);
+        Init::getInstance()->login = (self::$USER_DATA !== null);
     }
 
     //http://mysqltopgsql.com/post/sql-injection/

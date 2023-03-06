@@ -19,7 +19,7 @@ class AccountModel extends Model {
         if (!password_verify($password.Security::get_pepper(), $user->password))
             return false;
         if (\password_needs_rehash($user->password, \PASSWORD_ARGON2ID)) {
-            $user->password = \password_hash($_POST[Config_str::KW_PASSWORD->value].Security::get_pepper(), \PASSWORD_ARGON2ID);
+            $user->password = Security::password_hash($_POST[Config_str::KW_PASSWORD->value]);
             $user->commit(Model::get_db());
         }
         return (UserSessionTable::create_new_session($user->id(), $rememberme));
@@ -42,7 +42,7 @@ class AccountModel extends Model {
     }
 
     public function change_password($user, $password) : bool {
-        $user->password = password_hash($password.Security::get_pepper(), \PASSWORD_ARGON2ID);;
+        $user->password = Security::password_hash($password);
         $user->commit(static::$db);
         return true;
     }
